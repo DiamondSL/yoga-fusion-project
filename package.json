@@ -1,0 +1,17 @@
+{
+  "name": "yoga-fusion-project",
+  "version": "1.0.0",
+  "description": "",
+  "workspaces": [
+    "backend/*",
+    "frontend/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend-dev": "cd backend && yarn run strapi develop",
+    "frontend-dev": "cd frontend && yarn run next dev --turbopack",
+    "dev": "concurrently \"yarn run backend-dev\" \"yarn run frontend-dev\""
+  },
+  "private": true,
+  "packageManager": "yarn@4.5.3"
+}
