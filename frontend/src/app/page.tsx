@@ -1,5 +1,5 @@
 "use client";
-import {Container, Typography} from '@mui/material';
+import {Button, Container, Typography} from '@mui/material';
 import { gql, useQuery } from '@apollo/client';
 import {Box} from "@mui/system";
 
@@ -20,13 +20,14 @@ const Home = () => {
     // if (data) return <Box>
     //     <Typography variant={'h1'}>{data.articles[0].title}</Typography>
     //     <Typography variant={'body1'}>{data.articles[0].description}</Typography>
+
     //     </Box>
     //
     // console.log(data)
   return (
       <Container>
             <Box>
-Hello!
+                <Button color={"primary"}>click</Button>
             </Box>
       </Container>
   );

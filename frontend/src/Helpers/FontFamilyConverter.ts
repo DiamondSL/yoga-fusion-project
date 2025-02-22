@@ -39,6 +39,23 @@ interface CustomCSSProperties extends CSSProperties {
     fontWeight?: CSSProperties['fontWeight'] | '400italic' | '700italic';
 }
 
+const calculateLetterSpacing = (originalSize:string|number, neededPercent:number) => {
+    let formattedSize = (typeof originalSize === 'string' ? (originalSize.includes('px') ? Number(originalSize.replace('px', '')) : Number(originalSize)) : originalSize);
+    console.log(formattedSize * neededPercent)
+
+    return formattedSize * neededPercent
+}
+
+const formats = [
+    {ext: 'woff2', format: 'woff2'},
+    {ext: 'woff', format: 'woff'},
+    {ext: 'ttf', format: 'truetype'},
+    {ext: 'otf', format: 'opentype'},
+    {ext: 'svg', format: 'svg'},
+    {ext: 'eot', format: 'embedded-opentype'}
+];
+
+
 // Updated helper to return a TypeScript object
 const returnFontFamily = (fonts: FontsObjects) => {
     if (!fonts) return [];
@@ -47,23 +64,10 @@ const returnFontFamily = (fonts: FontsObjects) => {
 
     return fontArray.flatMap((fontObj) =>
             Object.entries(fontObj.family).flatMap(([familyName, weights]) =>
-                Object.entries(weights as Record<string, string>).map(([weight, file]) => {
+                Object.entries(weights as Record<string, string>).map(([weight, file], index) => {
                     const fileBaseName = file.split('.')[0];
-                    const formats = [
-                        {ext: 'woff2', format: 'woff2'},
-                        {ext: 'woff', format: 'woff'},
-                        {ext: 'ttf', format: 'truetype'},
-                        {ext: 'otf', format: 'opentype'},
-                        {ext: 'svg', format: 'svg'},
-                        {ext: 'eot', format: 'embedded-opentype'}
-                    ];
-
-                    const srcSet = formats
-                        .map(
-                            ({ ext, format }) =>
-                                `url('/fonts/${familyName}/${fileBaseName}.${ext}') format('${format}')`
-                        )
-                        .join(', ');
+                    const fileFormat = file.split('.')[1];
+                    const srcSet = `url("/fonts/${familyName}/${fileBaseName}.${fileFormat} format('truetype')")`
 
                     return {
                         fontFamily: familyName,
@@ -76,5 +80,5 @@ const returnFontFamily = (fonts: FontsObjects) => {
         );
 };
 
-export default returnFontFamily;
+export { returnFontFamily, calculateLetterSpacing };
 export type { FontsObjects, CustomFontsObject };

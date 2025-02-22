@@ -1,33 +1,34 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
 import {FontsObjects, CustomFontsObject} from "@/Helpers/FontFamilyConverter";
-import returnFontFamily from "@/Helpers/FontFamilyConverter";
+import { returnFontFamily, calculateLetterSpacing } from "@/Helpers/FontFamilyConverter";
 
-const customFonts:FontsObjects|CustomFontsObject = [
-        {
-            family: {
-                Manrope: {
-                    '200': "Manrope-ExtraLight.ttf",
-                    '300': "Manrope-Light.ttf",
-                    '400': "Manrope-Regular.ttf",
-                    '500': "Manrope-Medium.ttf",
-                    '600': "Manrope-SemiBold.ttf",
-                    '700': "Manrope-Bold.ttf",
-                    '800': "Manrope-ExtraBold.ttf",
-                }
-            }
-        },
-        {
-            family: {
-                NyghtSerif: {
-                    '400': "NyghtSerif-Light.ttf",
-                    '700': "NyghtSerif-Dark.ttf",
-                    "400italic": "NyghtSerif-LightItalic.ttf",
-                    "700italic": "NyghtSerif-DarkItalic.ttf",
-                }
+
+const customFonts: FontsObjects | CustomFontsObject = [
+    {
+        family: {
+            Manrope: {
+                '200': "Manrope-ExtraLight.ttf",
+                '300': "Manrope-Light.ttf",
+                '400': "Manrope-Regular.ttf",
+                '500': "Manrope-Medium.ttf",
+                '600': "Manrope-SemiBold.ttf",
+                '700': "Manrope-Bold.ttf",
+                '800': "Manrope-ExtraBold.ttf",
             }
         }
-        ]
+    },
+    {
+        family: {
+            NyghtSerif: {
+                '400': "NyghtSerif-Light.ttf",
+                '700': "NyghtSerif-Dark.ttf",
+                "400italic": "NyghtSerif-LightItalic.ttf",
+                "700italic": "NyghtSerif-DarkItalic.ttf",
+            }
+        }
+    }
+]
 
 const colors = {
     brand: {
@@ -50,153 +51,241 @@ const colors = {
     }
 }
 
+const fonts = returnFontFamily(customFonts).map((font, index) => ({
+    fontFamily: font.fontFamily,
+    fontWeight: font.fontWeight,
+    fontStyle: font.fontStyle,
+    src: font.src
+}))
+
+console.log(fonts)
+
+const headingsSizes = {
+    h1: '60px',
+    h2: '40px',
+    h3: '36px',
+    h4: '30px',
+    h5: '26px',
+    h6: '24px',
+    h7: '22px',
+    h8: '18px'
+}
+
+const bodySizes =  {
+        BodyFontSizeXL: '28px',
+        BodyFontSizeL: '18px',
+        BodyFontSizeLRegular: '16px',
+        BodyFontSizeM: '14px',
+        BodyFontSizeS: '14px'
+}
+
 const OriginalTheme = createTheme(
     {
-    palette: {
-        primary: {
-            main: colors.brand.beige,
-            dark: colors.brand.black,
-            light: '#EEEEEE',
-            contrastText: '#FFFFFF'
+        breakpoints: {
+            values: {
+                xs: 390,
+                sm: 600,
+                md: 900,
+                lg: 1200,
+                xl: 1440,
+            }
         },
-        secondary: {
-            main: '#F7BE00',
-            dark: '#4A3E30',
-            light: '#D5F166',
-            contrastText: '#282218'
+        palette: {
+            primary: {
+                main: colors.brand.beige,
+                dark: colors.brand.black,
+                light: '#EEEEEE',
+                contrastText: '#FFFFFF'
+            },
+            secondary: {
+                main: colors.brand.yellow,
+                dark: colors.secondary.brown,
+                light: colors.brand.lime,
+                contrastText: colors.brand.black
+            },
+            error: {
+                main: colors.brand.red
+            },
+            warning: {
+                main: colors.secondary.orange
+            },
+            info: {
+                main: colors.secondary.blue
+            },
+            success: {
+                main: colors.secondary.light_green
+            },
+            grey: {
+                100: '#E1E1E6',
+                200: '#E2D9B5',
+                300: '#C0C0C0'
+            },
+            background: {
+                default: colors.brand.beige,
+                paper: colors.brand.beige,
+            },
+            text: {
+                primary: colors.brand.black,
+                secondary: colors.secondary.brown
+            }
         },
-        error: {
-            main: colors.brand.red
+        typography: {
+            fontFamily: ['Manrope, sans-serif', 'NyghtSerif'].join(','),
+            h1: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 700,
+                fontStyle: 'italic',
+                fontSize: headingsSizes.h1,
+                lineHeight: '125%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h1, 0.04)}px`
+            },
+            h2: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 700,
+                fontSize: headingsSizes.h2,
+                fontStyle: 'italic',
+                lineHeight: '150%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h2,0.04)}px`
+            },
+            h3: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 700,
+                fontSize: headingsSizes.h3,
+                fontStyle: 'italic',
+                lineHeight: '125%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h3,0.04)}px`
+            },
+            h4: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 400,
+                fontStyle: 'italic',
+                fontSize: headingsSizes.h4,
+                lineHeight: '125%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h4,0.04)}px`
+
+            },
+            h5: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 700,
+                fontStyle: 'italic',
+                fontSize: headingsSizes.h5,
+                lineHeight: '125%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h5,0.04)}px`
+            },
+            h6: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 400,
+                fontStyle: 'italic',
+                fontSize: headingsSizes.h6,
+                lineHeight: '125%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h6,0.04)}px`
+            },
+            h7: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 500,
+                fontStyle: 'italic',
+                fontSize: headingsSizes.h7,
+                lineHeight: '125%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h7,0.04)}px`
+            },
+            h8: {
+                fontFamily: "NyghtSerif",
+                fontWeight: 400,
+                fontStyle: 'italic',
+                fontSize: headingsSizes.h8,
+                lineHeight: '125%',
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h7,0.04)}px`
+            },
+            body1: {
+                fontFamily: "Manrope",
+                fontWeight: 500,
+                fontSize: bodySizes.BodyFontSizeLRegular,
+                lineHeight: '150%',
+                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeLRegular,0.26)}px`
+            },
+            body2: {
+                fontFamily: "Manrope",
+                fontWeight: 400,
+                fontSize: bodySizes.BodyFontSizeM,
+                lineHeight: '150%',
+                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeM,0.26)}px`
+            },
+            bodyXL: {
+                fontFamily: "Manrope",
+                fontWeight: 500,
+                fontSize: bodySizes.BodyFontSizeXL,
+                lineHeight: '150%',
+                letterSpacing: '0.84px'
+            },
+            bodyS: {
+                fontFamily: "Manrope",
+                fontWeight: 500,
+                fontSize: bodySizes.BodyFontSizeXL,
+                lineHeight: '150%',
+                letterSpacing: '0.42px'
+            }
         },
-        warning: {
-            main: '#FE6914'
-        },
-        info: {
-            main: '#64CDF5'
-        },
-        success: {
-            main: '#76A025'
-        },
-        grey: {
-            100: '#E1E1E6',
-            200: '#E2D9B5',
-            300: '#C0C0C0'
-        },
-        background: {
-            default: '#FFFEFF',
-            paper: '#FFFFFF'
-        },
-        text: {
-            primary: '#282218',
-            secondary: '#4A3E30'
-        }
-    },
-    typography: {
-        fontFamily: ['Manrope, sans-serif', 'NyghtSerif'].join(','),
-        h1: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 700,
-            fontStyle: 'italic'
-        },
-        h2: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 700,
-        },
-        h3: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 700,
-        },
-        h4: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 400,
-        },
-        h5: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 700,
-        },
-        h6: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 400,
-        },
-        h7: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 500,
-        },
-        h8: {
-            fontFamily: "NyghtSerif",
-            fontWeight: 400,
-        },
-        body1: {
-            fontFamily: "Manrope",
-            fontWeight: 500,
-        }
-    },
-    components: {
-        MuiCssBaseline: {
-            styleOverrides: {
-                '@global': {
-                    '@font-face': returnFontFamily(customFonts).map(font => ({
-                        fontFamily: font.fontFamily,
-                        fontWeight: font.fontWeight,
-                        fontStyle: font.fontStyle,
-                        src: font.src}))
+        components: {
+            MuiCssBaseline: {
+                styleOverrides: {
+                    '@global': {
+                        '@font-face': fonts
+                    },
                 },
-                        MuiButton: {
-                            styleOverrides: {
-                                root: {
-                                    borderRadius: '8px',
-                                    textTransform: 'none',
-                                    boxShadow: 'none'
-                                },
-                                containedPrimary: {
-                                    backgroundColor: colors.secondary.light_green,
-                                    color: '#FFFEFF',
-                                    '&:hover': {
-                                        backgroundColor: '#9747FF'
-                                    }
-                                },
-                                containedSecondary: {
-                                    backgroundColor: colors.secondary.brown,
-                                    color: colors.brand.lime,
-                                    '&:hover': {
-                                        backgroundColor: colors.neutrals.grey1
-                                    }
-                                },
-                                outlinedPrimary: {
-                                    borderColor: '#76A025',
-                                    color: '#76A025',
-                                    '&:hover': {
-                                        borderColor: '#9747FF',
-                                        color: '#9747FF',
-                                        backgroundColor: 'rgba(151, 71, 255, 0.08)'
-                                    }
-                                },
-                                outlinedSecondary: {
-                                    borderColor: '#282218',
-                                    color: '#282218',
-                                    '&:hover': {
-                                        borderColor: '#',
-                                        color: '#C0C0C0',
-                                        backgroundColor: 'rgba(192, 192, 192, 0.08)'
-                                    }
-                                },
-                                textPrimary: {
-                                    color: colors.secondary.light_green,
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(118, 160, 37, 0.08)'
-                                    }
-                                },
-                                textSecondary: {
-                                    color: colors.secondary.brown,
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(40, 34, 24, 0.08)'
-                                    }
-                                },
-                            }
+            },
+            MuiButton: {
+                styleOverrides: {
+                    root: {
+                        borderRadius: '50px',
+                        backgroundColor: colors.brand.lime,
+                        fontFamily: "NyghtSerif",
+                        fontWeight: '700',
+                        fontSize: '20px',
+                        fontStyle: 'italic',
+                        textTransform: 'lowercase',
+                        letterSpacing: '0.88px;',
+                        padding: '9px 40px',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '10px',
+                        lineHeight: '28px',
+                        border: `1px solid ${colors.brand.black}`,
+                        transition: 'all 1s ease-in',
+                        color: colors.brand.black,
+                        ":hover": {
+                            backgroundColor: colors.secondary.light_green
+                        },
+                        ":disabled": {
+                            backgroundColor: colors.neutrals.grey2,
+                            color: colors.neutrals.grey1,
+                            borderColor: colors.neutrals.grey1,
+                            cursor: 'not-allowed'
+                        },
+                    },
+                },
+                variants: [
+                    {
+                        props: {variant: 'secondary'},
+                        style: {
+                            backgroundColor: colors.brand.beige,
+                            ":hover": {
+                                backgroundColor: colors.brand.lime
+                            },
+                        }
+                    },
+                    {
+                        props: {variant: 'transparent'},
+                        style: {
+                            background: 'transparent',
+                            backgroundColor: 'transparent',
+                            ":hover": {
+                                backgroundColor: colors.brand.lime
+                            },
                         }
                     }
-                }
+                ],
             }
+        }
     });
 
 export default OriginalTheme;

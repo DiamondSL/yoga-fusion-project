@@ -13,5 +13,8 @@
     "dev": "concurrently \"yarn run backend-dev\" \"yarn run frontend-dev\""
   },
   "private": true,
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.5.3",
+  "dependencies": {
+    "@svgr/webpack": "^8.1.0"
+  }
 }
