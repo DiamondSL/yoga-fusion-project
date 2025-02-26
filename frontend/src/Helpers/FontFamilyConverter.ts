@@ -41,7 +41,6 @@ interface CustomCSSProperties extends CSSProperties {
 
 const calculateLetterSpacing = (originalSize:string|number, neededPercent:number) => {
     let formattedSize = (typeof originalSize === 'string' ? (originalSize.includes('px') ? Number(originalSize.replace('px', '')) : Number(originalSize)) : originalSize);
-    console.log(formattedSize * neededPercent)
 
     return formattedSize * neededPercent
 }
@@ -64,13 +63,19 @@ const returnFontFamily = (fonts: FontsObjects) => {
 
     return fontArray.flatMap((fontObj) =>
             Object.entries(fontObj.family).flatMap(([familyName, weights]) =>
-                Object.entries(weights as Record<string, string>).map(([weight, file], index) => {
+                Object.entries(weights as Record<string, string>).map(([weight, file]) => {
                     const fileBaseName = file.split('.')[0];
                     const fileFormat = file.split('.')[1];
-                    const srcSet = `url("/fonts/${familyName}/${fileBaseName}.${fileFormat} format('truetype')")`
+                    const srcSet = `url("/fonts/${familyName}/${fileBaseName}.${fileFormat}")`
+
+                    const RemovePossibleUnderscores = familyName
+                        .split("_")
+                        .map((word)=>{
+                            return word[0].toUpperCase() + word.substring(1)
+                        }).join('')
 
                     return {
-                        fontFamily: familyName,
+                        fontFamily: String(RemovePossibleUnderscores.charAt(0).toUpperCase()+RemovePossibleUnderscores.slice(1)),
                         fontWeight: weight.includes('italic') ? weight.replace('italic', '') : weight,
                         fontStyle: weight.includes('italic') ? 'italic' : 'normal',
                         src: srcSet
@@ -79,6 +84,8 @@ const returnFontFamily = (fonts: FontsObjects) => {
             )
         );
 };
+
+
 
 export { returnFontFamily, calculateLetterSpacing };
 export type { FontsObjects, CustomFontsObject };

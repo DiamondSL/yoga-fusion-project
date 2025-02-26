@@ -1,26 +1,11 @@
 'use client';
-import { createTheme } from '@mui/material/styles';
-import {FontsObjects, CustomFontsObject} from "@/Helpers/FontFamilyConverter";
-import { returnFontFamily, calculateLetterSpacing } from "@/Helpers/FontFamilyConverter";
-
+import {createTheme} from '@mui/material/styles';
+import {calculateLetterSpacing, CustomFontsObject, FontsObjects, returnFontFamily} from "@/Helpers/FontFamilyConverter";
 
 const customFonts: FontsObjects | CustomFontsObject = [
     {
         family: {
-            Manrope: {
-                '200': "Manrope-ExtraLight.ttf",
-                '300': "Manrope-Light.ttf",
-                '400': "Manrope-Regular.ttf",
-                '500': "Manrope-Medium.ttf",
-                '600': "Manrope-SemiBold.ttf",
-                '700': "Manrope-Bold.ttf",
-                '800': "Manrope-ExtraBold.ttf",
-            }
-        }
-    },
-    {
-        family: {
-            NyghtSerif: {
+            nyght_serif: {
                 '400': "NyghtSerif-Light.ttf",
                 '700': "NyghtSerif-Dark.ttf",
                 "400italic": "NyghtSerif-LightItalic.ttf",
@@ -51,14 +36,17 @@ const colors = {
     }
 }
 
-const fonts = returnFontFamily(customFonts).map((font, index) => ({
+const fonts = returnFontFamily(customFonts).map((font) => ({
     fontFamily: font.fontFamily,
     fontWeight: font.fontWeight,
     fontStyle: font.fontStyle,
     src: font.src
 }))
 
-console.log(fonts)
+const fontsFontFace = String(fonts.map((font) => {
+    return `@font-face {font-family: '${font.fontFamily}';font-weight: ${Number(font.fontWeight) === 700 ? 'bold' : 'normal'};font-style: ${font.fontStyle};src: ${font.src};}`
+}))
+
 
 const headingsSizes = {
     h1: '60px',
@@ -130,7 +118,7 @@ const OriginalTheme = createTheme(
             }
         },
         typography: {
-            fontFamily: ['Manrope, sans-serif', 'NyghtSerif'].join(','),
+            fontFamily: ['Manrope', 'NyghtSerif'].join(','),
             h1: {
                 fontFamily: "NyghtSerif",
                 fontWeight: 700,
@@ -227,11 +215,7 @@ const OriginalTheme = createTheme(
         },
         components: {
             MuiCssBaseline: {
-                styleOverrides: {
-                    '@global': {
-                        '@font-face': fonts
-                    },
-                },
+                styleOverrides: fontsFontFace.replaceAll(',', " ")
             },
             MuiButton: {
                 styleOverrides: {

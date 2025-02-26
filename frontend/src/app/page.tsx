@@ -3,17 +3,29 @@ import {Button, Container, Typography} from '@mui/material';
 import { gql, useQuery } from '@apollo/client';
 import {Box} from "@mui/system";
 
-// const GET_ARTICLES = gql`
-//   query articles {
-//     articles {
-//       title
-//       description
-//     }
-//   }
-// `;
+// const LandingPage = gql`
+//   query landingPage {
+//             landingPage {
+//                 __typename
+//                 createdAt
+//                 Section_One {
+//                     ... on ComponentSectionTitle {
+//                         Placement
+//                         Title
+//                     }
+//                     ... on ComponentSectionButton {
+//                         Text
+//                         Variant
+//                     }
+//                 }
+//             }
+//           }
+//
+// `
 
 const Home = () => {
-    // const { loading, error, data } = useQuery(GET_ARTICLES);
+    // const { loading, error, data } = useQuery(LandingPage);
+    // console.log(error, loading, data)
     //
     // if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error.message}</p>;
@@ -26,9 +38,6 @@ const Home = () => {
     // console.log(data)
   return (
       <Container>
-            <Box>
-                <Button color={"primary"}>click</Button>
-            </Box>
       </Container>
   );
 }
