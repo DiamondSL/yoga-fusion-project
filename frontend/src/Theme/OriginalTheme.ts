@@ -226,6 +226,7 @@ const OriginalTheme = createTheme(
                         fontWeight: '700',
                         fontSize: '20px',
                         fontStyle: 'italic',
+                        minWidth: '141px',
                         textTransform: 'lowercase',
                         letterSpacing: '0.88px;',
                         padding: '9px 40px',

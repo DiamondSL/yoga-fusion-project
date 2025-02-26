@@ -2,30 +2,35 @@
 import {Button, Container, Typography} from '@mui/material';
 import { gql, useQuery } from '@apollo/client';
 import {Box} from "@mui/system";
+import { Manrope } from "next/dist/compiled/@next/font/dist/google";
+import {NextFont} from "next/dist/compiled/@next/font";
+
+
 
 // const LandingPage = gql`
-//   query landingPage {
-//             landingPage {
-//                 __typename
-//                 createdAt
-//                 Section_One {
-//                     ... on ComponentSectionTitle {
-//                         Placement
-//                         Title
-//                     }
-//                     ... on ComponentSectionButton {
-//                         Text
-//                         Variant
-//                     }
-//                 }
-//             }
-//           }
-//
+//     query LandingPage($status: PublicationStatus) {
+//     landingPage(status: $status) {
+//     createdAt
+//     documentId
+//     Section_One {
+//     ... on ComponentSectionTitle {
+//     id
+//     Title
+//     Placement
+//     }
+//     ... on ComponentSectionButton {
+//     id
+//     Text
+//     Variant
+//     }
+//     }
+//     }
+//     }
 // `
 
 const Home = () => {
-    // const { loading, error, data } = useQuery(LandingPage);
-    // console.log(error, loading, data)
+    const { loading, error, data } = useQuery(LandingPage);
+    console.log(error, loading, data)
     //
     // if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error.message}</p>;
