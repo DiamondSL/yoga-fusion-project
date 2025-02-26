@@ -40,19 +40,19 @@ interface CustomCSSProperties extends CSSProperties {
 }
 
 const calculateLetterSpacing = (originalSize:string|number, neededPercent:number) => {
-    let formattedSize = (typeof originalSize === 'string' ? (originalSize.includes('px') ? Number(originalSize.replace('px', '')) : Number(originalSize)) : originalSize);
+    const formattedSize = (typeof originalSize === 'string' ? (originalSize.includes('px') ? Number(originalSize.replace('px', '')) : Number(originalSize)) : originalSize);
 
     return formattedSize * neededPercent
 }
 
-const formats = [
-    {ext: 'woff2', format: 'woff2'},
-    {ext: 'woff', format: 'woff'},
-    {ext: 'ttf', format: 'truetype'},
-    {ext: 'otf', format: 'opentype'},
-    {ext: 'svg', format: 'svg'},
-    {ext: 'eot', format: 'embedded-opentype'}
-];
+// const formats = [
+//     {ext: 'woff2', format: 'woff2'},
+//     {ext: 'woff', format: 'woff'},
+//     {ext: 'ttf', format: 'truetype'},
+//     {ext: 'otf', format: 'opentype'},
+//     {ext: 'svg', format: 'svg'},
+//     {ext: 'eot', format: 'embedded-opentype'}
+// ];
 
 
 // Updated helper to return a TypeScript object

@@ -1,7 +1,5 @@
 "use client";
-import {Button, Container, Typography} from '@mui/material';
-import { gql, useQuery } from '@apollo/client';
-import {Box} from "@mui/system";
+import {Container} from '@mui/material';
 
 
 // const LandingPage = gql`

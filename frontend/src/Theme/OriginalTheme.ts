@@ -1,6 +1,36 @@
 'use client';
-import {createTheme} from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import {calculateLetterSpacing, CustomFontsObject, FontsObjects, returnFontFamily} from "@/Helpers/FontFamilyConverter";
+import {CSSProperties} from "@mui/material/styles/createTypography";
+
+declare module '@mui/material/styles' {
+    interface TypographyVariantsOptions {
+        h7?: CSSProperties;
+        h8?: CSSProperties;
+        bodyXL?: CSSProperties;
+        bodyL?: CSSProperties;
+        bodyM?: CSSProperties;
+        bodyS?: CSSProperties;
+    }
+}
+
+declare module '@mui/material/Typography' {
+    interface TypographyPropsVariantOverrides {
+        h7: true;
+        h8: true;
+        bodyXL: true
+        bodyL: true
+        bodyM: true
+        bodyS: true
+    }
+}
+
+declare module '@mui/material/Button' {
+    interface ButtonPropsVariantOverrides {
+        transparent: true;
+        secondary: true;
+    }
+}
 
 const customFonts: FontsObjects | CustomFontsObject = [
     {
