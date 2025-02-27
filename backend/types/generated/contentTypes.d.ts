@@ -593,11 +593,13 @@ export interface ApiLandingPageLandingPage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    Section_One: Schema.Attribute.DynamicZone<
-      ['section.title', 'section.button']
+    Section_One: Schema.Attribute.Component<
+      'landing-page-components.section-one',
+      false
     >;
-    Section_Two: Schema.Attribute.DynamicZone<
-      ['section.title', 'section.icon-description']
+    Section_Two: Schema.Attribute.Component<
+      'landing-page-components.section-two',
+      false
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

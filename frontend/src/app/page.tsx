@@ -1,46 +1,29 @@
-"use client";
+'use client'
 import {Container} from '@mui/material';
+import LandingSectionOne from "@/Components/Landing/Section_One";
+import React from "react";
+import LandingSectionTwo from "@/Components/Landing/Section_Two";
+import NavBar from "@/Components/Navigation/NavBar";
 
 
-// const LandingPage = gql`
-//     query LandingPage($status: PublicationStatus) {
-//     landingPage(status: $status) {
-//     createdAt
-//     documentId
-//     Section_One {
-//     ... on ComponentSectionTitle {
-//     id
-//     Title
-//     Placement
-//     }
-//     ... on ComponentSectionButton {
-//     id
-//     Text
-//     Variant
-//     }
-//     }
-//     }
-//     }
-// `
+const linkPlaceholders = [{link: 'наш простір', url: ''},
+    {link: 'розклад', url: ''}, {link: 'вчителі', url: ''}, {link: 'тренування', url: ''}, {
+        link: 'ціни',
+        url: ''
+    }, {link: 'контакти', url: ''}, {link: 'вхід', url: ''}, {link: 'ukr', url: ''}];
 
 const Home = () => {
-    // const { loading, error, data } = useQuery(LandingPage);
-    // console.log(error, loading, data)
-    //
-    // if (loading) return <p>Loading...</p>;
-    // if (error) return <p>Error: {error.message}</p>;
-    // if (data) return <Box>
-    //     <Typography variant={'h1'}>{data.articles[0].title}</Typography>
-    //     <Typography variant={'body1'}>{data.articles[0].description}</Typography>
 
-    //     </Box>
-    //
-    // console.log(data)
-  return (
-      <Container>
-          Hello!
-      </Container>
-  );
+    return (
+        <>
+            <NavBar linkItems={linkPlaceholders}  />
+            <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important'}}
+                       className={'LandingPage'}>
+                <LandingSectionOne />
+                <LandingSectionTwo />
+            </Container>
+        </>
+    );
 }
 
 export default Home;

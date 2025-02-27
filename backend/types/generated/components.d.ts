@@ -1,5 +1,34 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface LandingPageComponentsSectionOne
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_ones';
+  info: {
+    description: '';
+    displayName: 'Section_One';
+  };
+  attributes: {
+    Buttons: Schema.Attribute.Component<'section.button', true>;
+    Title: Schema.Attribute.Component<'section.title', true>;
+  };
+}
+
+export interface LandingPageComponentsSectionTwo
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_twos';
+  info: {
+    description: '';
+    displayName: 'Section_Two';
+  };
+  attributes: {
+    ListDescription: Schema.Attribute.Component<
+      'section.icon-description',
+      true
+    >;
+    Title: Schema.Attribute.Component<'section.title', false>;
+  };
+}
+
 export interface SectionAccordion extends Struct.ComponentSchema {
   collectionName: 'components_section_accordions';
   info: {
@@ -128,6 +157,8 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'landing-page-components.section-one': LandingPageComponentsSectionOne;
+      'landing-page-components.section-two': LandingPageComponentsSectionTwo;
       'section.accordion': SectionAccordion;
       'section.button': SectionButton;
       'section.icon-description': SectionIconDescription;
