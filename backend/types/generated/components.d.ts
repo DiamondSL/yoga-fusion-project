@@ -1,5 +1,42 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface LandingPageComponentsSectionEight
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_eights';
+  info: {
+    displayName: 'Section_Eight';
+  };
+  attributes: {
+    FAQ_elements: Schema.Attribute.Component<'section.accordion', true>;
+    Title: Schema.Attribute.Component<'section.title', false>;
+  };
+}
+
+export interface LandingPageComponentsSectionFive
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_fives';
+  info: {
+    displayName: 'Section_Five';
+  };
+  attributes: {
+    Button: Schema.Attribute.Component<'section.button', false> &
+      Schema.Attribute.Required;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface LandingPageComponentsSectionFour
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_fours';
+  info: {
+    displayName: 'Section_Four';
+  };
+  attributes: {
+    Shape_Titles: Schema.Attribute.Component<'section.shape-title', true>;
+    Title: Schema.Attribute.Component<'section.title', false>;
+  };
+}
+
 export interface LandingPageComponentsSectionOne
   extends Struct.ComponentSchema {
   collectionName: 'components_landing_page_components_section_ones';
@@ -10,6 +47,52 @@ export interface LandingPageComponentsSectionOne
   attributes: {
     Buttons: Schema.Attribute.Component<'section.button', true>;
     Title: Schema.Attribute.Component<'section.title', true>;
+  };
+}
+
+export interface LandingPageComponentsSectionSeven
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_sevens';
+  info: {
+    displayName: 'Section_Seven';
+  };
+  attributes: {
+    Placement: Schema.Attribute.RichText & Schema.Attribute.Required;
+    Route: Schema.Attribute.Component<'shared.hidden-link', true>;
+    Title: Schema.Attribute.String;
+  };
+}
+
+export interface LandingPageComponentsSectionSix
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_sixes';
+  info: {
+    displayName: 'Section_Six';
+  };
+  attributes: {
+    Button: Schema.Attribute.Component<'section.button', false>;
+    Description: Schema.Attribute.Text;
+    Gallery: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    Title: Schema.Attribute.Component<'section.title', false>;
+  };
+}
+
+export interface LandingPageComponentsSectionThree
+  extends Struct.ComponentSchema {
+  collectionName: 'components_landing_page_components_section_threes';
+  info: {
+    description: '';
+    displayName: 'Section_Three';
+  };
+  attributes: {
+    Button: Schema.Attribute.Component<'section.button', true>;
+    Description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    Photos: Schema.Attribute.Media<'images' | 'files' | 'videos', true>;
+    Title: Schema.Attribute.Component<'shared.quote', false> &
+      Schema.Attribute.Required;
   };
 }
 
@@ -43,9 +126,11 @@ export interface SectionAccordion extends Struct.ComponentSchema {
 export interface SectionButton extends Struct.ComponentSchema {
   collectionName: 'components_section_buttons';
   info: {
+    description: '';
     displayName: 'Button';
   };
   attributes: {
+    action: Schema.Attribute.String & Schema.Attribute.DefaultTo<'/'>;
     Text: Schema.Attribute.String & Schema.Attribute.Required;
     Variant: Schema.Attribute.Enumeration<
       ['primary', 'secondary', 'transparent']
@@ -88,6 +173,17 @@ export interface SectionTitle extends Struct.ComponentSchema {
     Placement: Schema.Attribute.Enumeration<['Left', 'Center', 'Right']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Center'>;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedHiddenLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_hidden_links';
+  info: {
+    displayName: 'HiddenLink';
+  };
+  attributes: {
+    Link: Schema.Attribute.String & Schema.Attribute.Required;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -157,13 +253,20 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'landing-page-components.section-eight': LandingPageComponentsSectionEight;
+      'landing-page-components.section-five': LandingPageComponentsSectionFive;
+      'landing-page-components.section-four': LandingPageComponentsSectionFour;
       'landing-page-components.section-one': LandingPageComponentsSectionOne;
+      'landing-page-components.section-seven': LandingPageComponentsSectionSeven;
+      'landing-page-components.section-six': LandingPageComponentsSectionSix;
+      'landing-page-components.section-three': LandingPageComponentsSectionThree;
       'landing-page-components.section-two': LandingPageComponentsSectionTwo;
       'section.accordion': SectionAccordion;
       'section.button': SectionButton;
       'section.icon-description': SectionIconDescription;
       'section.shape-title': SectionShapeTitle;
       'section.title': SectionTitle;
+      'shared.hidden-link': SharedHiddenLink;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

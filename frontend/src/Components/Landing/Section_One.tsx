@@ -1,67 +1,15 @@
-'use client';
 import {Box} from "@mui/system";
-import {Container, Typography, Button, ButtonPropsVariantOverrides, CardMedia} from "@mui/material";
-import React, {FC, useEffect, useState} from "react";
+import {Container, Typography, Button, CardMedia} from "@mui/material";
+import React, {FC} from "react";
 import StarSvgIcon from "@/Components/Visual/SVGIcons/StarSvgIcon";
-import {gql, useQuery} from "@apollo/client";
+import SectionWrapper from './SectionWrapper'
+import {LandingSectionOneContent} from "@/types/LandingPageTypes";
 
 
-type SectionOneButton = {
-    Text?: string
-    Variant?: 'primary' | ButtonPropsVariantOverrides | undefined
-    Action?: Function | string | undefined
-}
-
-interface LandingSectionOneContent {
-    Title?: {
-        Title?: string;
-        Placement?: 'Left' | 'Right' | 'Center';
-    }[]
-    Buttons?: SectionOneButton[]
-}
-
-const SectionOnePlaceHolderValues = {
-    Title: [{Title: 'Be your own fusion.', Placement: 'Left'}, {Title: 'Join the community.', Placement: 'Right'}, {Title: 'Transform yourself.', Placement: 'Center'}],
-    Button: [{ Text: 'fusion me, now', Variant: 'secondary', Action: undefined}]
-}
-
-const SectionOneContentQuery = gql`
-    query LandingPage($status: PublicationStatus) {
-        landingPage(status: $status) {
-            createdAt
-            documentId
-            Section_One {
-                Title {
-                    Title
-                    Placement
-                }
-                Buttons {
-                    Text
-                    Variant
-                }
-            }
-        }
-    }
-`
-
-const LandingSectionOne:FC<LandingSectionOneContent> = ({Title = SectionOnePlaceHolderValues.Title, Buttons = SectionOnePlaceHolderValues.Button}) => {
-    const { error, data } = useQuery(SectionOneContentQuery);
-    const [sectionOneContent, setSectionOneContent] = useState({Title, Buttons});
-
-    useEffect(() => {
-        if (data?.landingPage?.Section_One) {
-            data?.landingPage?.Section_One.Title.length > 0 && setSectionOneContent((prevState) => ({Buttons: prevState.Buttons, Title: data.landingPage.Section_One.Title}))
-            data?.landingPage?.Section_One.Buttons.length > 0 && setSectionOneContent((prevState) => ({Title: prevState.Title, Buttons: data.landingPage.Section_One.Buttons}))
-        }
-    }, [data]);
-
-    if (error) {
-        console.log(error)
-    }
-
+const LandingSectionOne:FC<LandingSectionOneContent> = ({Title, Buttons}) => {
     return (
-        <Box component={"section"} id={'Landing-section-one'} sx={{width: '100vw', margin: '0 0 0 0', padding: '0 0 0 0'}}  >
-            <Container className={'Gradients'} maxWidth={false} sx={{opacity: '0%', overflow: 'hidden', position: "absolute", width: '100vw', maxHeight: '587px', height: '100%', display: 'inline-flex', justifyContent: 'space-between', padding: '0 !important', zIndex: '-1'}}>
+        <SectionWrapper id={'Landing-section-one'}>
+            <Container className={'Gradients'} maxWidth={false} sx={{opacity: '0%', overflow: 'hidden', position: "absolute", width: '100vw', maxHeight: '587px', height: '100%', display: 'inline-flex', justifyContent: 'space-between', padding: '82px 0 120px 0 !important', zIndex: '-1'}}>
                 <CardMedia sx={{width: '598.4041748046875px', height: '603.7822875976562px', objectFit: 'contain'}}  component="img" src={'icons/gradients/Desktop/Landing_Section_One_Yellow_Elipse.svg'} />
                 <CardMedia sx={{width: '649.0210571289062px', height: '653.6255493164062px', objectFit: 'contain'}} component="img" src={'icons/gradients/Desktop/Landing_Section_One_Red_Elipse.svg'} />
                 <CardMedia sx={{width: '932.4757080078125px', height: '939.091064453125px', objectFit: 'contain'}} component="img" src={'icons/gradients/Desktop/Landing_Section_One_Pink.svg'} />
@@ -77,7 +25,7 @@ const LandingSectionOne:FC<LandingSectionOneContent> = ({Title = SectionOnePlace
                     </Box>
                 </Box>
                 <Box className={'Title'} sx={{display: 'flex', flexDirection: 'column', alignSelf:'center', maxWidth: '867px', width: '100%'}}>
-                    {sectionOneContent?.Title?.map((item) => {
+                    {Title?.map((item) => {
                         const AlignSelfProperty = item.Placement === 'Left' ? {alignSelf: 'flex-start'} : item.Placement === 'Right' ? {alignSelf: 'flex-end'} : item?.Placement === 'Center' ? {alignSelf: 'center'} : undefined
                         return (
                         <Typography key={item.Title} variant={'h1'} sx={{...AlignSelfProperty}}>{item.Title}</Typography>
@@ -91,9 +39,9 @@ const LandingSectionOne:FC<LandingSectionOneContent> = ({Title = SectionOnePlace
                         </Box>
                     </Box>
                         <Box className={'actions'} sx={{display: 'flex', justifySelf: 'stretch', flexDirection: 'column', alignSelf: 'stretch'}}>
-                            {sectionOneContent.Buttons.length > 0 && sectionOneContent.Buttons.map((item) => {
+                            {Buttons && Buttons.length > 0 && Buttons.map((item) => {
                                 return (
-                                    <Button key={item.Text} variant={item.Variant === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : item.Variant === "transparent" ? "transparent" : "secondary"}>{item.Text}</Button>
+                                    <Button key={item.Text} variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"}>{item.Text}</Button>
                                 )
                             })}
                         </Box>
@@ -103,7 +51,7 @@ const LandingSectionOne:FC<LandingSectionOneContent> = ({Title = SectionOnePlace
                         </Box>
                 </Box>
             </Container>
-        </Box>
+        </SectionWrapper>
     )
 }
 

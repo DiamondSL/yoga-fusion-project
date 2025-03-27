@@ -593,8 +593,32 @@ export interface ApiLandingPageLandingPage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    Section_Eight: Schema.Attribute.Component<
+      'landing-page-components.section-eight',
+      false
+    >;
+    Section_Five: Schema.Attribute.Component<
+      'landing-page-components.section-five',
+      false
+    >;
+    Section_Four: Schema.Attribute.Component<
+      'landing-page-components.section-four',
+      false
+    >;
     Section_One: Schema.Attribute.Component<
       'landing-page-components.section-one',
+      false
+    >;
+    Section_Seven: Schema.Attribute.Component<
+      'landing-page-components.section-seven',
+      false
+    >;
+    Section_Six: Schema.Attribute.Component<
+      'landing-page-components.section-six',
+      false
+    >;
+    Section_Three: Schema.Attribute.Component<
+      'landing-page-components.section-three',
       false
     >;
     Section_Two: Schema.Attribute.Component<

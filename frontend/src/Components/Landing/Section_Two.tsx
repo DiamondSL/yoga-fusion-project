@@ -1,99 +1,42 @@
-'use client';
 import {Box} from "@mui/system";
-import {Container, Typography, Button, ButtonPropsVariantOverrides, CardMedia} from "@mui/material";
-import React, {FC, useEffect, useState} from "react";
-import StarSvgIcon from "@/Components/Visual/SVGIcons/StarSvgIcon";
-import {gql, useQuery} from "@apollo/client";
+import {CardMedia, Container, Typography} from "@mui/material";
+import React, {FC} from "react";
+import SectionWrapper from './SectionWrapper'
+import {LandingSectionTwoContent, ListDescriptionItem} from "@/types/LandingPageTypes";
 
 
-type ListDescriptionItem = {
-    Description?: string;
-    Icon?: {
-        url?: string;
-        height?: string;
-        width?: string;
-    }
+const IconListComponent = ({Icon, Description}:ListDescriptionItem) => {
+    return (
+        <Container component={'li'} maxWidth={false} sx={{display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', gap: '36px', padding: '0 !important', margin: '0 !important',  flex: "50%"}}>
+            <Box>
+                <CardMedia component={'img'} alt={Icon?.alt} src={'http://localhost:1337'+Icon?.url} sx={{width: Icon?.width, height: Icon?.height}}  />
+            </Box>
+            <Box sx={{maxWidth: '358px', width: '100%'}}>
+                <Typography variant={'body2'}>{Description? Description : 'Blank'}</Typography>
+            </Box>
+        </Container>
+    )
 }
-
-interface LandingSectionTwoContent {
-    Title?: {
-        Title?: string;
-        Placement?: 'Left' | 'Right' | 'Center';
-    }
-    ListDescription?: ListDescriptionItem[]
-}
-
-const SectionTwoPlaceHolderValues = {
-    Title: {Title: 'Why us?', Placement: 'Center'},
-    ListDescription: [{Description: 'Placeholder', Icon: {
-        url: '/', height: '60px', width: '60px' }}]
-}
-
-const SectionTwoContentQuery = gql`
-    query LandingPage($status: PublicationStatus) {
-        landingPage(status: $status) {
-            createdAt
-            documentId
-            Section_Two {
-                id
-                Title {
-                    Title
-                    Placement
-                }
-                ListDescription {
-                    Description
-                    Icon {
-                        url
-                        height
-                        width
-                    }
-                }
-            }
-        }
-    }
-`
 
 const LandingSectionTwo: FC<LandingSectionTwoContent> = ({
-                                                             Title = SectionTwoPlaceHolderValues.Title,
-                                                             ListDescription = SectionTwoPlaceHolderValues.ListDescription
+                                                             Title,
+                                                             ListDescription
                                                          }) => {
-    const {error, data} = useQuery(SectionTwoContentQuery);
-    const [SectionTwo, setSectionTwoContent] = useState({Title, ListDescription});
-
-    useEffect(() => {
-        if (data?.landingPage?.Section_Two) {
-            data?.landingPage?.Section_Two?.Title && setSectionTwoContent((prevState) => ({Title: data.landingPage.Section_Two.Title, ListDescription: prevState.ListDescription}))
-            data?.landingPage?.Section_Two?.ListDescription.length > 0 && setSectionTwoContent((prevState) => ({Title: prevState.Title, ListDescription: data?.landingPage.Section_Two.ListDescription}))
-        }
-    }, [data]);
-
-    if (error) {
-        console.log(error)
-    }
-
-    const { Placement } = SectionTwo.Title
-
-    const IconListComponent = ({Icon, Description}:ListDescriptionItem) => {
-
-        return (
-            <Box></Box>
-        )
-    }
-
-
-
-
     return (
-        <Box component={"section"} id={'Landing-section-two'} sx={{width: '100vw', margin: '0 0 0 0', padding: '0 0 0 0'}}>
-            <Container maxWidth={false} sx={{maxWidth: '960px', width: '100%', display: 'flex', flexDirection: 'column', padding: '0 !important'}}>
-                <Box className={'title'} sx={{paddingTop: '80px', display: 'flex', flexDirection: 'row', justifyContent: Placement === 'Center' ? 'center' : Placement === 'Left' ? 'flex=start' : Placement === 'Right' ? 'flex-end' :'center'}}>
-                    <Typography variant={'h1'}>{SectionTwo.Title.Title}</Typography>
+        <SectionWrapper id={'Landing-section-two'}>
+            <Container maxWidth={false} sx={{padding: '80px 0 !important', maxWidth: '960px', width: '100%', display: 'flex', flexDirection: 'column'}}>
+                <Box className={'title'} sx={{display: 'flex', flexDirection: 'row', justifyContent: Title?.Placement === 'Center' ? 'center' : Title?.Placement === 'Left' ? 'flex=start' : Title?.Placement === 'Right' ? 'flex-end' :'center'}}>
+                    <Typography variant={'h1'}>{Title?.Title}</Typography>
                 </Box>
-                <Box className={'Icon-description-list'}>
-
+                <Box className={'Icon-description-list'} component={'ul'} sx={{display: 'grid', gridTemplateColumns:'calc(50% - 50px) calc(50% - 50px)', rowGap: '40px', columnGap: '50px',  justifyContent: 'space-between', padding: '0 !important', margin: '34px 0 0 0 !important'}}>
+                    {ListDescription?.map((item) => {
+                        return (
+                            <IconListComponent key={item.Description} Icon={item.Icon} Description={item.Description} />
+                        )
+                    })}
                 </Box>
             </Container>
-        </Box>
+        </SectionWrapper>
     )
 }
 
