@@ -265,13 +265,13 @@ type ComponentSharedRichText {
 input ComponentSharedQuoteInput {
     id: ID
     title: String
-    body: String
+    motto: String
 }
 
 type ComponentSharedQuote {
     id: ID!
     title: String
-    body: String
+    motto: String
 }
 
 type ComponentSharedMedia {
@@ -372,6 +372,7 @@ enum ENUM_COMPONENTSECTIONBUTTON_VARIANT {
 input ComponentSectionButtonFiltersInput {
     Text: StringFilterInput
     Variant: StringFilterInput
+    action: StringFilterInput
     and: [ComponentSectionButtonFiltersInput]
     or: [ComponentSectionButtonFiltersInput]
     not: ComponentSectionButtonFiltersInput
@@ -381,12 +382,14 @@ input ComponentSectionButtonInput {
     id: ID
     Text: String
     Variant: ENUM_COMPONENTSECTIONBUTTON_VARIANT
+    action: String
 }
 
 type ComponentSectionButton {
     id: ID!
     Text: String!
     Variant: ENUM_COMPONENTSECTIONBUTTON_VARIANT
+    action: String
 }
 
 input ComponentSectionAccordionFiltersInput {
@@ -424,18 +427,18 @@ type ComponentLandingPageComponentsSectionTwo {
 input ComponentLandingPageComponentsSectionThreeInput {
     id: ID
     Title: ComponentSharedQuoteInput
-    Description: String
     Button: [ComponentSectionButtonInput]
     Photos: [ID]
+    Description: JSON
 }
 
 type ComponentLandingPageComponentsSectionThree {
     id: ID!
     Title: ComponentSharedQuote!
-    Description: String!
     Button(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]
     Photos_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
     Photos(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+    Description: JSON!
 }
 
 input ComponentLandingPageComponentsSectionSixInput {

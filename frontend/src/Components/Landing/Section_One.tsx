@@ -1,20 +1,21 @@
 import {Box} from "@mui/system";
-import {Container, Typography, Button, CardMedia} from "@mui/material";
+import {Container, Typography, Button} from "@mui/material";
 import React, {FC} from "react";
 import StarSvgIcon from "@/Components/Visual/SVGIcons/StarSvgIcon";
 import SectionWrapper from './SectionWrapper'
 import {LandingSectionOneContent} from "@/types/LandingPageTypes";
+import './sectionOne.css'
 
 
 const LandingSectionOne:FC<LandingSectionOneContent> = ({Title, Buttons}) => {
     return (
         <SectionWrapper id={'Landing-section-one'}>
-            <Container className={'Gradients'} maxWidth={false} sx={{opacity: '0%', overflow: 'hidden', position: "absolute", width: '100vw', maxHeight: '587px', height: '100%', display: 'inline-flex', justifyContent: 'space-between', padding: '82px 0 120px 0 !important', zIndex: '-1'}}>
-                <CardMedia sx={{width: '598.4041748046875px', height: '603.7822875976562px', objectFit: 'contain'}}  component="img" src={'icons/gradients/Desktop/Landing_Section_One_Yellow_Elipse.svg'} />
-                <CardMedia sx={{width: '649.0210571289062px', height: '653.6255493164062px', objectFit: 'contain'}} component="img" src={'icons/gradients/Desktop/Landing_Section_One_Red_Elipse.svg'} />
-                <CardMedia sx={{width: '932.4757080078125px', height: '939.091064453125px', objectFit: 'contain'}} component="img" src={'icons/gradients/Desktop/Landing_Section_One_Pink.svg'} />
-            </Container>
-            <Container maxWidth={false} sx={{display: 'flex', flexDirection: 'column', maxWidth: '1067px', width: '100%', padding: '82px 0 0 0 !important'}}>
+            {/*<Container className={'Gradients'} maxWidth={false} sx={{opacity: '0%', overflow: 'hidden', position: "absolute", width: '100vw', maxHeight: '587px', height: '100%', display: 'inline-flex', justifyContent: 'space-between', padding: '82px 0 120px 0 !important', zIndex: '-1'}}>*/}
+            {/*    <CardMedia sx={{width: '598.4041748046875px', height: '603.7822875976562px', objectFit: 'contain'}}  component="img" src={'icons/gradients/Desktop/Landing_Section_One_Yellow_Elipse.svg'} />*/}
+            {/*    <CardMedia sx={{width: '649.0210571289062px', height: '653.6255493164062px', objectFit: 'contain'}} component="img" src={'icons/gradients/Desktop/Landing_Section_One_Red_Elipse.svg'} />*/}
+            {/*    <CardMedia sx={{width: '932.4757080078125px', height: '939.091064453125px', objectFit: 'contain'}} component="img" src={'icons/gradients/Desktop/Landing_Section_One_Pink.svg'} />*/}
+            {/*</Container>*/}
+            <Container maxWidth={false} sx={{display: 'flex', flexDirection: 'column', maxWidth: '1067px', width: '100%', padding: '82px 0 126px 0 !important'}}>
                 <Box className={'Upper-stars'} sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Box className={'left'} sx={{display: 'flex', flexDirection: 'column', gap: '14px'}}>
                     <StarSvgIcon className={'upper'} style={{width: '22px', height: '29px', marginLeft: '26px'}}  />

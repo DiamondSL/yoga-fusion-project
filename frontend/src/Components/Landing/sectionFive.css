@@ -1,0 +1,78 @@
+.bar-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../../../public/backgrounds/Section_Six_background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: 90%;
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.bar-description_controls {
+    align-items: center;
+}
+
+.location {
+    display: flex;
+    justify-content: center;
+    padding-top: 190px;
+    height: 474px;
+    background-image: url("../../../public/backgrounds/Section_Six_findUs.png");
+    background-repeat: no-repeat;
+    background-size: 100% 460px;
+    background-position-x: center;
+    background-position-y: 80%;
+}
+
+.location-content {
+    display: flex;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 965px;
+    width: 100%;
+}
+
+.location-content .arrows {
+    display: flex;
+    flex-direction: column;
+    padding-left: 60px;
+    padding-right: 40px;
+    max-width: 230px;
+}
+
+.location-content .arrows img:first-child {
+    margin-left: 72px;
+    transform: translateY(2%);
+}
+
+.location-content .arrows img:last-child {
+    max-width: 80px;
+}
+
+.location-content .title {
+    max-width: 434px;
+    width: 100%;
+    letter-spacing: 1.5px !important;
+    padding-top: 50px;
+}
+
+.location .location-details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 300px;
+    width: 100%;
+}
+
+.location .location-link {
+    cursor: pointer;
+    text-transform: lowercase;
+    font-weight: bold;
+}
+

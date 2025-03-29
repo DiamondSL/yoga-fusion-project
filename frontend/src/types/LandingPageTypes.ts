@@ -1,4 +1,5 @@
 import {ButtonPropsVariantOverrides} from "@mui/material";
+import { BlocksContent } from "@strapi/blocks-react-renderer";
 
 type SectionOneButton = {
     Text?: string
@@ -11,7 +12,7 @@ interface TitleItem {
     Placement: 'Left' | 'Right' | 'Center';
 }
 
-interface ButtonItem {
+export interface ButtonItem {
     Text: string;
     Variant: 'primary' | 'secondary'; // Add more variants as needed
 }
@@ -44,14 +45,17 @@ export interface LandingSectionTwoContent {
 }
 
 interface SectionThreeTitle {
-    body: string;
     title: string;
+    motto: string;
 }
 
 export interface LandingSectionThreeContent {
-    Title: SectionThreeTitle;
-    Description: string;
-    Button: ButtonItem;
+    Title?: SectionThreeTitle;
+    Description?: BlocksContent;
+    Button?: ButtonItem[];
+    Photos?: {
+        url: string
+    }[]
 }
 
 interface Shape {
@@ -66,8 +70,8 @@ interface ShapeTitle {
 }
 
 export interface LandingSectionFourContent {
-    Title: TitleItem[];
-    Shape_Titles: ShapeTitle[];
+    Title?: TitleItem;
+    Shape_Titles?: ShapeTitle[];
 }
 
 export interface LandingSectionFiveContent {
@@ -82,13 +86,13 @@ interface GalleryItem {
 }
 
 export interface LandingSectionSixContent {
-    Button: ButtonItem;
-    Title: TitleItem[];
-    Description: string;
-    Gallery: GalleryItem[];
+    Button?: ButtonItem;
+    Title?: TitleItem;
+    Description?: string;
+    Gallery?: GalleryItem[];
 }
 
-interface RouteItem {
+export interface RouteItem {
     Title: string;
     Link: string;
 }
@@ -107,17 +111,6 @@ interface FAQElement {
 export interface LandingSectionEightContent {
     Title: TitleItem[];
     FAQ_elements: FAQElement[];
-}
-
-export interface DataContent {
-    SectionOne: LandingSectionOneContent | null,
-    SectionTwo: LandingSectionTwoContent | null,
-    SectionThree: LandingSectionThreeContent | null,
-    SectionFour: LandingSectionFourContent | null,
-    SectionFive: LandingSectionFiveContent | null,
-    SectionSix: LandingSectionSixContent | null,
-    SectionSeven: LandingSectionSevenContent | null,
-    SectionEight: LandingSectionEightContent | null,
 }
 
 export interface content {

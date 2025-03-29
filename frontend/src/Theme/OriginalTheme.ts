@@ -219,14 +219,14 @@ const OriginalTheme = createTheme(
                 fontWeight: 500,
                 fontSize: bodySizes.BodyFontSizeLRegular,
                 lineHeight: '150%',
-                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeLRegular,0.26)}px`
+                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeLRegular,0.03)}px`
             },
             body2: {
                 fontFamily: "Manrope",
                 fontWeight: 400,
                 fontSize: bodySizes.BodyFontSizeM,
                 lineHeight: '150%',
-                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeM,0.26)}px`
+                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeM,0.03)}px`
             },
             bodyXL: {
                 fontFamily: "Manrope",

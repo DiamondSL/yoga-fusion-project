@@ -1,0 +1,22 @@
+.section-five {
+    background-image: url("../../../public/backgrounds/Section_Five_background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.marquee-item {
+    background-color: inherit;
+    padding: 12px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    align-items: center;
+}
+
+
+.marquee-item > p:first-child {
+    font-family: "NyghtSerif", serif !important;
+    font-weight: normal;
+    font-size: 30px !important;
+    font-style: italic;
+}

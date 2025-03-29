@@ -1,46 +1,5 @@
 import {gql} from "@apollo/client";
 
-
-export const SectionOneContentQuery = gql`
-    query SectionOne($status: PublicationStatus) {
-        landingPage(status: $status) {
-            Section_One {
-                id
-                Title {
-                    Title
-                    Placement
-                }
-                Buttons {
-                    Text
-                    Variant
-                }
-            }
-        }
-    }
-`
-
-export const SectionTwoContentQuery = gql`
-    query SectionTwo($status: PublicationStatus) {
-        landingPage(status: $status) {
-            Section_Two {
-                id
-                Title {
-                    Title
-                    Placement
-                }
-                ListDescription {
-                    Description
-                    Icon {
-                        url
-                        height
-                        width
-                    }
-                }
-            }
-        }
-    }
-`
-
 export const LandingPageQuery = gql`
     query LandingPage($status: PublicationStatus) {
         landingPage(status: $status) {
@@ -73,8 +32,11 @@ export const LandingPageQuery = gql`
             Section_Three {
                 id
                 Title {
-                    body
+                    motto
                     title
+                }
+                Photos {
+                    url
                 }
                 Description
                 Button {

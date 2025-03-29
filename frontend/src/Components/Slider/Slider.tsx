@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Box, IconButton, useTheme } from '@mui/material';
+import {Box, IconButton, SxProps} from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import {Theme} from "@mui/system";
 
-interface ImageSliderProps {
+export interface ImageSliderProps {
     images: string[]; // Array of image URLs
     width: number | string;
     height: number | string;
+    style?: SxProps<Theme>;
 }
 
-const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height }) => {
+const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height, style }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -34,6 +36,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                ...style
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -110,4 +113,5 @@ const Slider: React.FC = () => {
     );
 };
 
-export default Slider;
+export { Slider }
+export default ImageSlider;

@@ -6,6 +6,9 @@ import LandingSectionTwo from "@/Components/Landing/Section_Two";
 import {ApolloError, useQuery} from "@apollo/client";
 import {content} from "@/types/LandingPageTypes";
 import {LandingPageQuery} from "@/GraphQL/TSQueries/LandingPageQueries";
+import LandingSectionThree from "@/Components/Landing/Section_Three";
+import LandingSectionFour from "@/Components/Landing/Section_Four";
+import LandingSectionFive from "@/Components/Landing/Section_Five";
 
 
 const useLandingPageSections = (): {
@@ -76,11 +79,16 @@ const Home = () => {
     const sections = useLandingPageSections();
     const {SectionOne, SectionTwo, SectionThree, SectionFour, SectionFive, SectionSix, SectionSeven, SectionEight} = sections.data
 
+
+    console.log(SectionSeven)
     return (
         <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important'}}
                    className={'LandingPage'}>
             <LandingSectionOne Title={SectionOne?.Title} Buttons={SectionOne?.Buttons}/>
             <LandingSectionTwo Title={SectionTwo?.Title} ListDescription={SectionTwo?.ListDescription}/>
+            <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button} Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
+            <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles} Button={SectionFive?.Button} titleSecond={SectionFive?.Title}/>
+            <LandingSectionFive Title={SectionSix?.Title} Button={SectionSix?.Button} Gallery={SectionSix?.Gallery} Route={SectionSeven?.Route} TitleSecondPlacement={SectionSeven?.Placement} Description={SectionSix?.Description} TitleSecond={SectionSeven?.Title}  />
         </Container>
     );
 }

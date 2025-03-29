@@ -89,7 +89,7 @@ export interface LandingPageComponentsSectionThree
   };
   attributes: {
     Button: Schema.Attribute.Component<'section.button', true>;
-    Description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    Description: Schema.Attribute.Blocks & Schema.Attribute.Required;
     Photos: Schema.Attribute.Media<'images' | 'files' | 'videos', true>;
     Title: Schema.Attribute.Component<'shared.quote', false> &
       Schema.Attribute.Required;
@@ -202,11 +202,12 @@ export interface SharedMedia extends Struct.ComponentSchema {
 export interface SharedQuote extends Struct.ComponentSchema {
   collectionName: 'components_shared_quotes';
   info: {
+    description: '';
     displayName: 'Quote';
     icon: 'indent';
   };
   attributes: {
-    body: Schema.Attribute.Text;
+    motto: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
 }
