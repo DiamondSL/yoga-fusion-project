@@ -1,7 +1,7 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
 import {calculateLetterSpacing, CustomFontsObject, FontsObjects, returnFontFamily} from "@/Helpers/FontFamilyConverter";
-import {CSSProperties} from "@mui/material/styles/createTypography";
+import {CSSProperties} from "@mui/material";
 
 declare module '@mui/material/styles' {
     interface TypographyVariantsOptions {

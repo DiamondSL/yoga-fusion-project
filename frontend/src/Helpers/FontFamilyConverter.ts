@@ -1,4 +1,4 @@
-import { CSSProperties } from '@mui/material/styles/createTypography';
+import { CSSProperties } from '@mui/material';
 
 // Extend CSSProperties to include custom font weights
 interface CustomCSSProperties extends CSSProperties {
