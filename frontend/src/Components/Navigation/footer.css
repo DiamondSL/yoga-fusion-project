@@ -1,0 +1,41 @@
+.Footer {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.Footer .links-box {
+    max-width: 960px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Footer .links-box .MuiList-root, .Footer .links-box .MuiList-root li {
+    padding: 0 !important;
+}
+
+.Footer .links-box .MuiList-root li a {
+    font-weight: 200;
+}
+
+.Footer .links-box .links_left {
+    display: flex;
+    flex-direction: row;
+    gap: 106px;
+}
+
+
+.Footer .links-box .links_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Footer .footer-link, .Footer #branding {
+    padding-top: 26px;
+    padding-bottom: 26px;
+}

@@ -1,4 +1,3 @@
-import React, {FC} from "react";
 import {LandingSectionThreeContent} from "@/types/LandingPageTypes";
 import SectionWrapper from './SectionWrapper'
 import {BlocksRenderer} from "@strapi/blocks-react-renderer";
@@ -6,7 +5,7 @@ import {Box, Container, Typography, Button as ButtonEl} from "@mui/material";
 import Link from "next/link";
 import ImageSlider from "@/Components/Slider/Slider";
 
-const LandingSectionThree: FC<LandingSectionThreeContent> = ({Title, Button, Description, Photos}) => {
+const LandingSectionThree = ({Title, Button, Description, Photos}:LandingSectionThreeContent) => {
     const RenderedButtons = Button && Button.map((item) => {
         return <ButtonEl key={item.Text} sx={{maxWidth: '239px', width: '100%'}}
                          variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"}>{item.Text}</ButtonEl>

@@ -109,8 +109,8 @@ interface FAQElement {
 }
 
 export interface LandingSectionEightContent {
-    Title: TitleItem[];
-    FAQ_elements: FAQElement[];
+    Title?: TitleItem;
+    FAQ_elements?: FAQElement[];
 }
 
 export interface content {

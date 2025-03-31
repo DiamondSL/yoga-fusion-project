@@ -1,6 +1,5 @@
 import {Box} from "@mui/system";
 import {CardMedia, Container, Typography} from "@mui/material";
-import React, {FC} from "react";
 import SectionWrapper from './SectionWrapper'
 import {LandingSectionTwoContent, ListDescriptionItem} from "@/types/LandingPageTypes";
 
@@ -18,10 +17,10 @@ const IconListComponent = ({Icon, Description}:ListDescriptionItem) => {
     )
 }
 
-const LandingSectionTwo: FC<LandingSectionTwoContent> = ({
+const LandingSectionTwo = ({
                                                              Title,
                                                              ListDescription
-                                                         }) => {
+                                                         }:LandingSectionTwoContent) => {
     return (
         <SectionWrapper id={'Landing-section-two'}>
             <Container maxWidth={false} sx={{padding: '80px 0 !important', maxWidth: '960px', width: '100%', display: 'flex', flexDirection: 'column'}}>

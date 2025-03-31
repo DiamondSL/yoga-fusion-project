@@ -1,13 +1,12 @@
 import {Box} from "@mui/system";
 import {Container, Typography, Button} from "@mui/material";
-import React, {FC} from "react";
 import StarSvgIcon from "@/Components/Visual/SVGIcons/StarSvgIcon";
 import SectionWrapper from './SectionWrapper'
 import {LandingSectionOneContent} from "@/types/LandingPageTypes";
 import './sectionOne.css'
 
 
-const LandingSectionOne:FC<LandingSectionOneContent> = ({Title, Buttons}) => {
+const LandingSectionOne = ({Title, Buttons}:LandingSectionOneContent) => {
     return (
         <SectionWrapper id={'Landing-section-one'}>
             {/*<Container className={'Gradients'} maxWidth={false} sx={{opacity: '0%', overflow: 'hidden', position: "absolute", width: '100vw', maxHeight: '587px', height: '100%', display: 'inline-flex', justifyContent: 'space-between', padding: '82px 0 120px 0 !important', zIndex: '-1'}}>*/}

@@ -1,0 +1,26 @@
+.FAQ {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.FAQ [id^="faq_item"] {
+    --Paper-shadow: none !important;
+    border-bottom: 1px solid;
+    border-radius: 0 !important;
+}
+
+.FAQ [id^="faq_item"] * {
+    padding-left: 0;
+    padding-right: 0;
+    align-items: flex-start;
+}
+
+.FAQ [id^="faq_item"]::before {
+    content: none !important;
+    display: none !important;
+}
+
+.FAQ [id^="faq_item"] .MuiAccordionSummary-content {
+    margin: 0 0 !important;
+}

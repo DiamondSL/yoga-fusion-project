@@ -4,6 +4,7 @@ import {ApolloWrapper} from "@/app/ApolloWrapper";
 import type {Metadata} from 'next'
 import { Manrope } from "next/font/google";
 import NavBar from "@/Components/Navigation/NavBar";
+import Footer from "@/Components/Navigation/Footer";
 
 export const metadata: Metadata = {
     title: 'Yoga Fusion',
@@ -17,6 +18,10 @@ const linkPlaceholders = [{link: 'наш простір', url: ''},
         url: ''
     }, {link: 'контакти', url: ''}, {link: 'вхід', url: ''}, {link: 'ukr', url: ''}];
 
+const footerPlaceholders = {
+    links: [{to: '/', text: 'тренування'}, {to: '/', text: 'ціни'}, {to: '/', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: '/', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: '/', text: 'вчителі'}],
+    socialMedia: [{to: '/', text: 'instagram'}, {to: '/', text: 'facebook'}]
+}
 
 export default function RootLayout({
                                        children,
@@ -30,6 +35,7 @@ export default function RootLayout({
                 <MUIProvider>
                     <NavBar linkItems={linkPlaceholders} />
                     {children}
+                    <Footer links={footerPlaceholders.links} socialMedia={footerPlaceholders.socialMedia} />
                 </MUIProvider>
             </ApolloWrapper>
             </body>

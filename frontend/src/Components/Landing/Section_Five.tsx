@@ -1,4 +1,3 @@
-import {FC} from "react";
 import {
     LandingSectionSixContent, RouteItem
 } from "@/types/LandingPageTypes";
@@ -10,9 +9,8 @@ import { useRouter } from 'next/navigation';
 type SectionFiveContent = LandingSectionSixContent & {  TitleSecond?: string; TitleSecondPlacement?: 'Left' | 'Right' | 'Center'; Route?: RouteItem[];}
 
 
-const LandingSectionFive:FC<SectionFiveContent> = ({Title, TitleSecond, TitleSecondPlacement, Route, Button, Description, Gallery}) => {
+const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Button, Description, Gallery}:SectionFiveContent) => {
     const router = useRouter();
-    console.log('Route:', Route)
 
     return (
         <SectionWrapper id={'Landing-section-five'}>
@@ -37,7 +35,7 @@ const LandingSectionFive:FC<SectionFiveContent> = ({Title, TitleSecond, TitleSec
                         <Box component={'img'} src={'icons/arrows/sectionSix_arrow1.svg'}></Box>
                     </Box>
                     <Box className={'location-details'}>
-                        {Route && Route.map(item => <Typography variant={'h6'} onClick={() => router.replace(item.Link)} className={'location-link'} key={item.Title}>{item.Title}</Typography>)}
+                        {Route && Route.map(item => <Typography variant={'h6'} onClick={() => router.push(item.Link)} className={'location-link'} key={item.Title}>{item.Title}</Typography>)}
                         {TitleSecondPlacement && <Typography variant={'body2'}>{TitleSecondPlacement}</Typography>}
                     </Box>
                     </Container>

@@ -1,4 +1,3 @@
-import React, {FC} from "react";
 import {LandingSectionFourContent, ButtonItem} from "@/types/LandingPageTypes";
 import SectionWrapper from "@/Components/Landing/SectionWrapper";
 import {Box, Container, Typography, Button as ButtonEl} from "@mui/material";
@@ -12,7 +11,7 @@ import { useRouter } from 'next/navigation';
 type LandingConnector = LandingSectionFourContent & {titleSecond?: string, Button?: ButtonItem};
 
 
-const LandingSectionFour: FC<LandingConnector> = ({Title, Shape_Titles, titleSecond, Button }) => {
+const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button }:LandingConnector) => {
     const router = useRouter()
     const onMarqueeClick = () => {
         return router.refresh()
