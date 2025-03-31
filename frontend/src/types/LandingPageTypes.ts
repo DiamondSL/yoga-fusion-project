@@ -4,7 +4,7 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 type SectionOneButton = {
     Text?: string
     Variant?: 'primary' | ButtonPropsVariantOverrides | undefined
-    Action?: Function | string | undefined
+    Action?: string | undefined
 }
 
 interface TitleItem {

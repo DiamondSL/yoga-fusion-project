@@ -19,35 +19,38 @@ const useLandingPageSections = (): {
 } => {
     const { data, loading, error } = useQuery(LandingPageQuery);
 
+    console.log(data)
+
     // Define default data
-    const defaultSections: content = {
-        SectionOne: {
-            Title: [
-                { Title: 'Be your own fusion.', Placement: 'Left' },
-                { Title: 'Join the community.', Placement: 'Right' },
-                { Title: 'Transform yourself.', Placement: 'Center' },
-            ],
-            Buttons: [{ Text: 'fusion me, now', Variant: 'primary', Action: undefined }],
-        },
-        SectionTwo: {
-            Title: { Title: 'Why us?', Placement: 'Center' },
-            ListDescription: [
-                {
-                    Description: 'Placeholder',
-                    Icon: { url: '/', height: '60px', width: '60px', alt: 'icon' },
-                },
-            ],
-        },
-        SectionThree: null,
-        SectionFour: null,
-        SectionFive: null,
-        SectionSix: null,
-        SectionSeven: null,
-        SectionEight: null,
-    };
 
     // Memoize the merged data to prevent unnecessary re-renders
     const sectionsData = useMemo(() => {
+        const defaultSections: content = {
+            SectionOne: {
+                Title: [
+                    { Title: 'Be your own fusion.', Placement: 'Left' },
+                    { Title: 'Join the community.', Placement: 'Right' },
+                    { Title: 'Transform yourself.', Placement: 'Center' },
+                ],
+                Buttons: [{ Text: 'fusion me, now', Variant: 'primary', Action: undefined }],
+            },
+            SectionTwo: {
+                Title: { Title: 'Why us?', Placement: 'Center' },
+                ListDescription: [
+                    {
+                        Description: 'Placeholder',
+                        Icon: { url: '/', height: '60px', width: '60px', alt: 'icon' },
+                    },
+                ],
+            },
+            SectionThree: null,
+            SectionFour: null,
+            SectionFive: null,
+            SectionSix: null,
+            SectionSeven: null,
+            SectionEight: null,
+        };
+
         const sections:Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
             return data !== null && index !== 0;
         }).map((data) => {
@@ -62,7 +65,7 @@ const useLandingPageSections = (): {
                 sections
             ),
         };
-    }, [defaultSections, data?.landingPage]);
+    }, [data?.landingPage]);
 
     if (error) {
         console.error('Error fetching landing page data:', error);
