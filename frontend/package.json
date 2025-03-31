@@ -21,6 +21,7 @@
     "@mui/material-nextjs": "^7.0.0",
     "@strapi/blocks-react-renderer": "^1.0.2",
     "graphql": "^16.10.0",
+    "husky": "^9.1.7",
     "next": "15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
