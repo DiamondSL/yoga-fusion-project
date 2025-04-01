@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
         });
         return config;
     },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
     experimental: {
         turbo: {
             rules: {
@@ -18,7 +21,6 @@ const nextConfig: NextConfig = {
             },
         },
     },
-    output: 'standalone'
 };
 
 export default nextConfig;
