@@ -7,7 +7,7 @@ export default ({env}) => {
     const database = env('DATABASE_NAME', process.env.DATABASE_NAME);
     const databaseURL = env('DATABASE_URL', process.env.DATABASE_URL);
 
-    console.info(databaseURL)
+    console.info(databaseURL, process.env.DATABASE_CA)
 
 
     const connections = {
@@ -22,7 +22,7 @@ export default ({env}) => {
                 ssl: env.bool('DATABASE_SSL', true) && {
                     key: env('DATABASE_SSL_KEY', undefined),
                     cert: env('DATABASE_SSL_CERT', undefined),
-                    ca: env('DATABASE_CA', undefined),
+                    ca: env('DATABASE_CA') ? env('DATABASE_CA').toString() : undefined,
                     capath: env('DATABASE_SSL_CAPATH', undefined),
                     cipher: env('DATABASE_SSL_CIPHER', undefined),
                     rejectUnauthorized: false,
@@ -32,6 +32,8 @@ export default ({env}) => {
         },
         debug: true
     };
+
+    console.info('connections:', connections)
 
     return {
         connection: {
