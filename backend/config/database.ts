@@ -12,7 +12,7 @@ export default ({env}) => {
 
     const connections = {
         postgres: {
-            connectionString: databaseURL,
+            //connectionString: databaseURL,
             connection: {
                 host: env('DATABASE_HOST', host),
                 port: env.int('DATABASE_PORT', port),
