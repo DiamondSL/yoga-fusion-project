@@ -7,6 +7,7 @@ export default ({ env }) => {
   const password = env('DATABASE_PASSWORD', process.env.DATABASE_PASSWORD);
   const database = env('DATABASE_NAME', process.env.DATABASE_NAME);
 
+
   const connections = {
     postgres: {
       connection: {
