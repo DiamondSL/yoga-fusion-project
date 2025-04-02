@@ -6,6 +6,10 @@
     "packages": [
       "frontend",
       "backend"
+    ],
+    "nohoist": [
+      "frontend/**",
+      "backend/**"
     ]
   },
   "scripts": {
