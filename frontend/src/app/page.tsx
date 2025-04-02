@@ -19,7 +19,7 @@ const useLandingPageSections = (): {
 } => {
     const { data, loading, error } = useQuery(LandingPageQuery);
 
-    console.log(error?.networkError, data)
+    console.log('error', {message: error?.networkError?.message, oneMore: error?.cause, twoMore: error?.extraInfo}, data)
 
     // Define default data
 

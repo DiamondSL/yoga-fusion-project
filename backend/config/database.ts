@@ -25,11 +25,12 @@ export default ({env}) => {
                     ca: env('DATABASE_CA', undefined),
                     capath: env('DATABASE_SSL_CAPATH', undefined),
                     cipher: env('DATABASE_SSL_CIPHER', undefined),
-                    rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', false),
+                    rejectUnauthorized: false,
                 },
             },
             pool: {min: env.int('DATABASE_POOL_MIN', 0), max: env.int('DATABASE_POOL_MAX', 10)},
         },
+        debug: true
     };
 
     return {

@@ -5,9 +5,6 @@ import {AddOutlined} from "@mui/icons-material";
 import './SectionSix.css'
 
 const LandingSectionSix = ({Title, FAQ_elements}:LandingSectionEightContent) => {
-    console.log(FAQ_elements)
-
-
     return (
         <SectionWrapper id={'Landing-section-six'}>
             <Container maxWidth={false} sx={{display: 'flex', flexDirection: 'column', gap: '34px', justifyContent:'center', alignItems: 'center', paddingLeft: '0 !important', paddingRight: '0 !important'}}>
