@@ -6,7 +6,7 @@ import {Box, Container, Typography, Button as ButtonEl} from "@mui/material";
 import './sectionFive.css'
 import { useRouter } from 'next/navigation';
 
-type SectionFiveContent = LandingSectionSixContent & {  TitleSecond?: string; TitleSecondPlacement?: 'Left' | 'Right' | 'Center'; Route?: RouteItem[];}
+type SectionFiveContent = LandingSectionSixContent & {  TitleSecond?: string; TitleSecondPlacement?: string; Route?: RouteItem[];}
 
 
 const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Button, Description, Gallery}:SectionFiveContent) => {
