@@ -78,8 +78,8 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 <Box>
                     {Photos && Photos.length > 0 ?
                         <ImageSlider style={{border: '1px solid', borderColor: 'primary.dark'}}
-                                     images={Photos?.map((item) => item.url)}
-                                     width={'700px'} height={'400px'}/>
+                                     images={Photos?.map((item) => process.env.NODE_ENV === 'development' ? 'http://localhost:1337'+item.url : item.url)}
+                                     width={'700px'} height={'400px'} />
                         : <Box component={'img'} src={'icons/Visuals/SectionThree/about_us.png'}></Box>
                     }
                 </Box>

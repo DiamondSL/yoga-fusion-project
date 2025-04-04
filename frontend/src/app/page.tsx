@@ -1,16 +1,15 @@
 'use client'
 import {Container} from '@mui/material';
-import LandingSectionOne from "@/Components/Landing/Section_One";
 import React, {useMemo} from "react";
-import LandingSectionTwo from "@/Components/Landing/Section_Two";
 import {ApolloError, useQuery} from "@apollo/client";
 import {content} from "@/types/LandingPageTypes";
-import {LandingPageQuery, LandingPageQuery1} from "@/GraphQL/TSQueries/LandingPageQueries";
+import {LandingPageQuery} from "@/GraphQL/TSQueries/LandingPageQueries";
+import LandingSectionOne from "@/Components/Landing/Section_One";
+import LandingSectionTwo from "@/Components/Landing/Section_Two";
 import LandingSectionThree from "@/Components/Landing/Section_Three";
 import LandingSectionFour from "@/Components/Landing/Section_Four";
 import LandingSectionFive from "@/Components/Landing/Section_Five";
 import LandingSectionSix from "@/Components/Landing/Section_Six";
-
 
 
 const useLandingPageSections = (): {
@@ -25,12 +24,8 @@ const useLandingPageSections = (): {
         }
     });
 
-    const query1 = useQuery(LandingPageQuery1)
-
-    console.log('query1', query1)
-
-    console.log('standart query data', data)
-    console.log('standart query error', {
+    console.log('standard query data', data)
+    console.log('standard query error', {
         message: error,
         oneMore: error?.cause,
         twoMore: error?.extraInfo
@@ -100,7 +95,7 @@ const useLandingPageSections = (): {
                             width: '',
                             height: ''
                         }
-                },
+                    },
                     {
                         Title: 'vinyasa flow', Shape: {
                             url: 'icons/shapes/shape_3.svg',
@@ -122,7 +117,7 @@ const useLandingPageSections = (): {
                             height: ''
                         }
                     }
-                    ]
+                ]
             },
             SectionFive: {
                 Title: 'реєструйся та отримай 1 безкоштовний класс', Button: {
@@ -136,13 +131,20 @@ const useLandingPageSections = (): {
                     Text: 'детальніше',
                     Variant: 'secondary'
                 },
-                Gallery: [{url: 'icons/Visuals/SectionFive/photo.png', height: '', width: ''}, {url: 'icons/Visuals/SectionFive/photo.png', height: '', width: ''}],
+                Gallery: [{
+                    url: 'icons/Visuals/SectionFive/photo.png',
+                    height: '',
+                    width: ''
+                }, {url: 'icons/Visuals/SectionFive/photo.png', height: '', width: ''}],
                 Description: 'ваш безпечний простір для ідей, роботи та відпочинку\n' +
                     'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.   хелсі-бар обожнює зустрічати гостей!\n'
             },
             SectionSeven: {
                 Title: 'Як нас знайти',
-                Placement: [{type: 'paragraph', children: [{type: 'text', text: 'Наш простір розташований біля парку Т.Г. Шевченко'}]}],
+                Placement: [{
+                    type: 'paragraph',
+                    children: [{type: 'text', text: 'Наш простір розташований біля парку Т.Г. Шевченко'}]
+                }],
                 Route: [{Title: 'КЛІКНИ, ЩОБ ПРОКЛАСТИ МАРШРУТ', Link: 'https://maps.app.goo.gl/WQ86e8GRbQ6r3nZB7'}]
             },
             SectionEight: {
@@ -150,7 +152,10 @@ const useLandingPageSections = (): {
                     Title: 'FAQ',
                     Placement: 'Center'
                 },
-                FAQ_elements: [{Title: 'Що взяти з собою на тренування з собою на тренування?', Description: 'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.  хелсі-бар обожнює зустрічати гостей!'}]
+                FAQ_elements: [{
+                    Title: 'Що взяти з собою на тренування з собою на тренування?',
+                    Description: 'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.  хелсі-бар обожнює зустрічати гостей!'
+                }]
             }
         };
 
