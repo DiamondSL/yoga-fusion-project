@@ -46,7 +46,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}:LandingSection
                     <Box className={'description'} sx={{display: 'flex', flexDirection: 'column', gap: '38px'}}>
                         <Container maxWidth={false} sx={{width: '100%', display: 'flex', maxWidth: '460px', flexDirection: 'column', gap: '38px', padding: '0 !important', justifyContent: 'flex-end', marginRight: '0 !important'}} >
                         {Title?.motto && <Typography variant={'body1'}>{Title?.motto}</Typography>}
-                        {Description && <BlocksRenderer
+                        {Description ? <BlocksRenderer
                             content={Description}
                             blocks={{
                                 // You can use the default components to set class names...
@@ -77,7 +77,9 @@ const LandingSectionThree = ({Title, Button, Description, Photos}:LandingSection
                                 bold: ({children}) => <strong>{children}</strong>,
                                 italic: ({children}) => <span className="italic">{children}</span>,
                             }}
-                        />}
+                        /> : <Box>
+                            <Typography><Typography component={'strong'} variant={'body1'}>yoga fusion</Typography> – це  це більше, ніж йога-студія. ми балансуємо між місцем наповнення та сили: як фізично, так і ментально. для кожного та кожної, хто завітає до нас: раді стати місцем вашого спокою та перезавантаження. просто в самому серці києва!</Typography>
+                        </Box>}
                         </Container>
                         <Container maxWidth={false} sx={{padding: '0 !important', display: 'flex', flexDirection: 'row', gap: '24px', justifyContent: 'end'}}>
                             {RenderedButtons && RenderedButtons.map((item) => item)}

@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
             },
         },
     },
+    async rewrites() {
+        return [
+            {
+                source: '/admin/:path*',
+                destination: 'https://yoga-fusion-w3cqn.ondigitalocean.app/:path*', // External Strapi URL
+            },
+        ];
+    },
 };
 
 export default nextConfig;
