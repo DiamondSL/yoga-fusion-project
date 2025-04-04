@@ -1,9 +1,8 @@
 import {LandingSectionThreeContent} from "@/types/LandingPageTypes";
 import SectionWrapper from './SectionWrapper'
-import {BlocksRenderer} from "@strapi/blocks-react-renderer";
 import {Box, Container, Typography, Button as ButtonEl} from "@mui/material";
-import Link from "next/link";
 import ImageSlider from "@/Components/Slider/Slider";
+import renderBlocks from "@/Helpers/BlockRender";
 
 const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectionThreeContent) => {
     const RenderedButtons = Button && Button.map((item) => {
@@ -56,38 +55,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                             marginRight: '0 !important'
                         }}>
                             {Title?.motto && <Typography variant={'body1'}>{Title?.motto}</Typography>}
-                            {Description ? <BlocksRenderer
-                                content={Description}
-                                blocks={{
-                                    // You can use the default components to set class names...
-                                    paragraph: ({children}) => <Typography variant={'body1'}>{children}</Typography>,
-                                    // ...or point to a design system
-                                    heading: ({children, level}) => {
-                                        switch (level) {
-                                            case 1:
-                                                return <Typography variant="h1">{children}</Typography>
-                                            case 2:
-                                                return <Typography variant="h2">{children}</Typography>
-                                            case 3:
-                                                return <Typography variant="h3">{children}</Typography>
-                                            case 4:
-                                                return <Typography variant="h4">{children}</Typography>
-                                            case 5:
-                                                return <Typography variant="h5">{children}</Typography>
-                                            case 6:
-                                                return <Typography variant="h6">{children}</Typography>
-                                            default:
-                                                return <Typography variant="h1">{children}</Typography>
-                                        }
-                                    },
-                                    // For links, you may want to use the component from your router or framework
-                                    link: ({children, url}) => <Link href={url}>{children}</Link>,
-                                }}
-                                modifiers={{
-                                    bold: ({children}) => <strong>{children}</strong>,
-                                    italic: ({children}) => <span className="italic">{children}</span>,
-                                }}
-                            /> : <Box>
+                            {Description ? renderBlocks(Description) : <Box>
                                 <Typography><Typography component={'strong'} variant={'body1'}>yoga
                                     fusion</Typography> – це це більше, ніж йога-студія. ми балансуємо між місцем
                                     наповнення та

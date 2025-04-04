@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_landing_sections_section_ones",
+  "info": {
+    "displayName": "Section One"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "component",
+      "repeatable": true,
+      "component": "section.title",
+      "required": true
+    },
+    "Buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "section.button",
+      "max": 3,
+      "required": true
+    }
+  }
+}

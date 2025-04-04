@@ -4,7 +4,6 @@ function getCertificate() {
     return fs.readFileSync('../backend/public/DB_certificate/ca-certificate.crt')?.toString();
 }
 
-
 export default ({env}) => {
     const client = env('DATABASE_CLIENT', 'postgres');
     const host = env('DATABASE_HOST', process.env.DATABASE_HOST);
@@ -13,6 +12,8 @@ export default ({env}) => {
     const password = env('DATABASE_PASSWORD', process.env.DATABASE_PASSWORD);
     const database = env('DATABASE_NAME', process.env.DATABASE_NAME);
     const CA= getCertificate();
+    const environment = process.env.NODE_ENV || 'development';
+
 
 
     const connections = {
@@ -28,12 +29,10 @@ export default ({env}) => {
                     rejectUnauthorized: false,
                 },
             },
-            pool: {min: env.int('DATABASE_POOL_MIN', 0), max: env.int('DATABASE_POOL_MAX', 10)},
+            pool: {min: env.int('DATABASE_POOL_MIN', environment === 'development' ? 2 : 0), max: env.int('DATABASE_POOL_MAX', 10)},
         },
         debug: true
     };
-
-    console.log('Connections', connections, 'CA', CA)
 
     return {
         connection: {

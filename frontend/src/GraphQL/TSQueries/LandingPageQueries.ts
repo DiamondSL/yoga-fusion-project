@@ -1,109 +1,128 @@
 import {gql} from "@apollo/client";
 
+
+export const LandingPageQuery1 = gql`
+    query LandingPage {
+      landingPage(status: PUBLISHED, locale: "uk-UA") {
+          documentId
+          Section_One {
+              Title {
+                  Title
+                  Placement
+              }
+              Buttons {
+                  Action
+                  Variant
+                  Text
+              }
+          }
+      }  
+    }`
+
 export const LandingPageQuery = gql`
-    query LandingPage($status: PublicationStatus) {
-        landingPage(status: $status) {
+    query LandingPage($status: PublicationStatus, $locale: I18NLocaleCode) {
+        landingPage(status: $status, locale: $locale) {
+            documentId
+            locale
             Section_One {
                 id
                 Title {
-                    Title
                     Placement
+                    Title
                 }
                 Buttons {
-                    Variant
+                    Action
                     Text
+                    Variant
                 }
             }
             Section_Two {
-                id
-                Title {
-                    Title
-                    Placement
-                }
-                ListDescription {
+                List_Description {
                     Description
                     Icon {
                         url
-                        height
                         width
+                        height
                     }
+                }
+                Title {
+                    Placement
+                    Title
                 }
             }
             Section_Three {
-                id
-                Title {
-                    motto
-                    title
-                }
-                Photos {
-                    url
-                }
-                Description
                 Button {
+                    Action
                     Text
                     Variant
+                }
+                Description
+                Photos {
+                    url
+                    width
+                    height
+                }
+                Title {
+                    title
+                    motto
                 }
             }
             Section_Four {
-                id
-                Title {
-                    Title
-                    Placement
-                }
                 Shape_Titles {
-                    Title
                     Shape {
                         url
-                        height
-                        width
                     }
+                    Title
+                }
+                Title {
+                    Placement
+                    Title
                 }
             }
             Section_Five {
-                id
-                Title
                 Button {
-                    Variant
+                    Action
                     Text
+                    Variant
                 }
+                Title
             }
             Section_Six {
-                id
                 Button {
+                    Action
                     Text
                     Variant
+                }
+                Description
+                Gallery {
+                    url
+                    height
+                    width
                 }
                 Title {
                     Title
                     Placement
                 }
-                Description
-                Gallery {
-                    width
-                    height
-                    url
-                }
             }
             Section_Seven {
-                id
-                Title
                 Placement
                 Route {
-                    Title
                     Link
+                    Title
                 }
+                Title
             }
             Section_Eight {
-                id
                 Title {
                     Title
                     Placement
                 }
                 FAQ_elements {
-                    Title
                     Description
+                    Title
                 }
             }
         }
     }
 `
+

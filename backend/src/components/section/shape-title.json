@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_section_shape_titles",
+  "info": {
+    "displayName": "Shape Title"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Shape": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_landing_sections_section_threes",
+  "info": {
+    "displayName": "Section Three",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Button": {
+      "type": "component",
+      "repeatable": true,
+      "component": "section.button"
+    },
+    "Photos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "Title": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.quote"
+    }
+  }
+}

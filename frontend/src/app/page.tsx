@@ -5,7 +5,7 @@ import React, {useMemo} from "react";
 import LandingSectionTwo from "@/Components/Landing/Section_Two";
 import {ApolloError, useQuery} from "@apollo/client";
 import {content} from "@/types/LandingPageTypes";
-import {LandingPageQuery} from "@/GraphQL/TSQueries/LandingPageQueries";
+import {LandingPageQuery, LandingPageQuery1} from "@/GraphQL/TSQueries/LandingPageQueries";
 import LandingSectionThree from "@/Components/Landing/Section_Three";
 import LandingSectionFour from "@/Components/Landing/Section_Four";
 import LandingSectionFive from "@/Components/Landing/Section_Five";
@@ -18,10 +18,20 @@ const useLandingPageSections = (): {
     loading: boolean;
     error: ApolloError | undefined;
 } => {
-    const {data, loading, error} = useQuery(LandingPageQuery);
+    const {data, loading, error} = useQuery(LandingPageQuery, {
+        variables: {
+            locale: 'uk-UA',
+            status: 'PUBLISHED'
+        }
+    });
 
-    console.log('error', {
-        message: error?.networkError?.message,
+    const query1 = useQuery(LandingPageQuery1)
+
+    console.log('query1', query1)
+
+    console.log('standart query data', data)
+    console.log('standart query error', {
+        message: error,
         oneMore: error?.cause,
         twoMore: error?.extraInfo
     }, data)
@@ -41,7 +51,7 @@ const useLandingPageSections = (): {
             },
             SectionTwo: {
                 Title: {Title: 'Why us?', Placement: 'Center'},
-                ListDescription: [
+                List_Description: [
                     {
                         Description: 'безпечний простір в самому центрі Києва: у нас завжди тепло, затишно та є світло',
                         Icon: {url: 'icons/ListIcons/ListIcon_1.svg', height: '60px', width: '60px', alt: 'icon'},
@@ -64,7 +74,7 @@ const useLandingPageSections = (): {
                     },
                     {
                         Description: 'ком’юніті: ти, твої подруги та друзі друзів! наш простір збирає в одному флоу тих, хто дбає про баланс тіла, духу та розуму',
-                        Icon: {url: 'icons/ListIcons/ListIcon_5.svg', height: '60px', width: '60px', alt: 'icon'},
+                        Icon: {url: 'icons/ListIcons/ListIcon_6.svg', height: '60px', width: '60px', alt: 'icon'},
                     },
                 ],
             },
@@ -132,7 +142,7 @@ const useLandingPageSections = (): {
             },
             SectionSeven: {
                 Title: 'Як нас знайти',
-                Placement: '',
+                Placement: [{type: 'paragraph', children: [{type: 'text', text: 'Наш простір розташований біля парку Т.Г. Шевченко'}]}],
                 Route: [{Title: 'КЛІКНИ, ЩОБ ПРОКЛАСТИ МАРШРУТ', Link: 'https://maps.app.goo.gl/WQ86e8GRbQ6r3nZB7'}]
             },
             SectionEight: {
@@ -189,7 +199,7 @@ const Home = () => {
         <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important'}}
                    className={'LandingPage'}>
             <LandingSectionOne Title={SectionOne?.Title} Buttons={SectionOne?.Buttons}/>
-            <LandingSectionTwo Title={SectionTwo?.Title} ListDescription={SectionTwo?.ListDescription}/>
+            <LandingSectionTwo Title={SectionTwo?.Title} List_Description={SectionTwo?.List_Description}/>
             <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button}
                                  Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
             <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles}

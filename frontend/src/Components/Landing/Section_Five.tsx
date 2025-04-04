@@ -5,8 +5,10 @@ import SectionWrapper from './SectionWrapper'
 import {Box, Container, Typography, Button as ButtonEl} from "@mui/material";
 import './sectionFive.css'
 import { useRouter } from 'next/navigation';
+import {BlocksContent} from "@strapi/blocks-react-renderer";
+import renderBlocks from "@/Helpers/BlockRender";
 
-type SectionFiveContent = LandingSectionSixContent & {  TitleSecond?: string; TitleSecondPlacement?: string; Route?: RouteItem[];}
+type SectionFiveContent = LandingSectionSixContent & {  TitleSecond?: string; TitleSecondPlacement?: BlocksContent | string; Route?: RouteItem[];}
 
 
 const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Button, Description, Gallery}:SectionFiveContent) => {
@@ -15,7 +17,7 @@ const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Bu
         <SectionWrapper id={'Landing-section-five'}>
             <Container maxWidth={false} sx={{padding: '0 !important'}}>
                 <Box className={'gallery'} sx={{display: 'flex', flexDirection: 'row'}}>
-                    {Gallery && Gallery.map((item, index) => <Box component={'img'} src={item.url.includes('uploads') ? 'http://localhost:1337'+item.url : item.url} sx={{flexBasis: '50%'}} key={item.url+index.toString()} />)}
+                    {Gallery && Gallery.map((item, index) => <Box component={'img'} src={process.env.NODE_ENV === 'development' ? 'http://localhost:1337'+item.url : item.url} sx={{flexBasis: '50%'}} key={item.url+index.toString()} />)}
                 </Box>
                 <Box className={'bar-description'} component={'article'}>
                     {Title && <Typography variant={'h1'}>{Title?.Title}</Typography>}
@@ -35,7 +37,7 @@ const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Bu
                     </Box>
                     <Box className={'location-details'}>
                         {Route && Route.map(item => <Typography variant={'h6'} onClick={() => router.push(item.Link)} className={'location-link'} key={item.Title}>{item.Title}</Typography>)}
-                        {<Typography variant={'body2'}>{TitleSecondPlacement ? TitleSecondPlacement : <><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}>Наш простір розташований біля парку Т.Г. Шевченко</Typography><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}> Місто Київ, вулиця Терещенківська, 21(сині двері, дзвінок зліва, -1 поверх)</Typography></>}</Typography>}
+                        {TitleSecondPlacement && typeof TitleSecondPlacement === 'object' ? renderBlocks(TitleSecondPlacement) : <><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}>Наш простір розташований біля парку Т.Г. Шевченко</Typography><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}> Місто Київ, вулиця Терещенківська, 21(сині двері, дзвінок зліва, -1 поверх)</Typography></>}
                     </Box>
                     </Container>
                 </Box>

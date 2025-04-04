@@ -13,9 +13,6 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
-"""A time string with format HH:mm:ss.SSS"""
-scalar Time
-
 type Error {
     code: String!
     message: String
@@ -162,31 +159,6 @@ input FloatFilterInput {
     between: [Float]
 }
 
-input TimeFilterInput {
-    and: [Time]
-    or: [Time]
-    not: TimeFilterInput
-    eq: Time
-    eqi: Time
-    ne: Time
-    nei: Time
-    startsWith: Time
-    endsWith: Time
-    contains: Time
-    notContains: Time
-    containsi: Time
-    notContainsi: Time
-    gt: Time
-    gte: Time
-    lt: Time
-    lte: Time
-    null: Boolean
-    notNull: Boolean
-    in: [Time]
-    notIn: [Time]
-    between: [Time]
-}
-
 input DateTimeFilterInput {
     and: [DateTime]
     or: [DateTime]
@@ -279,30 +251,10 @@ type ComponentSharedMedia {
     file: UploadFile
 }
 
-input ComponentSharedHiddenLinkFiltersInput {
-    Title: StringFilterInput
-    Link: StringFilterInput
-    and: [ComponentSharedHiddenLinkFiltersInput]
-    or: [ComponentSharedHiddenLinkFiltersInput]
-    not: ComponentSharedHiddenLinkFiltersInput
-}
-
-input ComponentSharedHiddenLinkInput {
-    id: ID
-    Title: String
-    Link: String
-}
-
-type ComponentSharedHiddenLink {
-    id: ID!
-    Title: String!
-    Link: String!
-}
-
 enum ENUM_COMPONENTSECTIONTITLE_PLACEMENT {
-    Left
     Center
     Right
+    Left
 }
 
 input ComponentSectionTitleFiltersInput {
@@ -322,7 +274,7 @@ input ComponentSectionTitleInput {
 type ComponentSectionTitle {
     id: ID!
     Title: String!
-    Placement: ENUM_COMPONENTSECTIONTITLE_PLACEMENT!
+    Placement: ENUM_COMPONENTSECTIONTITLE_PLACEMENT
 }
 
 input ComponentSectionShapeTitleFiltersInput {
@@ -363,6 +315,26 @@ type ComponentSectionIconDescription {
     Icon: UploadFile!
 }
 
+input ComponentSectionHiddenLinkFiltersInput {
+    Title: StringFilterInput
+    Link: StringFilterInput
+    and: [ComponentSectionHiddenLinkFiltersInput]
+    or: [ComponentSectionHiddenLinkFiltersInput]
+    not: ComponentSectionHiddenLinkFiltersInput
+}
+
+input ComponentSectionHiddenLinkInput {
+    id: ID
+    Title: String
+    Link: String
+}
+
+type ComponentSectionHiddenLink {
+    id: ID!
+    Title: String!
+    Link: String!
+}
+
 enum ENUM_COMPONENTSECTIONBUTTON_VARIANT {
     primary
     secondary
@@ -370,9 +342,9 @@ enum ENUM_COMPONENTSECTIONBUTTON_VARIANT {
 }
 
 input ComponentSectionButtonFiltersInput {
-    Text: StringFilterInput
     Variant: StringFilterInput
-    action: StringFilterInput
+    Text: StringFilterInput
+    Action: StringFilterInput
     and: [ComponentSectionButtonFiltersInput]
     or: [ComponentSectionButtonFiltersInput]
     not: ComponentSectionButtonFiltersInput
@@ -380,16 +352,16 @@ input ComponentSectionButtonFiltersInput {
 
 input ComponentSectionButtonInput {
     id: ID
-    Text: String
     Variant: ENUM_COMPONENTSECTIONBUTTON_VARIANT
-    action: String
+    Text: String
+    Action: String
 }
 
 type ComponentSectionButton {
     id: ID!
-    Text: String!
-    Variant: ENUM_COMPONENTSECTIONBUTTON_VARIANT
-    action: String
+    Variant: ENUM_COMPONENTSECTIONBUTTON_VARIANT!
+    Text: String
+    Action: String!
 }
 
 input ComponentSectionAccordionFiltersInput {
@@ -412,111 +384,111 @@ type ComponentSectionAccordion {
     Description: String
 }
 
-input ComponentLandingPageComponentsSectionTwoInput {
+input ComponentLandingSectionsSectionTwoInput {
     id: ID
+    List_Description: [ComponentSectionIconDescriptionInput]
     Title: ComponentSectionTitleInput
-    ListDescription: [ComponentSectionIconDescriptionInput]
 }
 
-type ComponentLandingPageComponentsSectionTwo {
+type ComponentLandingSectionsSectionTwo {
     id: ID!
+    List_Description(filters: ComponentSectionIconDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionIconDescription]
     Title: ComponentSectionTitle
-    ListDescription(filters: ComponentSectionIconDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionIconDescription]
 }
 
-input ComponentLandingPageComponentsSectionThreeInput {
+input ComponentLandingSectionsSectionThreeInput {
     id: ID
-    Title: ComponentSharedQuoteInput
     Button: [ComponentSectionButtonInput]
     Photos: [ID]
     Description: JSON
+    Title: ComponentSharedQuoteInput
 }
 
-type ComponentLandingPageComponentsSectionThree {
+type ComponentLandingSectionsSectionThree {
     id: ID!
-    Title: ComponentSharedQuote!
     Button(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]
     Photos_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
     Photos(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-    Description: JSON!
+    Description: JSON
+    Title: ComponentSharedQuote
 }
 
-input ComponentLandingPageComponentsSectionSixInput {
+input ComponentLandingSectionsSectionSixInput {
     id: ID
-    Gallery: [ID]
     Title: ComponentSectionTitleInput
+    Gallery: [ID]
     Description: String
     Button: ComponentSectionButtonInput
 }
 
-type ComponentLandingPageComponentsSectionSix {
+type ComponentLandingSectionsSectionSix {
     id: ID!
+    Title: ComponentSectionTitle!
     Gallery_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
     Gallery(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-    Title: ComponentSectionTitle
     Description: String
     Button: ComponentSectionButton
 }
 
-input ComponentLandingPageComponentsSectionSevenInput {
+input ComponentLandingSectionsSectionSevenInput {
     id: ID
+    Route: [ComponentSectionHiddenLinkInput]
+    Placement: JSON
     Title: String
-    Route: [ComponentSharedHiddenLinkInput]
-    Placement: String
 }
 
-type ComponentLandingPageComponentsSectionSeven {
+type ComponentLandingSectionsSectionSeven {
     id: ID!
+    Route(filters: ComponentSectionHiddenLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionHiddenLink]
+    Placement: JSON
     Title: String
-    Route(filters: ComponentSharedHiddenLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedHiddenLink]
-    Placement: String!
 }
 
-input ComponentLandingPageComponentsSectionOneInput {
+input ComponentLandingSectionsSectionOneInput {
     id: ID
     Title: [ComponentSectionTitleInput]
     Buttons: [ComponentSectionButtonInput]
 }
 
-type ComponentLandingPageComponentsSectionOne {
+type ComponentLandingSectionsSectionOne {
     id: ID!
-    Title(filters: ComponentSectionTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionTitle]
-    Buttons(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]
+    Title(filters: ComponentSectionTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionTitle]!
+    Buttons(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]!
 }
 
-input ComponentLandingPageComponentsSectionFourInput {
+input ComponentLandingSectionsSectionFourInput {
     id: ID
     Title: ComponentSectionTitleInput
     Shape_Titles: [ComponentSectionShapeTitleInput]
 }
 
-type ComponentLandingPageComponentsSectionFour {
+type ComponentLandingSectionsSectionFour {
     id: ID!
-    Title: ComponentSectionTitle
-    Shape_Titles(filters: ComponentSectionShapeTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionShapeTitle]
+    Title: ComponentSectionTitle!
+    Shape_Titles(filters: ComponentSectionShapeTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionShapeTitle]!
 }
 
-input ComponentLandingPageComponentsSectionFiveInput {
+input ComponentLandingSectionsSectionFiveInput {
     id: ID
     Title: String
     Button: ComponentSectionButtonInput
 }
 
-type ComponentLandingPageComponentsSectionFive {
+type ComponentLandingSectionsSectionFive {
     id: ID!
     Title: String!
-    Button: ComponentSectionButton!
+    Button: ComponentSectionButton
 }
 
-input ComponentLandingPageComponentsSectionEightInput {
+input ComponentLandingSectionsSectionEightInput {
     id: ID
     Title: ComponentSectionTitleInput
     FAQ_elements: [ComponentSectionAccordionInput]
 }
 
-type ComponentLandingPageComponentsSectionEight {
+type ComponentLandingSectionsSectionEight {
     id: ID!
-    Title: ComponentSectionTitle
+    Title: ComponentSectionTitle!
     FAQ_elements(filters: ComponentSectionAccordionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionAccordion]
 }
 
@@ -800,53 +772,6 @@ type UsersPermissionsUserRelationResponseCollection {
     nodes: [UsersPermissionsUser!]!
 }
 
-input EmailDesigner5EmailDesignerTemplateFiltersInput {
-    documentId: IDFilterInput
-    templateReferenceId: IntFilterInput
-    design: JSONFilterInput
-    name: StringFilterInput
-    subject: StringFilterInput
-    bodyHtml: StringFilterInput
-    bodyText: StringFilterInput
-    tags: JSONFilterInput
-    createdAt: DateTimeFilterInput
-    updatedAt: DateTimeFilterInput
-    publishedAt: DateTimeFilterInput
-    and: [EmailDesigner5EmailDesignerTemplateFiltersInput]
-    or: [EmailDesigner5EmailDesignerTemplateFiltersInput]
-    not: EmailDesigner5EmailDesignerTemplateFiltersInput
-}
-
-input EmailDesigner5EmailDesignerTemplateInput {
-    templateReferenceId: Int
-    design: JSON
-    name: String
-    subject: String
-    bodyHtml: String
-    bodyText: String
-    tags: JSON
-    publishedAt: DateTime
-}
-
-type EmailDesigner5EmailDesignerTemplate {
-    documentId: ID!
-    templateReferenceId: Int
-    design: JSON
-    name: String
-    subject: String
-    bodyHtml: String
-    bodyText: String
-    tags: JSON
-    createdAt: DateTime
-    updatedAt: DateTime
-    publishedAt: DateTime
-}
-
-type EmailDesigner5EmailDesignerTemplateEntityResponseCollection {
-    nodes: [EmailDesigner5EmailDesignerTemplate!]!
-    pageInfo: Pagination!
-}
-
 union AboutBlocksDynamicZone = ComponentSharedMedia | ComponentSharedQuote | ComponentSharedRichText | ComponentSharedSlider | Error
 
 scalar AboutBlocksDynamicZoneInput
@@ -996,44 +921,6 @@ type CategoryEntityResponseCollection {
     pageInfo: Pagination!
 }
 
-input ClassFiltersInput {
-    documentId: IDFilterInput
-    Timeslot: TimeFilterInput
-    createdAt: DateTimeFilterInput
-    updatedAt: DateTimeFilterInput
-    publishedAt: DateTimeFilterInput
-    locale: StringFilterInput
-    localizations: ClassFiltersInput
-    and: [ClassFiltersInput]
-    or: [ClassFiltersInput]
-    not: ClassFiltersInput
-}
-
-input ClassInput {
-    Timeslot: Time
-    publishedAt: DateTime
-}
-
-type Class {
-    documentId: ID!
-    Timeslot: Time!
-    createdAt: DateTime
-    updatedAt: DateTime
-    publishedAt: DateTime
-    locale: String
-    localizations_connection(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ClassRelationResponseCollection
-    localizations(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Class]!
-}
-
-type ClassEntityResponseCollection {
-    nodes: [Class!]!
-    pageInfo: Pagination!
-}
-
-type ClassRelationResponseCollection {
-    nodes: [Class!]!
-}
-
 input GlobalInput {
     siteName: String
     favicon: ID
@@ -1054,33 +941,40 @@ type Global {
 }
 
 input LandingPageInput {
-    Section_Two: ComponentLandingPageComponentsSectionTwoInput
-    Section_One: ComponentLandingPageComponentsSectionOneInput
-    Section_Three: ComponentLandingPageComponentsSectionThreeInput
-    Section_Four: ComponentLandingPageComponentsSectionFourInput
-    Section_Five: ComponentLandingPageComponentsSectionFiveInput
-    Section_Six: ComponentLandingPageComponentsSectionSixInput
-    Section_Seven: ComponentLandingPageComponentsSectionSevenInput
-    Section_Eight: ComponentLandingPageComponentsSectionEightInput
+    Section_One: ComponentLandingSectionsSectionOneInput
+    Section_Two: ComponentLandingSectionsSectionTwoInput
+    Section_Three: ComponentLandingSectionsSectionThreeInput
+    Section_Four: ComponentLandingSectionsSectionFourInput
+    Section_Five: ComponentLandingSectionsSectionFiveInput
+    Section_Six: ComponentLandingSectionsSectionSixInput
+    Section_Seven: ComponentLandingSectionsSectionSevenInput
+    Section_Eight: ComponentLandingSectionsSectionEightInput
     publishedAt: DateTime
 }
 
 type LandingPage {
     documentId: ID!
-    Section_Two: ComponentLandingPageComponentsSectionTwo
-    Section_One: ComponentLandingPageComponentsSectionOne
-    Section_Three: ComponentLandingPageComponentsSectionThree
-    Section_Four: ComponentLandingPageComponentsSectionFour
-    Section_Five: ComponentLandingPageComponentsSectionFive
-    Section_Six: ComponentLandingPageComponentsSectionSix
-    Section_Seven: ComponentLandingPageComponentsSectionSeven
-    Section_Eight: ComponentLandingPageComponentsSectionEight
+    Section_One: ComponentLandingSectionsSectionOne
+    Section_Two: ComponentLandingSectionsSectionTwo
+    Section_Three: ComponentLandingSectionsSectionThree
+    Section_Four: ComponentLandingSectionsSectionFour
+    Section_Five: ComponentLandingSectionsSectionFive
+    Section_Six: ComponentLandingSectionsSectionSix
+    Section_Seven: ComponentLandingSectionsSectionSeven
+    Section_Eight: ComponentLandingSectionsSectionEight
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
+    locale: String
+    localizations_connection: LandingPageRelationResponseCollection
+    localizations: [LandingPage]!
 }
 
-union GenericMorph = ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedMedia | ComponentSharedHiddenLink | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionIconDescription | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingPageComponentsSectionTwo | ComponentLandingPageComponentsSectionThree | ComponentLandingPageComponentsSectionSix | ComponentLandingPageComponentsSectionSeven | ComponentLandingPageComponentsSectionOne | ComponentLandingPageComponentsSectionFour | ComponentLandingPageComponentsSectionFive | ComponentLandingPageComponentsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | EmailDesigner5EmailDesignerTemplate | About | Article | Author | Category | Class | Global | LandingPage
+type LandingPageRelationResponseCollection {
+    nodes: [LandingPage!]!
+}
+
+union GenericMorph = ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedMedia | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | About | Article | Author | Category | Global | LandingPage
 
 input FileInfoInput {
     name: String
@@ -1167,9 +1061,6 @@ type Query {
     usersPermissionsUser(documentId: ID!, status: PublicationStatus = PUBLISHED): UsersPermissionsUser
     usersPermissionsUsers_connection(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): UsersPermissionsUserEntityResponseCollection
     usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [UsersPermissionsUser]!
-    emailDesigner5EmailDesignerTemplate(documentId: ID!, status: PublicationStatus = PUBLISHED): EmailDesigner5EmailDesignerTemplate
-    emailDesigner5EmailDesignerTemplates_connection(filters: EmailDesigner5EmailDesignerTemplateFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): EmailDesigner5EmailDesignerTemplateEntityResponseCollection
-    emailDesigner5EmailDesignerTemplates(filters: EmailDesigner5EmailDesignerTemplateFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [EmailDesigner5EmailDesignerTemplate]!
     about(status: PublicationStatus = PUBLISHED): About
     article(documentId: ID!, status: PublicationStatus = PUBLISHED): Article
     articles_connection(filters: ArticleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ArticleEntityResponseCollection
@@ -1180,33 +1071,13 @@ type Query {
     category(documentId: ID!, status: PublicationStatus = PUBLISHED): Category
     categories_connection(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): CategoryEntityResponseCollection
     categories(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Category]!
-    class(
-        documentId: ID!
-        status: PublicationStatus = PUBLISHED
-
-        """The locale to use for the query"""
-        locale: I18NLocaleCode
-    ): Class
-    classes_connection(
-        filters: ClassFiltersInput
-        pagination: PaginationArg = {}
-        sort: [String] = []
-        status: PublicationStatus = PUBLISHED
-
-        """The locale to use for the query"""
-        locale: I18NLocaleCode
-    ): ClassEntityResponseCollection
-    classes(
-        filters: ClassFiltersInput
-        pagination: PaginationArg = {}
-        sort: [String] = []
-        status: PublicationStatus = PUBLISHED
-
-        """The locale to use for the query"""
-        locale: I18NLocaleCode
-    ): [Class]!
     global(status: PublicationStatus = PUBLISHED): Global
-    landingPage(status: PublicationStatus = PUBLISHED): LandingPage
+    landingPage(
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): LandingPage
     me: UsersPermissionsMe
 }
 
@@ -1217,9 +1088,6 @@ type Mutation {
     createReviewWorkflowsWorkflowStage(status: PublicationStatus = PUBLISHED, data: ReviewWorkflowsWorkflowStageInput!): ReviewWorkflowsWorkflowStage
     updateReviewWorkflowsWorkflowStage(documentId: ID!, status: PublicationStatus = PUBLISHED, data: ReviewWorkflowsWorkflowStageInput!): ReviewWorkflowsWorkflowStage
     deleteReviewWorkflowsWorkflowStage(documentId: ID!): DeleteMutationResponse
-    createEmailDesigner5EmailDesignerTemplate(status: PublicationStatus = PUBLISHED, data: EmailDesigner5EmailDesignerTemplateInput!): EmailDesigner5EmailDesignerTemplate
-    updateEmailDesigner5EmailDesignerTemplate(documentId: ID!, status: PublicationStatus = PUBLISHED, data: EmailDesigner5EmailDesignerTemplateInput!): EmailDesigner5EmailDesignerTemplate
-    deleteEmailDesigner5EmailDesignerTemplate(documentId: ID!): DeleteMutationResponse
     updateAbout(status: PublicationStatus = PUBLISHED, data: AboutInput!): About
     deleteAbout: DeleteMutationResponse
     createArticle(status: PublicationStatus = PUBLISHED, data: ArticleInput!): Article
@@ -1231,31 +1099,19 @@ type Mutation {
     createCategory(status: PublicationStatus = PUBLISHED, data: CategoryInput!): Category
     updateCategory(documentId: ID!, status: PublicationStatus = PUBLISHED, data: CategoryInput!): Category
     deleteCategory(documentId: ID!): DeleteMutationResponse
-    createClass(
+    updateGlobal(status: PublicationStatus = PUBLISHED, data: GlobalInput!): Global
+    deleteGlobal: DeleteMutationResponse
+    updateLandingPage(
         status: PublicationStatus = PUBLISHED
-        data: ClassInput!
+        data: LandingPageInput!
 
         """The locale to use for the query"""
         locale: I18NLocaleCode
-    ): Class
-    updateClass(
-        documentId: ID!
-        status: PublicationStatus = PUBLISHED
-        data: ClassInput!
-
-        """The locale to use for the query"""
-        locale: I18NLocaleCode
-    ): Class
-    deleteClass(
-        documentId: ID!
-
+    ): LandingPage
+    deleteLandingPage(
         """The locale to use for the query"""
         locale: I18NLocaleCode
     ): DeleteMutationResponse
-    updateGlobal(status: PublicationStatus = PUBLISHED, data: GlobalInput!): Global
-    deleteGlobal: DeleteMutationResponse
-    updateLandingPage(status: PublicationStatus = PUBLISHED, data: LandingPageInput!): LandingPage
-    deleteLandingPage: DeleteMutationResponse
     updateUploadFile(id: ID!, info: FileInfoInput): UploadFile!
     deleteUploadFile(id: ID!): UploadFile
 

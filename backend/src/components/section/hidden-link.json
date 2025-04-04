@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_section_hidden_links",
+  "info": {
+    "displayName": "Hidden Link"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Link": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

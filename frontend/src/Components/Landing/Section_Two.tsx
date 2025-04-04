@@ -16,7 +16,7 @@ const IconListComponent = ({Icon, Description}: ListDescriptionItem) => {
             flex: "50%"
         }}>
             <Box>
-                <CardMedia component={'img'} alt={Icon?.alt} src={Icon?.url?.includes('uploads') ? 'http://localhost:1337/' + Icon?.url : Icon?.url} sx={{width: Icon?.width, height: Icon?.height}}/>
+                <CardMedia component={'img'} alt={Icon?.alt} src={process.env.NODE_ENV === 'development' && Icon?.url?.includes('uploads') ? 'http://localhost:1337/' + Icon?.url : Icon?.url} sx={{objectFit: 'contain', width: Icon?.width, height: Icon?.height}}/>
             </Box>
             <Box sx={{maxWidth: '358px', width: '100%'}}>
                 <Typography variant={'body2'}>{Description ? Description : 'Blank'}</Typography>
@@ -27,7 +27,7 @@ const IconListComponent = ({Icon, Description}: ListDescriptionItem) => {
 
 const LandingSectionTwo = ({
                                Title,
-                               ListDescription
+                               List_Description
                            }: LandingSectionTwoContent) => {
     return (
         <SectionWrapper id={'Landing-section-two'}>
@@ -54,7 +54,7 @@ const LandingSectionTwo = ({
                     padding: '0 !important',
                     margin: '34px 0 0 0 !important'
                 }}>
-                    {ListDescription?.map((item) => {
+                    {List_Description?.map((item) => {
                         return (
                             <IconListComponent key={item.Description} Icon={item.Icon} Description={item.Description}/>
                         )

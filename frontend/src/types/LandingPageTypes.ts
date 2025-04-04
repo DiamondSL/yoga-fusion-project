@@ -41,7 +41,7 @@ export interface LandingSectionTwoContent {
         Title?: string;
         Placement?: 'Left' | 'Right' | 'Center';
     }
-    ListDescription?: ListDescriptionItem[]
+    List_Description?: ListDescriptionItem[]
 }
 
 interface SectionThreeTitle {
@@ -99,7 +99,7 @@ export interface RouteItem {
 
 export interface LandingSectionSevenContent {
     Title: string;
-    Placement: string;
+    Placement: BlocksContent;
     Route: RouteItem[];
 }
 

@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_landing_sections_section_sevens",
+  "info": {
+    "displayName": "Section Seven"
+  },
+  "options": {},
+  "attributes": {
+    "Route": {
+      "type": "component",
+      "repeatable": true,
+      "component": "section.hidden-link"
+    },
+    "Placement": {
+      "type": "blocks"
+    },
+    "Title": {
+      "type": "string"
+    }
+  }
+}

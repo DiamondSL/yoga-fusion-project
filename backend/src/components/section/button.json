@@ -1,7 +1,8 @@
 {
   "collectionName": "components_section_buttons",
   "info": {
-    "displayName": "Button"
+    "displayName": "Button",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -17,6 +18,11 @@
     },
     "Text": {
       "type": "string"
+    },
+    "Action": {
+      "type": "string",
+      "default": "/",
+      "required": true
     }
   }
 }

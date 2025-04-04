@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_section_icon_descriptions",
+  "info": {
+    "displayName": "Icon Description"
+  },
+  "options": {},
+  "attributes": {
+    "Description": {
+      "type": "text",
+      "required": true
+    },
+    "Icon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

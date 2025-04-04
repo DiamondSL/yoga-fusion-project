@@ -537,6 +537,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiLandingPageLandingPage extends Struct.SingleTypeSchema {
   collectionName: 'landing_pages';
   info: {
+    description: '';
     displayName: 'Landing Page';
     pluralName: 'landing-pages';
     singularName: 'landing-page';
@@ -559,6 +560,78 @@ export interface ApiLandingPageLandingPage extends Struct.SingleTypeSchema {
       'api::landing-page.landing-page'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    Section_Eight: Schema.Attribute.Component<
+      'landing-sections.section-eight',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Section_Five: Schema.Attribute.Component<
+      'landing-sections.section-five',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Section_Four: Schema.Attribute.Component<
+      'landing-sections.section-four',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Section_One: Schema.Attribute.Component<
+      'landing-sections.section-one',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Section_Seven: Schema.Attribute.Component<
+      'landing-sections.section-seven',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Section_Six: Schema.Attribute.Component<
+      'landing-sections.section-six',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Section_Three: Schema.Attribute.Component<
+      'landing-sections.section-three',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Section_Two: Schema.Attribute.Component<
+      'landing-sections.section-two',
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
