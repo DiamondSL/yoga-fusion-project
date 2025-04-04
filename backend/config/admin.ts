@@ -5,7 +5,7 @@ export default ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT'),
   },
-  url: '/cms',
+  url: '/admin',
   transfer: {
     token: {
       salt: env('TRANSFER_TOKEN_SALT'),

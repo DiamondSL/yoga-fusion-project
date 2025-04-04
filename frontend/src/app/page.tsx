@@ -10,6 +10,7 @@ import LandingSectionThree from "@/Components/Landing/Section_Three";
 import LandingSectionFour from "@/Components/Landing/Section_Four";
 import LandingSectionFive from "@/Components/Landing/Section_Five";
 import LandingSectionSix from "@/Components/Landing/Section_Six";
+import { usePathname } from 'next/navigation'
 
 
 const useLandingPageSections = (): {
@@ -110,9 +111,11 @@ const useLandingPageSections = (): {
 
 
 const Home = () => {
+    const router = usePathname();
     const sections = useLandingPageSections();
     const {SectionOne, SectionTwo, SectionThree, SectionFour, SectionFive, SectionSix, SectionSeven, SectionEight} = sections.data
 
+    console.log(router)
     return (
         <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important'}}
                    className={'LandingPage'}>
