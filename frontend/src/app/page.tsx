@@ -77,8 +77,8 @@ const useLandingPageSections = (): {
                     Title: 'FAQ',
                     Placement: 'Center'
                 },
-                FAQ_elements: [{Title: 'Що взяти з собою на тренування з собою на тренування?', Description: 'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.  хелсі-бар обожнює зустрічати гостей!'}]
-            }
+                FAQ_elements: [{Title: 'Що взяти з собою на тренування з собою на тренування?', Description: ''}]
+            },
         };
 
         const sections:Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {

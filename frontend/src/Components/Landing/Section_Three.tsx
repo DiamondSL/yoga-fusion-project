@@ -78,7 +78,8 @@ const LandingSectionThree = ({Title, Button, Description, Photos}:LandingSection
                                 italic: ({children}) => <span className="italic">{children}</span>,
                             }}
                         /> : <Box>
-                            <Typography><Typography component={'strong'} variant={'body1'}>yoga fusion</Typography> – це  це більше, ніж йога-студія. ми балансуємо між місцем наповнення та сили: як фізично, так і ментально. для кожного та кожної, хто завітає до нас: раді стати місцем вашого спокою та перезавантаження. просто в самому серці києва!</Typography>
+                            <Typography><Typography component={'strong'} variant={'body1'}>yoga fusion</Typography> – це </Typography>
+
                         </Box>}
                         </Container>
                         <Container maxWidth={false} sx={{padding: '0 !important', display: 'flex', flexDirection: 'row', gap: '24px', justifyContent: 'end'}}>
