@@ -43,12 +43,42 @@ const useLandingPageSections = (): {
                     },
                 ],
             },
-            SectionThree: null,
-            SectionFour: null,
-            SectionFive: null,
-            SectionSix: null,
-            SectionSeven: null,
-            SectionEight: null,
+            SectionThree: {
+                Title: {
+                    title: 'Yoga Fusion',
+                    motto: 'твоя трансформація бере початок тут!'                },
+                Button: [{Text: 'більше про нас', Variant: 'secondary'}],
+            },
+            SectionFour: {
+                Title: {Title: 'Our classes', Placement: 'Center'},
+            },
+            SectionFive: {
+                Title: 'реєструйся та отримай 1 безкоштовний класс', Button: {
+                    Text: 'зареєструватися',
+                    Variant: 'primary'
+                }
+            },
+            SectionSix: {
+                Title: {Title: 'Healthy bar', Placement: 'Center'},
+                Button: {
+                    Text: 'детальніше',
+                    Variant: 'secondary'
+                },
+                Description: 'ваш безпечний простір для ідей, роботи та відпочинку\n' +
+                    'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.   хелсі-бар обожнює зустрічати гостей!\n'
+            },
+            SectionSeven: {
+                Title: 'Як нас знайти',
+                Placement: 'Center',
+                Route: [{Title: 'КЛІКНИ, ЩОБ ПРОКЛАСТИ МАРШРУТ', Link: 'https://maps.app.goo.gl/WQ86e8GRbQ6r3nZB7'}]
+            },
+            SectionEight: {
+                Title: {
+                    Title: 'FAQ',
+                    Placement: 'Center'
+                },
+                FAQ_elements: [{Title: 'Що взяти з собою на тренування з собою на тренування?', Description: ''}]
+            }
         };
 
         const sections:Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
