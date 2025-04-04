@@ -16,7 +16,7 @@ const linkPlaceholders = [{link: 'наш простір', url: ''},
     {link: 'розклад', url: ''}, {link: 'вчителі', url: ''}, {link: 'тренування', url: ''}, {
         link: 'ціни',
         url: ''
-    }, {link: 'контакти', url: ''}, {link: 'вхід', url: ''}, {link: 'ukr', url: ''}];
+    }, {link: 'контакти', url: ''}];
 
 const footerPlaceholders = {
     links: [{to: '/', text: 'тренування'}, {to: '/', text: 'ціни'}, {to: '/', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: '/', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: '/', text: 'вчителі'}],

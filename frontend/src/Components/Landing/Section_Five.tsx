@@ -11,12 +11,11 @@ type SectionFiveContent = LandingSectionSixContent & {  TitleSecond?: string; Ti
 
 const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Button, Description, Gallery}:SectionFiveContent) => {
     const router = useRouter();
-
     return (
         <SectionWrapper id={'Landing-section-five'}>
             <Container maxWidth={false} sx={{padding: '0 !important'}}>
                 <Box className={'gallery'} sx={{display: 'flex', flexDirection: 'row'}}>
-                    {Gallery && Gallery.map((item) => <Box component={'img'} src={'http://localhost:1337'+item.url} sx={{flexBasis: '50%'}} key={item.url} />)}
+                    {Gallery && Gallery.map((item, index) => <Box component={'img'} src={item.url.includes('uploads') ? 'http://localhost:1337'+item.url : item.url} sx={{flexBasis: '50%'}} key={item.url+index.toString()} />)}
                 </Box>
                 <Box className={'bar-description'} component={'article'}>
                     {Title && <Typography variant={'h1'}>{Title?.Title}</Typography>}
@@ -36,7 +35,7 @@ const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Bu
                     </Box>
                     <Box className={'location-details'}>
                         {Route && Route.map(item => <Typography variant={'h6'} onClick={() => router.push(item.Link)} className={'location-link'} key={item.Title}>{item.Title}</Typography>)}
-                        {TitleSecondPlacement && <Typography variant={'body2'}>{TitleSecondPlacement}</Typography>}
+                        {<Typography variant={'body2'}>{TitleSecondPlacement ? TitleSecondPlacement : <><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}>Наш простір розташований біля парку Т.Г. Шевченко</Typography><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}> Місто Київ, вулиця Терещенківська, 21(сині двері, дзвінок зліва, -1 поверх)</Typography></>}</Typography>}
                     </Box>
                     </Container>
                 </Box>

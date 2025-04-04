@@ -4,6 +4,7 @@ import {Box} from "@mui/system";
 import Link from "next/link";
 import {AppBar, Button, Container, Toolbar, Typography} from "@mui/material";
 import YogaFusionLogo from "../Visual/SVGIcons/YogaFusionLogoIcon";
+import './navbar.css'
 
 type linkItems = {
     link: string;
@@ -39,6 +40,12 @@ const SiteNavigation = ({linkItems}: SiteNavigationParams) => {
                             {link}
                         </Typography>
                     ))}
+                    <Box className={'language-select'}>
+                        <Typography variant="body2" color={'textPrimary'}  sx={{cursor: 'pointer', textDecoration: 'none', letterSpacing: '3%'}}><span>en</span> | <span className={'active'}>ukr</span></Typography>
+                    </Box>
+                    <Box>
+                        <Box component={'img'} sx={{cursor: 'pointer'}} src={'icons/navigation/header-user.svg'}></Box>
+                    </Box>
                 </Box>
                 <Box>
                     <Button color={"primary"}>book</Button>

@@ -502,43 +502,6 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiClassClass extends Struct.CollectionTypeSchema {
-  collectionName: 'classes';
-  info: {
-    displayName: 'Classes';
-    pluralName: 'classes';
-    singularName: 'class';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::class.class'>;
-    publishedAt: Schema.Attribute.DateTime;
-    Timeslot: Schema.Attribute.Time &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }> &
-      Schema.Attribute.DefaultTo<'00:00:00.000'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -574,57 +537,28 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiLandingPageLandingPage extends Struct.SingleTypeSchema {
   collectionName: 'landing_pages';
   info: {
-    description: '';
-    displayName: 'LandingPage';
+    displayName: 'Landing Page';
     pluralName: 'landing-pages';
     singularName: 'landing-page';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::landing-page.landing-page'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    Section_Eight: Schema.Attribute.Component<
-      'landing-page-components.section-eight',
-      false
-    >;
-    Section_Five: Schema.Attribute.Component<
-      'landing-page-components.section-five',
-      false
-    >;
-    Section_Four: Schema.Attribute.Component<
-      'landing-page-components.section-four',
-      false
-    >;
-    Section_One: Schema.Attribute.Component<
-      'landing-page-components.section-one',
-      false
-    >;
-    Section_Seven: Schema.Attribute.Component<
-      'landing-page-components.section-seven',
-      false
-    >;
-    Section_Six: Schema.Attribute.Component<
-      'landing-page-components.section-six',
-      false
-    >;
-    Section_Three: Schema.Attribute.Component<
-      'landing-page-components.section-three',
-      false
-    >;
-    Section_Two: Schema.Attribute.Component<
-      'landing-page-components.section-two',
-      false
-    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1144,7 +1078,6 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
-      'api::class.class': ApiClassClass;
       'api::global.global': ApiGlobalGlobal;
       'api::landing-page.landing-page': ApiLandingPageLandingPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;

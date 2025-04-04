@@ -10,7 +10,7 @@ import LandingSectionThree from "@/Components/Landing/Section_Three";
 import LandingSectionFour from "@/Components/Landing/Section_Four";
 import LandingSectionFive from "@/Components/Landing/Section_Five";
 import LandingSectionSix from "@/Components/Landing/Section_Six";
-import { usePathname } from 'next/navigation'
+
 
 
 const useLandingPageSections = (): {
@@ -18,9 +18,13 @@ const useLandingPageSections = (): {
     loading: boolean;
     error: ApolloError | undefined;
 } => {
-    const { data, loading, error } = useQuery(LandingPageQuery);
+    const {data, loading, error} = useQuery(LandingPageQuery);
 
-    console.log('error', {message: error?.networkError?.message, oneMore: error?.cause, twoMore: error?.extraInfo}, data)
+    console.log('error', {
+        message: error?.networkError?.message,
+        oneMore: error?.cause,
+        twoMore: error?.extraInfo
+    }, data)
 
     // Define default data
 
@@ -29,29 +33,86 @@ const useLandingPageSections = (): {
         const defaultSections: content = {
             SectionOne: {
                 Title: [
-                    { Title: 'Be your own fusion.', Placement: 'Left' },
-                    { Title: 'Join the community.', Placement: 'Right' },
-                    { Title: 'Transform yourself.', Placement: 'Center' },
+                    {Title: 'Be your own fusion.', Placement: 'Left'},
+                    {Title: 'Join the community.', Placement: 'Right'},
+                    {Title: 'Transform yourself.', Placement: 'Center'},
                 ],
-                Buttons: [{ Text: 'fusion me, now', Variant: 'primary', Action: undefined }],
+                Buttons: [{Text: 'fusion me, now', Variant: 'primary', Action: undefined}],
             },
             SectionTwo: {
-                Title: { Title: 'Why us?', Placement: 'Center' },
+                Title: {Title: 'Why us?', Placement: 'Center'},
                 ListDescription: [
                     {
-                        Description: 'Placeholder',
-                        Icon: { url: '/', height: '60px', width: '60px', alt: 'icon' },
+                        Description: 'безпечний простір в самому центрі Києва: у нас завжди тепло, затишно та є світло',
+                        Icon: {url: 'icons/ListIcons/ListIcon_1.svg', height: '60px', width: '60px', alt: 'icon'},
+                    },
+                    {
+                        Description: 'музика в йога ф’южн — це провідник! любимо її та по-особливому ставимось до плейлистів в нашій студії',
+                        Icon: {url: 'icons/ListIcons/ListIcon_2.svg', height: '60px', width: '60px', alt: 'icon'},
+                    },
+                    {
+                        Description: 'хелсі-бар: простір для відновлення, роботи та зустрічей! у нас потужна кавова та чайна карта, матча та корисні снеки.',
+                        Icon: {url: 'icons/ListIcons/ListIcon_3.svg', height: '60px', width: '60px', alt: 'icon'},
+                    },
+                    {
+                        Description: 'ваш комфортний досвід: роздягальні, душові, чисті рушники. все, аби почувати себе впевнено після практик!',
+                        Icon: {url: 'icons/ListIcons/ListIcon_4.svg', height: '60px', width: '60px', alt: 'icon'},
+                    },
+                    {
+                        Description: 'новітній підхід: ми відкриті до нового досвіду та практик. активація кундаліні під супровід глибокого ембієнту? lets go!',
+                        Icon: {url: 'icons/ListIcons/ListIcon_5.svg', height: '60px', width: '60px', alt: 'icon'},
+                    },
+                    {
+                        Description: 'ком’юніті: ти, твої подруги та друзі друзів! наш простір збирає в одному флоу тих, хто дбає про баланс тіла, духу та розуму',
+                        Icon: {url: 'icons/ListIcons/ListIcon_5.svg', height: '60px', width: '60px', alt: 'icon'},
                     },
                 ],
             },
             SectionThree: {
                 Title: {
                     title: 'Yoga Fusion',
-                    motto: 'твоя трансформація бере початок тут!'                },
+                    motto: 'твоя трансформація бере початок тут!'
+                },
                 Button: [{Text: 'більше про нас', Variant: 'secondary'}],
             },
             SectionFour: {
                 Title: {Title: 'Our classes', Placement: 'Center'},
+                Shape_Titles: [{
+                    Title: 'power yoga', Shape: {
+                        url: 'icons/shapes/shape_1.svg',
+                        width: '',
+                        height: ''
+                    }
+                },
+                    {
+                        Title: 'hatha yoga', Shape: {
+                            url: 'icons/shapes/shape_2.svg',
+                            width: '',
+                            height: ''
+                        }
+                },
+                    {
+                        Title: 'vinyasa flow', Shape: {
+                            url: 'icons/shapes/shape_3.svg',
+                            width: '',
+                            height: ''
+                        }
+                    },
+                    {
+                        Title: 'kundalini', Shape: {
+                            url: 'icons/shapes/shape_4.svg',
+                            width: '',
+                            height: ''
+                        }
+                    },
+                    {
+                        Title: 'stretching', Shape: {
+                            url: 'icons/shapes/shape_5.svg',
+                            width: '',
+                            height: ''
+                        }
+                    }
+                    ]
             },
             SectionFive: {
                 Title: 'реєструйся та отримай 1 безкоштовний класс', Button: {
@@ -65,12 +126,13 @@ const useLandingPageSections = (): {
                     Text: 'детальніше',
                     Variant: 'secondary'
                 },
+                Gallery: [{url: 'icons/Visuals/SectionFive/photo.png', height: '', width: ''}, {url: 'icons/Visuals/SectionFive/photo.png', height: '', width: ''}],
                 Description: 'ваш безпечний простір для ідей, роботи та відпочинку\n' +
                     'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.   хелсі-бар обожнює зустрічати гостей!\n'
             },
             SectionSeven: {
                 Title: 'Як нас знайти',
-                Placement: 'Center',
+                Placement: '',
                 Route: [{Title: 'КЛІКНИ, ЩОБ ПРОКЛАСТИ МАРШРУТ', Link: 'https://maps.app.goo.gl/WQ86e8GRbQ6r3nZB7'}]
             },
             SectionEight: {
@@ -78,11 +140,11 @@ const useLandingPageSections = (): {
                     Title: 'FAQ',
                     Placement: 'Center'
                 },
-                FAQ_elements: [{Title: 'Що взяти з собою на тренування з собою на тренування?', Description: ''}]
+                FAQ_elements: [{Title: 'Що взяти з собою на тренування з собою на тренування?', Description: 'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.  хелсі-бар обожнює зустрічати гостей!'}]
             }
         };
 
-        const sections:Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
+        const sections: Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
             return data !== null && index !== 0;
         }).map((data) => {
             return [data[0].replace(/_/g, ""), data[1]];
@@ -111,20 +173,31 @@ const useLandingPageSections = (): {
 
 
 const Home = () => {
-    const router = usePathname();
     const sections = useLandingPageSections();
-    const {SectionOne, SectionTwo, SectionThree, SectionFour, SectionFive, SectionSix, SectionSeven, SectionEight} = sections.data
+    const {
+        SectionOne,
+        SectionTwo,
+        SectionThree,
+        SectionFour,
+        SectionFive,
+        SectionSix,
+        SectionSeven,
+        SectionEight
+    } = sections.data
 
-    console.log(router)
     return (
         <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important'}}
                    className={'LandingPage'}>
             <LandingSectionOne Title={SectionOne?.Title} Buttons={SectionOne?.Buttons}/>
             <LandingSectionTwo Title={SectionTwo?.Title} ListDescription={SectionTwo?.ListDescription}/>
-            <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button} Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
-            <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles} Button={SectionFive?.Button} titleSecond={SectionFive?.Title}/>
-            <LandingSectionFive Title={SectionSix?.Title} Button={SectionSix?.Button} Gallery={SectionSix?.Gallery} Route={SectionSeven?.Route} TitleSecondPlacement={SectionSeven?.Placement} Description={SectionSix?.Description} TitleSecond={SectionSeven?.Title}  />
-            <LandingSectionSix Title={SectionEight?.Title} FAQ_elements={SectionEight?.FAQ_elements} />
+            <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button}
+                                 Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
+            <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles}
+                                Button={SectionFive?.Button} titleSecond={SectionFive?.Title}/>
+            <LandingSectionFive Title={SectionSix?.Title} Button={SectionSix?.Button} Gallery={SectionSix?.Gallery}
+                                Route={SectionSeven?.Route} TitleSecondPlacement={SectionSeven?.Placement}
+                                Description={SectionSix?.Description} TitleSecond={SectionSeven?.Title}/>
+            <LandingSectionSix Title={SectionEight?.Title} FAQ_elements={SectionEight?.FAQ_elements}/>
         </Container>
     );
 }

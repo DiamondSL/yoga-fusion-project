@@ -56,7 +56,7 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button }:LandingC
                                     width: '100%', // Adjust size as needed
                                     height: 'auto',
                                     display: 'block',
-                                }} src={'http://localhost:1337' + item.Shape.url}/>
+                                }} src={item.Shape.url.includes('uploads') ? 'http://localhost:1337' + item.Shape.url : item.Shape.url}/>
                                 <Typography
                                     variant={'bodyXL'}
                                     sx={{

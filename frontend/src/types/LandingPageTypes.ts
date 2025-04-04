@@ -99,7 +99,7 @@ export interface RouteItem {
 
 export interface LandingSectionSevenContent {
     Title: string;
-    Placement: 'Left' | 'Right' | 'Center';
+    Placement: string;
     Route: RouteItem[];
 }
 
