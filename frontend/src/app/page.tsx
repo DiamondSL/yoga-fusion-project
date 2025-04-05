@@ -11,7 +11,6 @@ import LandingSectionFour from "@/Components/Landing/Section_Four";
 import LandingSectionFive from "@/Components/Landing/Section_Five";
 import LandingSectionSix from "@/Components/Landing/Section_Six";
 
-
 const useLandingPageSections = (): {
     data: content;
     loading: boolean;
@@ -23,16 +22,12 @@ const useLandingPageSections = (): {
             status: 'PUBLISHED'
         }
     });
-
-    console.log('standard query data', data)
     console.log('standard query error', {
         message: error,
         oneMore: error?.cause,
         twoMore: error?.extraInfo
     }, data)
-
     // Define default data
-
     // Memoize the merged data to prevent unnecessary re-renders
     const sectionsData = useMemo(() => {
         const defaultSections: content = {
@@ -158,15 +153,12 @@ const useLandingPageSections = (): {
                 }]
             }
         };
-
         const sections: Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
             return data !== null && index !== 0;
         }).map((data) => {
             return [data[0].replace(/_/g, ""), data[1]];
         })
-
         if (!data?.landingPage) return defaultSections;
-
         return {
             ...defaultSections,
             ...Object.fromEntries(
@@ -174,11 +166,9 @@ const useLandingPageSections = (): {
             ),
         };
     }, [data?.landingPage]);
-
     if (error) {
         console.error('Error fetching landing page data:', error);
     }
-
     return {
         data: sectionsData,
         loading,

@@ -1,5 +1,4 @@
 "use client";
-
 import { HttpLink } from "@apollo/client";
 import {
     ApolloNextAppProvider,
@@ -7,12 +6,9 @@ import {
     InMemoryCache,
 } from "@apollo/experimental-nextjs-app-support";
 
-interface makeClient {
-    uri?: string;
-}
 
 // have a function to create a client for you
-function makeClient({uri}:makeClient) {
+function makeClient(uri:string) {
     const env = process.env.NODE_ENV
     const httpLink = new HttpLink({
         // this needs to be an absolute url, as relative urls cannot be used in SSR
@@ -35,9 +31,10 @@ function makeClient({uri}:makeClient) {
 }
 
 // you need to create a component to wrap your app in
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
+export function ApolloWrapper({children}: {children: React.ReactNode}) {
+    const appUrl = process.env.NEXT_PUBLIC_URL;
     return (
-        <ApolloNextAppProvider makeClient={() => makeClient({uri: 'https://yoga-fusion-w3cqn.ondigitalocean.app'})}>
+        <ApolloNextAppProvider makeClient={() => makeClient(appUrl ?? 'https://yoga-fusion-w3cqn.ondigitalocean.app')}>
             {children}
         </ApolloNextAppProvider>
     );

@@ -5,6 +5,7 @@ import {LandingSectionTwoContent, ListDescriptionItem} from "@/types/LandingPage
 
 
 const IconListComponent = ({Icon, Description}: ListDescriptionItem) => {
+    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
     return (
         <Container component={'li'} maxWidth={false} sx={{
             display: 'flex',
@@ -16,7 +17,7 @@ const IconListComponent = ({Icon, Description}: ListDescriptionItem) => {
             flex: "50%"
         }}>
             <Box>
-                <CardMedia component={'img'} alt={Icon?.alt} src={process.env.NODE_ENV === 'development' && Icon?.url?.includes('uploads') ? 'http://localhost:1337' + Icon?.url : Icon?.url} sx={{objectFit: 'contain', width: Icon?.width, height: Icon?.height}}/>
+                <CardMedia component={'img'} alt={Icon?.alt} src={process.env.NODE_ENV === 'development' && Icon?.url?.includes('uploads') ? 'http://localhost:1337' + Icon?.url : process.env.NODE_ENV === 'production' && Icon?.url?.includes('uploads') ? `${appUrl}/cms`+Icon?.url : Icon?.url} sx={{objectFit: 'contain', width: Icon?.width, height: Icon?.height}}/>
             </Box>
             <Box sx={{maxWidth: '358px', width: '100%'}}>
                 <Typography variant={'body2'}>{Description ? Description : 'Blank'}</Typography>

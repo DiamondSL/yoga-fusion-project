@@ -10,6 +10,8 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                          variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"}>{item.Text}</ButtonEl>
     })
 
+    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
+
     return (
         <SectionWrapper id={'Landing-section-three'}>
             <Container maxWidth={false} sx={{
@@ -78,7 +80,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 <Box>
                     {Photos && Photos.length > 0 ?
                         <ImageSlider style={{border: '1px solid', borderColor: 'primary.dark'}}
-                                     images={Photos?.map((item) => process.env.NODE_ENV === 'development' ? 'http://localhost:1337'+item.url : item.url)}
+                                     images={Photos?.map((item) => process.env.NODE_ENV === 'development' ? 'http://localhost:1337'+item.url : process.env.NODE_ENV === 'production' && item?.url?.includes('uploads') ? `${appUrl}/cms`+item.url : item.url)}
                                      width={'700px'} height={'400px'} />
                         : <Box component={'img'} src={'icons/Visuals/SectionThree/about_us.png'}></Box>
                     }

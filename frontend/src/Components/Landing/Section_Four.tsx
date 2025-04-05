@@ -16,6 +16,7 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button }:LandingC
     const onMarqueeClick = () => {
         return router.refresh()
     }
+    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
 
     return (
         <SectionWrapper id={'Landing-section-four'}>
@@ -56,7 +57,7 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button }:LandingC
                                     width: '100%', // Adjust size as needed
                                     height: 'auto',
                                     display: 'block',
-                                }} src={process.env.NODE_ENV === 'development' && item.Shape.url.includes('uploads') ? 'http://localhost:1337' + item.Shape.url : item.Shape.url}/>
+                                }} src={process.env.NODE_ENV === 'development' && item.Shape.url.includes('uploads') ? 'http://localhost:1337' + item.Shape.url : process.env.NODE_ENV === 'production' && item.Shape.url.includes('uploads') ? `${appUrl}/cms`+item.Shape.url : item.Shape.url }/>
                                 <Typography
                                     variant={'bodyXL'}
                                     sx={{

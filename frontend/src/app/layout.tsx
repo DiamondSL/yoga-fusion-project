@@ -23,6 +23,7 @@ const footerPlaceholders = {
     socialMedia: [{to: '/', text: 'instagram'}, {to: '/', text: 'facebook'}]
 }
 
+
 export default function RootLayout({
                                        children,
                                    }: Readonly<{
