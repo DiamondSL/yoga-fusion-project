@@ -150,6 +150,7 @@ export const useGradientCloudsBackground = ({
                     });
                 }
             } catch (e) {
+                console.info(e)
                 const styleTag = document.createElement('style');
                 styleTag.textContent = cssRules + keyframesCSS;
                 document.head.appendChild(styleTag);
