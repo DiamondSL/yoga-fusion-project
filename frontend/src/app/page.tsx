@@ -1,5 +1,5 @@
 'use client'
-import {Container} from '@mui/material';
+import {Box, Container} from '@mui/material';
 import React, {useMemo} from "react";
 import {ApolloError, useQuery} from "@apollo/client";
 import {content} from "@/types/LandingPageTypes";
@@ -191,14 +191,16 @@ const Home = () => {
     } = sections.data
 
     return (
-        <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important'}}
+        <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important', overflowX: 'hidden'}}
                    className={'LandingPage'}>
             <LandingSectionOne Title={SectionOne?.Title} Buttons={SectionOne?.Buttons}/>
+            <Box id={'sections-gradient-container'}>
             <LandingSectionTwo Title={SectionTwo?.Title} List_Description={SectionTwo?.List_Description}/>
             <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button}
                                  Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
             <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles}
                                 Button={SectionFive?.Button} titleSecond={SectionFive?.Title}/>
+            </Box>
             <LandingSectionFive Title={SectionSix?.Title} Button={SectionSix?.Button} Gallery={SectionSix?.Gallery}
                                 Route={SectionSeven?.Route} TitleSecondPlacement={SectionSeven?.Placement}
                                 Description={SectionSix?.Description} TitleSecond={SectionSeven?.Title}/>
