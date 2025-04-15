@@ -3,20 +3,24 @@ import SectionWrapper from './SectionWrapper'
 import {Box, Container, Typography, Button as ButtonEl} from "@mui/material";
 import ImageSlider from "@/Components/Slider/Slider";
 import renderBlocks from "@/Helpers/BlockRender";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectionThreeContent) => {
+    const isPhone = useMediaQuery('(max-width:767px)')
+    const isSmallScreen = useMediaQuery('(max-width:425px)')
+    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
+
+
     const RenderedButtons = Button && Button.map((item) => {
-        return <ButtonEl key={item.Text} sx={{maxWidth: '239px', width: '100%'}}
+        return <ButtonEl key={item.Text} sx={{maxWidth: isPhone ? '100%' : '239px', width: '100%'}}
                          variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"}>{item.Text}</ButtonEl>
     })
-
-    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
 
     return (
         <SectionWrapper id={'Landing-section-three'}>
             <Container maxWidth={false} sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: isPhone ? 'column' : 'row',
                 justifyContent: 'flex-end',
                 position: 'relative',
                 gap: '40px',
@@ -26,38 +30,41 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 paddingRight: '0 !important'
             }}>
                 <Box component={'article'} className={'section-three-article'}
-                     sx={{maxWidth: '575px', display: 'flex', position: 'relative', flexDirection: 'column'}}>
+                     sx={{maxWidth: isPhone ? '100%' : '575px', padding: isPhone ? '0 30px' : '', display: 'flex', position: 'relative', flexDirection: 'column'}}>
                     <Box
                         component="img"
                         src={'icons/shapes/Section_Three_Shape.svg'}
                         alt={'Section Three'}
                         sx={{
-                            maxWidth: '575px',
-                            width: 'max-content',
-                            height: 'auto',
+                            maxWidth: isPhone ? '238px' : '575px',
+                            width: isPhone ? '100%' : 'max-content',
+                            height: isPhone ? '238px' : 'auto',
                             objectFit: 'contain',
-                            left: '-21%',
+                            right: isPhone ? '-5%' : '',
                             position: 'absolute',
-                            top: '17%',
+                            left: isPhone ? '' : '-21%',
+                            top: isPhone ? '' : '17%',
+                            transform: isPhone ? 'rotate(90deg) scale(1, -1)' : '',
                             transition: 'opacity 0.3s ease-in-out',
                         }}
                     />
-                    <Box className={'title'} display={'flex'} sx={{marginBottom: '8px', justifyContent: 'center'}}>
-                        {Title?.title && <Typography variant={'h1'}>{Title?.title}</Typography>}
+                    <Box className={'title'} display={'flex'} sx={{marginBottom: isPhone? '16px' : '8px', justifyContent: isPhone ? 'flex-start' : 'center'}}>
+                        {Title?.title && <Typography variant={isPhone ? 'h3' : 'h1'}>{Title?.title}</Typography>}
                     </Box>
-                    <Box className={'description'} sx={{display: 'flex', flexDirection: 'column', gap: '38px'}}>
+                    <Box className={'description'} sx={{display: 'flex', flexDirection: 'column', gap: isPhone ? '40px' : '38px'}}>
                         <Container maxWidth={false} sx={{
                             width: '100%',
                             display: 'flex',
-                            maxWidth: '460px',
+                            maxWidth: isSmallScreen ? '260px' : '460px',
                             flexDirection: 'column',
-                            gap: '38px',
+                            gap: isPhone? '30px' : '38px',
                             padding: '0 !important',
                             justifyContent: 'flex-end',
-                            marginRight: '0 !important'
+                            marginRight: isPhone ? '0' : '0',
+                            marginLeft: isPhone ? '0' : '',
                         }}>
-                            {Title?.motto && <Typography variant={'body1'}>{Title?.motto}</Typography>}
-                            {Description ? renderBlocks(Description) : <Box>
+                            {Title?.motto && <Typography fontSize={isPhone ? '14px' : '16px'} variant={'body1'}>{Title?.motto}</Typography>}
+                            {Description ? renderBlocks({content: Description, className: isPhone ? 'small' : ''}) : <Box>
                                 <Typography><Typography component={'strong'} variant={'body1'}>yoga
                                     fusion</Typography> – це це більше, ніж йога-студія. ми балансуємо між місцем
                                     наповнення та
@@ -71,7 +78,8 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                             display: 'flex',
                             flexDirection: 'row',
                             gap: '24px',
-                            justifyContent: 'end'
+                            justifyContent: isPhone ? 'center' : 'end',
+                            marginTop: isPhone ? '10px' : ''
                         }}>
                             {RenderedButtons && RenderedButtons.map((item) => item)}
                         </Container>

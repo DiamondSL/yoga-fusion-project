@@ -190,6 +190,7 @@ const Home = () => {
         SectionEight
     } = sections.data
 
+
     return (
         <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important', overflowX: 'hidden'}}
                    className={'LandingPage'}>

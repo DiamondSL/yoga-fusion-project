@@ -32,7 +32,8 @@ function makeClient(uri:string) {
 
 // you need to create a component to wrap your app in
 export function ApolloWrapper({children}: {children: React.ReactNode}) {
-    const appUrl = process.env.NEXT_PUBLIC_URL;
+    const appUrl = process.env.NEXT_PUBLIC_URL
+
     return (
         <ApolloNextAppProvider makeClient={() => makeClient(appUrl ?? 'https://yoga-fusion-w3cqn.ondigitalocean.app')}>
             {children}

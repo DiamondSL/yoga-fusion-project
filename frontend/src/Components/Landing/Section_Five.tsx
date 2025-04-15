@@ -34,7 +34,7 @@ const LandingSectionFive = ({Title, TitleSecond, TitleSecondPlacement, Route, Bu
                     </Box>
                     <Box className={'location-details'}>
                         {Route && Route.map(item => <Typography variant={'h6'} onClick={() => router.push(item.Link)} className={'location-link'} key={item.Title}>{item.Title}</Typography>)}
-                        {TitleSecondPlacement && typeof TitleSecondPlacement === 'object' ? <Box>{renderBlocks(TitleSecondPlacement)}</Box> : <><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}>Наш простір розташований біля парку Т.Г. Шевченко</Typography><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}> Місто Київ, вулиця Терещенківська, 21(сині двері, дзвінок зліва, -1 поверх)</Typography></>}
+                        {TitleSecondPlacement && typeof TitleSecondPlacement === 'object' ? <Box>{renderBlocks({content: TitleSecondPlacement})}</Box> : <><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}>Наш простір розташований біля парку Т.Г. Шевченко</Typography><Typography component={'span'} variant={'body2'} sx={{display: 'block'}}> Місто Київ, вулиця Терещенківська, 21(сині двері, дзвінок зліва, -1 поверх)</Typography></>}
                     </Box>
                     </Container>
                 </Box>
