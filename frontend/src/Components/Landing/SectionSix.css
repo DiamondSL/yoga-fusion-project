@@ -24,3 +24,20 @@
 .FAQ [id^="faq_item"] .MuiAccordionSummary-content {
     margin: 0 0 !important;
 }
+
+@media (max-width: 767px) {
+    .FAQ  {
+        gap: 10px;
+
+        & [class^="MuiAccordionDetails"] {
+            padding-top: 0;
+            padding-bottom: 14px;
+        }
+
+        &  [id^="faq_item"] * {
+            min-height: 54px;
+        }
+    }
+
+
+}

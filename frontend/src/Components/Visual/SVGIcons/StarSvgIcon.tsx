@@ -79,7 +79,7 @@ const StarSvgIcon: FC<StarSvgIconProps> = ({
                 cancelAnimationFrame(animationFrameRef.current);
             }
         };
-    }, [animated]);
+    }, [animated, style?.transform]);
 
     if (style?.width || style?.height) {
         const width = Number(style.width?.toString().replace("px", "")) ?? 22;

@@ -24,19 +24,27 @@ const SiteNavigation = ({linkItems}: SiteNavigationParams) => {
     const isPhone = useMediaQuery('(max-width: 767px)')
     const [menuOpen, setMenuOpen] = React.useState(false);
     const lang = useContext(LanguageContext);
+    const [siteLang, setLanguage] = React.useState<"uk-UA" | 'ru-RU' | 'en-US' | null>('uk-UA');
+
+    const changeLanguage = (langName: "uk-UA" | 'ru-RU' | 'en-US' | null) => {
+        setLanguage(langName);
+    }
 
     const LanguageComponent = ({language, children}: {language: "uk-UA" | 'ru-RU' | 'en-US' | null, children?: React.ReactNode}) => {
-        return (<Box className={'language-select'}>
+        return (
+            <LanguageContext.Provider value={language}>
+            <Box className={'language-select'}>
             <Typography variant="body2" fontSize={isPhone ? '18px' : '14px'} color={'textPrimary'}
                         sx={{
                             cursor: 'pointer',
                             textDecoration: 'none',
                             letterSpacing: '3%'
                         }}>
-                <span className={language?.includes('en') ? 'active' : ''}>en</span> | <span className={language?.includes('UA') ? 'active' : ''}>ukr</span>
+                <span onClick={() => changeLanguage("en-US")} className={language?.includes('en') ? 'active' : ''}>en</span> | <span onClick={() => changeLanguage("uk-UA")}  className={language?.includes('UA') ? 'active' : ''}>ukr</span>
             </Typography>
             {children}
-        </Box>)
+        </Box>
+            </LanguageContext.Provider>)
     }
 
 
@@ -84,7 +92,7 @@ const SiteNavigation = ({linkItems}: SiteNavigationParams) => {
                                 {link}
                             </Typography>
                         ))}
-                        {!isPhone && <LanguageComponent language={lang}></LanguageComponent>}
+                        {!isPhone && <LanguageComponent language={siteLang}></LanguageComponent>}
                         <Box>
                             <Box component={'img'} sx={{cursor: 'pointer'}}
                                  src={'icons/navigation/header-user.svg'}></Box>

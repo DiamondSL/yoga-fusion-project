@@ -8,11 +8,12 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectionThreeContent) => {
     const isPhone = useMediaQuery('(max-width:767px)')
     const isSmallScreen = useMediaQuery('(max-width:425px)')
+    const isTablet = useMediaQuery('(min-width:768px) and (max-width:1024px)')
     const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
 
 
     const RenderedButtons = Button && Button.map((item) => {
-        return <ButtonEl key={item.Text} sx={{maxWidth: isPhone ? '100%' : '239px', width: '100%'}}
+        return <ButtonEl key={item.Text} sx={{maxWidth: isPhone ? '330px' : '239px', width: '100%'}}
                          variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"}>{item.Text}</ButtonEl>
     })
 
@@ -20,7 +21,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
         <SectionWrapper id={'Landing-section-three'}>
             <Container maxWidth={false} sx={{
                 display: 'flex',
-                flexDirection: isPhone ? 'column' : 'row',
+                flexDirection: (isPhone || isTablet) ? 'column' : 'row',
                 justifyContent: 'flex-end',
                 position: 'relative',
                 gap: '40px',
@@ -30,7 +31,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 paddingRight: '0 !important'
             }}>
                 <Box component={'article'} className={'section-three-article'}
-                     sx={{maxWidth: isPhone ? '100%' : '575px', padding: isPhone ? '0 30px' : '', display: 'flex', position: 'relative', flexDirection: 'column'}}>
+                     sx={{maxWidth: isPhone ? '100%' : '575px', padding: (isPhone || isTablet) ? '0 30px' : '', display: 'flex', position: 'relative', flexDirection: 'column'}}>
                     <Box
                         component="img"
                         src={'icons/shapes/Section_Three_Shape.svg'}
@@ -63,8 +64,8 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                             marginRight: isPhone ? '0' : '0',
                             marginLeft: isPhone ? '0' : '',
                         }}>
-                            {Title?.motto && <Typography fontSize={isPhone ? '14px' : '16px'} variant={'body1'}>{Title?.motto}</Typography>}
-                            {Description ? renderBlocks({content: Description, className: isPhone ? 'small' : ''}) : <Box>
+                            {Title?.motto && <Typography fontSize={isPhone ? '14px' : '16px'} sx={isPhone ? {letterSpacing: '0', textWrap: 'nowrap'} : {}} variant={'body1'}>{Title?.motto}</Typography>}
+                            {Description ? renderBlocks({content: Description, className: isPhone ? 'small' : '', style: isPhone? {fontSize: '14px', letterSpacing: '0'} : {}}) : <Box>
                                 <Typography><Typography component={'strong'} variant={'body1'}>yoga
                                     fusion</Typography> – це це більше, ніж йога-студія. ми балансуємо між місцем
                                     наповнення та
@@ -89,7 +90,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                     {Photos && Photos.length > 0 ?
                         <ImageSlider style={{border: '1px solid', borderColor: 'primary.dark'}}
                                      images={Photos?.map((item) => process.env.NODE_ENV === 'development' ? 'http://localhost:1337'+item.url : process.env.NODE_ENV === 'production' && item?.url?.includes('uploads') ? `${appUrl}/cms`+item.url : item.url)}
-                                     width={'700px'} height={'400px'} />
+                                     width={(isPhone || isTablet) ? 'auto' : '700px'} height={isPhone ? '226px' : isTablet ? 'auto' : '400px'} />
                         : <Box component={'img'} src={'icons/Visuals/SectionThree/about_us.png'}></Box>
                     }
                 </Box>

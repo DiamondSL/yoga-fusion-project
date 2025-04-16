@@ -1,5 +1,5 @@
 'use client'
-import {createContext, useEffect, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 
 
 type languageType = 'uk-UA' | 'ru-RU' | 'en-US' | null
@@ -13,14 +13,13 @@ interface ContextWrapperProps {
 
 
 const ContextWrapper = ({children, language}:ContextWrapperProps) => {
-    const [lang, setLanguage] = useState<languageType>('uk-UA')
-
+    const [lang, setLanguage] = useState<languageType>(language ?? null)
 
     useEffect(() => {
-        if (language !== undefined && language !== null && lang !== language) {
+        if ((lang || language) !== undefined && (lang || language) !== null && language !== undefined) {
             setLanguage(language)
         }
-    }, [language])
+    }, [lang, language])
 
     return (
         <LanguageContext.Provider value={lang}>

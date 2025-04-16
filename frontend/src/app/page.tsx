@@ -1,6 +1,6 @@
 'use client'
 import {Box, Container} from '@mui/material';
-import React, {useMemo} from "react";
+import React, {useContext, useMemo} from "react";
 import {ApolloError, useQuery} from "@apollo/client";
 import {content} from "@/types/LandingPageTypes";
 import {LandingPageQuery} from "@/GraphQL/TSQueries/LandingPageQueries";
@@ -10,23 +10,23 @@ import LandingSectionThree from "@/Components/Landing/Section_Three";
 import LandingSectionFour from "@/Components/Landing/Section_Four";
 import LandingSectionFive from "@/Components/Landing/Section_Five";
 import LandingSectionSix from "@/Components/Landing/Section_Six";
+import {LanguageContext} from "@/app/ContextWrapper";
 
 const useLandingPageSections = (): {
     data: content;
     loading: boolean;
     error: ApolloError | undefined;
 } => {
+
+    const lang = useContext(LanguageContext);
     const {data, loading, error} = useQuery(LandingPageQuery, {
         variables: {
-            locale: 'uk-UA',
+            locale: lang ? lang : 'uk-UA',
             status: 'PUBLISHED'
         }
     });
-    console.log('standard query error', {
-        message: error,
-        oneMore: error?.cause,
-        twoMore: error?.extraInfo
-    }, data)
+
+
     // Define default data
     // Memoize the merged data to prevent unnecessary re-renders
     const sectionsData = useMemo(() => {

@@ -7,55 +7,54 @@ import './sectionOne.css'
 import {useGradientCloudsBackground} from "@/Helpers/DynamicGradient";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-const redGradient = <svg width="890" height="895" viewBox="0 0 890 895" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g filter="url(#filter0_f_7801_10339)">
-        <ellipse cx="444.893" cy="447.578" rx="324.511" ry="326.813" fill="#FE4538"/>
-    </g>
-    <defs>
-        <filter id="filter0_f_7801_10339" x="0.382812" y="0.764923" width="889.021" height="893.626"
-                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-            <feGaussianBlur stdDeviation="60" result="effect1_foregroundBlur_7801_10339"/>
-        </filter>
-    </defs>
-</svg>
-
-const yellowGradient = <svg width="719" height="725" viewBox="0 0 719 725" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-    <g filter="url(#filter0_f_7801_10338)">
-        <ellipse cx="359.202" cy="362.743" rx="299.202" ry="301.891" fill="#F7BE01"/>
-    </g>
-    <defs>
-        <filter id="filter0_f_7801_10338" x="0" y="0.851868" width="718.404" height="723.782"
-                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-            <feGaussianBlur stdDeviation="30" result="effect1_foregroundBlur_7801_10338"/>
-        </filter>
-    </defs>
-</svg>
-
-const pinkGradient = <svg width="1333" height="1340" viewBox="0 0 1333 1340" fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
-    <g filter="url(#filter0_f_7801_10337)">
-        <ellipse cx="666.761" cy="669.546" rx="466.238" ry="469.546" fill="#FF81BE"/>
-    </g>
-    <defs>
-        <filter id="filter0_f_7801_10337" x="0.523438" y="0" width="1332.48" height="1339.09"
-                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-            <feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur_7801_10337"/>
-        </filter>
-    </defs>
-</svg>
-
+// const redGradient = <svg width="890" height="895" viewBox="0 0 890 895" fill="none" xmlns="http://www.w3.org/2000/svg">
+//     <g filter="url(#filter0_f_7801_10339)">
+//         <ellipse cx="444.893" cy="447.578" rx="324.511" ry="326.813" fill="#FE4538"/>
+//     </g>
+//     <defs>
+//         <filter id="filter0_f_7801_10339" x="0.382812" y="0.764923" width="889.021" height="893.626"
+//                 filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+//             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+//             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+//             <feGaussianBlur stdDeviation="60" result="effect1_foregroundBlur_7801_10339"/>
+//         </filter>
+//     </defs>
+// </svg>
+//
+// const yellowGradient = <svg width="719" height="725" viewBox="0 0 719 725" fill="none"
+//                             xmlns="http://www.w3.org/2000/svg">
+//     <g filter="url(#filter0_f_7801_10338)">
+//         <ellipse cx="359.202" cy="362.743" rx="299.202" ry="301.891" fill="#F7BE01"/>
+//     </g>
+//     <defs>
+//         <filter id="filter0_f_7801_10338" x="0" y="0.851868" width="718.404" height="723.782"
+//                 filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+//             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+//             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+//             <feGaussianBlur stdDeviation="30" result="effect1_foregroundBlur_7801_10338"/>
+//         </filter>
+//     </defs>
+// </svg>
+//
+// const pinkGradient = <svg width="1333" height="1340" viewBox="0 0 1333 1340" fill="none"
+//                           xmlns="http://www.w3.org/2000/svg">
+//     <g filter="url(#filter0_f_7801_10337)">
+//         <ellipse cx="666.761" cy="669.546" rx="466.238" ry="469.546" fill="#FF81BE"/>
+//     </g>
+//     <defs>
+//         <filter id="filter0_f_7801_10337" x="0.523438" y="0" width="1332.48" height="1339.09"
+//                 filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+//             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+//             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+//             <feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur_7801_10337"/>
+//         </filter>
+//     </defs>
+// </svg>
+//
 
 const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
     const gradientColors = ['#FF81BE', '#F7BE01', '#FE4538']
     const isDesktop = useMediaQuery('(min-width:1200px)')
-    const isTabletLikeWidth = useMediaQuery('(min-width:768px) and (max-width: 1199px)')
     const isPhone = useMediaQuery('(max-width:767px)')
 
 
@@ -130,7 +129,7 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                         {Buttons && Buttons.length > 0 && Buttons.map((item) => {
                             return (
                                 <Button key={item.Text}
-                                        variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"}>{item.Text}</Button>
+                                        variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"} sx={isPhone ? {maxWidth: '330px'} : {}}>{item.Text}</Button>
                             )
                         })}
                     </Box>
