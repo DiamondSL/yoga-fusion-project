@@ -12,6 +12,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    @media (max-width: 767px) {
+        padding: 0 30px;
+        font-size: 14px;
+    }
 }
 
 .Footer .links-box .MuiList-root, .Footer .links-box .MuiList-root li {
@@ -26,6 +31,17 @@
     display: flex;
     flex-direction: row;
     gap: 106px;
+
+    @media (max-width: 767px) {
+        & {
+            gap: 0;
+            flex-direction: column;
+        }
+       & .footer-link, & #branding {
+           padding-top: 10px;
+           padding-bottom: 10px;
+       }
+    }
 }
 
 
@@ -38,4 +54,7 @@
 .Footer .footer-link, .Footer #branding {
     padding-top: 26px;
     padding-bottom: 26px;
+    @media (max-width: 767px) {
+        padding: 10px 0;
+    }
 }

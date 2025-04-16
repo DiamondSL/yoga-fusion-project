@@ -4,6 +4,8 @@
     background-size: 100%;
 }
 
+
+
 .marquee-item {
     background-color: inherit;
     padding: 12px 0;
@@ -19,4 +21,15 @@
     font-weight: normal;
     font-size: 30px !important;
     font-style: italic;
+}
+
+@media (max-width: 767px) {
+    .section-five {
+        background-size: 100% 150%;
+        background-position-y: 12%;
+    }
+
+    .marquee-item > p:first-child {
+        font-size: 18px !important;
+    }
 }

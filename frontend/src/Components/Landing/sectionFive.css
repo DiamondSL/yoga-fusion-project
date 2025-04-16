@@ -19,19 +19,22 @@
 .location {
     display: flex;
     justify-content: center;
+    position: relative;
     padding-top: 190px;
     height: 474px;
-    background-image: url("Section_Six_findUs.png");
-    background-repeat: no-repeat;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #E2D9B5 100%), url("Section_Six_findUs.png");
     background-size: 100% 460px;
     background-position-x: center;
     background-position-y: 80%;
 }
 
-.location-content {
+
+
+
+#Landing-section-five .location-content {
     display: flex;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    margin: 0;
     flex-direction: row;
     justify-content: center;
     max-width: 965px;
@@ -76,3 +79,76 @@
     font-weight: bold;
 }
 
+@media (max-width: 767px) {
+    .location {
+        background-size: 115% 115%;
+        background-position-y: 0;
+        padding-top: 110px;
+        height: auto;
+        padding-bottom: 120px;
+    }
+    #Landing-section-five .location-content {
+        flex-direction: column;
+        padding: 0 30px;
+    }
+
+    #Landing-section-five .location .location-details {
+        max-width: max-content;
+        text-wrap: balance;
+    }
+
+    .location-details .location-link, .location-content > .arrows {
+        display: none;
+    }
+
+    .mobile-route {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .mobile-route .location-link {
+        flex-basis: 60%;
+        font-size: 18px;
+        text-wrap: balance;
+        padding-top: 36px;
+    }
+
+    .mobile-route .arrows {
+        padding-left: 0;
+        padding-right: 0;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+
+    .mobile-route .arrows img {
+        position: relative;
+        &:first-child {
+            max-width: 48px;
+            height: 48px;
+            margin-left: 0;
+            rotate: 120deg;
+            transform: none;
+        }
+        &:last-child {
+            max-width: 56px;
+            margin-block-start: 20px;
+            rotate: 90deg;
+            transform: none;
+        }
+    }
+
+    .location-content .title {
+        padding-top: 0;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+    .bar-description {
+        background-size: 200% 200%;
+        background-position-y: 100%;
+        background-position-x: 100%;
+    }
+
+}

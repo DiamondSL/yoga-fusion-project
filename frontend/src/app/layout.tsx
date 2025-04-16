@@ -5,11 +5,13 @@ import type {Metadata} from 'next'
 import { Manrope } from "next/font/google";
 import NavBar from "@/Components/Navigation/NavBar";
 import Footer from "@/Components/Navigation/Footer";
+import ContextWrapper from "@/app/ContextWrapper";
 
 export const metadata: Metadata = {
     title: 'Yoga Fusion',
     description: 'Kyiv Based Yoga Studio'
 }
+
 const manrope = Manrope({subsets: ["cyrillic", "cyrillic-ext", "greek", "latin", "latin-ext", "vietnamese"]})
 
 const linkPlaceholders = [{link: 'наш простір', url: ''},
@@ -32,6 +34,7 @@ export default function RootLayout({
     return (
             <html lang="en">
             <body className={manrope.className}>
+            <ContextWrapper>
             <ApolloWrapper>
                 <MUIProvider>
                     <NavBar linkItems={linkPlaceholders} />
@@ -39,6 +42,7 @@ export default function RootLayout({
                     <Footer links={footerPlaceholders.links} socialMedia={footerPlaceholders.socialMedia} />
                 </MUIProvider>
             </ApolloWrapper>
+            </ContextWrapper>
             </body>
             </html>
     )

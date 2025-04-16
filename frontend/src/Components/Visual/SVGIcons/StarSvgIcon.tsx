@@ -22,8 +22,8 @@ const StarSvgIcon: FC<StarSvgIconProps> = ({
     const starRef = useRef<HTMLImageElement | SVGSVGElement>(null);
     const animationFrameRef = useRef<number | null>(null);
     const transformRef = useRef({
-        x: Math.random() * 6 - 3, // Reduced initial translate to -3 to 3px
-        y: Math.random() * 6 - 3,
+        x: style?.transform && style?.transform.includes('transformX') ? Number(style.transform?.replace( /[^\d.]/g, '' )) :Math.random() * 6 - 3, // Reduced initial translate to -3 to 3px
+        y: style?.transform && style?.transform.includes('transformY') ? Number(style.transform?.replace( /[^\d.]/g, '' )) : Math.random() * 6 - 3,
         scale: 1, // Initial scale
         rotate: Math.random() * 10 - 5, // Reduced initial rotation to -5 to 5deg
     });
@@ -33,15 +33,17 @@ const StarSvgIcon: FC<StarSvgIconProps> = ({
 
         const animateStar = () => {
             if (starRef.current) {
+                const transformX = style?.transform && style?.transform.includes('transformX');
+                const transformY = style?.transform && style?.transform.includes('transformY') ;
                 // Translation (reduced range)
                 const getRandomOffset = () => Math.random() * 3 + 5; // 5-8px instead of 10-15px
                 const directionX = Math.random() > 0.5 ? 1 : -1;
                 const directionY = Math.random() > 0.5 ? 1 : -1;
 
-                let newX = transformRef.current.x + getRandomOffset() * directionX;
-                let newY = transformRef.current.y + getRandomOffset() * directionY;
-                newX = Math.max(-10, Math.min(10, newX)); // Reduced boundary to ±10px
-                newY = Math.max(-10, Math.min(10, newY));
+                let newX = transformX ? transformRef.current.x : transformRef.current.x + getRandomOffset() * directionX;
+                let newY = transformY ? transformRef.current.y : transformRef.current.y + getRandomOffset() * directionY;
+                newX = transformX ? newX : Math.max(-10, Math.min(10, newX)); // Reduced boundary to ±10px
+                newY = transformY ? newY : Math.max(-10, Math.min(10, newY));
 
                 // Scaling (more subtle)
                 const scaleDirection = Math.random() > 0.5 ? 1 : -1;
@@ -77,7 +79,7 @@ const StarSvgIcon: FC<StarSvgIconProps> = ({
                 cancelAnimationFrame(animationFrameRef.current);
             }
         };
-    }, [animated]);
+    }, [animated, style?.transform]);
 
     if (style?.width || style?.height) {
         const width = Number(style.width?.toString().replace("px", "")) ?? 22;
@@ -86,6 +88,7 @@ const StarSvgIcon: FC<StarSvgIconProps> = ({
             <Image
                 ref={starRef as React.RefObject<HTMLImageElement>}
                 color="primary"
+                className={className ?? undefined}
                 src="/icons/stars/star.svg"
                 width={width}
                 height={height}

@@ -2,6 +2,7 @@
 import {Box, Container, List, ListItem, Typography, useTheme} from "@mui/material";
 import Link from "next/link";
 import './footer.css'
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface footerTypes {
     links?: {
@@ -19,9 +20,11 @@ const Footer = ({links, socialMedia}: footerTypes) => {
     const theme = useTheme();
     const chunk1 = links && links.slice(0, links.length / 2);
     const chunk2 = links && links.slice(links.length / 2, links.length);
+    const isPhone = useMediaQuery('(max-width:767px)')
+
 
     return (
-        <Container className={'Footer'} maxWidth={false}
+        <Container className={'Footer'} component={'footer'} maxWidth={false}
                    sx={{paddingLeft: '0 !important', paddingRight: '0 !important', backgroundColor: 'secondary.dark'}}>
             <Box className={'links-box'}>
                 <Box className={'links_left'}>
@@ -56,7 +59,7 @@ const Footer = ({links, socialMedia}: footerTypes) => {
                             </ListItem>)
                         }
                     </List>
-                    <Typography id={'branding'} color={'secondary.light'} fontWeight={200} variant={'body1'}>yoga fusion, 2025</Typography>
+                    <Typography id={'branding'} color={'secondary.light'} fontWeight={200} variant={isPhone? 'body2' : 'body1'}>yoga fusion, 2025</Typography>
                 </Box>
             </Box>
         </Container>

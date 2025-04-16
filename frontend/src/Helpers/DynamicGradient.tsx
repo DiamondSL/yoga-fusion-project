@@ -1,5 +1,5 @@
 // hooks/useGradientCloudsBackground.ts
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 
 interface GradientCloudsOptions {
     colors: string[]; // Array of HEX color strings
@@ -150,7 +150,8 @@ export const useGradientCloudsBackground = ({
                     });
                 }
             } catch (e) {
-                console.info(e)
+                const errorLog = `Error inserting CSS rules into stylesheet: ${e}`;
+                console.error(errorLog);
                 const styleTag = document.createElement('style');
                 styleTag.textContent = cssRules + keyframesCSS;
                 document.head.appendChild(styleTag);
@@ -182,3 +183,155 @@ export const useGradientCloudsBackground = ({
     }, [colors, targetElementId, animationDuration, variant]);
 };
 
+// interface SvgElementOptions {
+//     svgElements: JSX.Element[]; // Array of SVG React elements
+//     targetElementId: string; // ID of the target element
+//     animationDuration?: number; // Base duration in seconds (default: 20s)
+// }
+
+// export const useSvgElementBackground = ({
+//                                             svgElements,
+//                                             targetElementId,
+//                                             animationDuration = 20,
+//                                         }: SvgElementOptions) => {
+//     useEffect(() => {
+//         const applySvgElements = () => {
+//             const targetElement = document.getElementById(targetElementId);
+//             if (!targetElement || !svgElements.length) return;
+//
+//             targetElement.style.position = 'relative';
+//             targetElement.style.overflow = 'hidden';
+//
+//             // Create background container
+//             const backgroundElement = document.createElement('div');
+//             const backgroundId = `svg-background-layer-${targetElementId}-${Date.now()}`;
+//             backgroundElement.id = backgroundId;
+//             backgroundElement.style.position = 'absolute';
+//             backgroundElement.style.top = '0';
+//             backgroundElement.style.left = '0';
+//             backgroundElement.style.width = '100%';
+//             backgroundElement.style.height = '100%';
+//             backgroundElement.style.zIndex = '-1';
+//             backgroundElement.style.pointerEvents = 'none';
+//
+//             // Append to target element
+//             targetElement.appendChild(backgroundElement);
+//
+//             const styleSheet = document.styleSheets[0];
+//
+//             // Process each SVG element
+//             svgElements.forEach((svgElement, index) => {
+//                 // Convert JSX to DOM string (simplified; assumes static SVG structure)
+//                 const svgString = `
+//           <svg width="${svgElement.props.width}" height="${svgElement.props.height}" viewBox="${svgElement.props.viewBox}" fill="none" xmlns="http://www.w3.org/2000/svg">
+//             <g filter="url(#filter${index}-${backgroundId})">
+//               <ellipse cx="${svgElement.props.children[0].props.children.props.cx}"
+//                        cy="${svgElement.props.children[0].props.children.props.cy}"
+//                        rx="${svgElement.props.children[0].props.children.props.rx}"
+//                        ry="${svgElement.props.children[0].props.children.props.ry}"
+//                        fill="${svgElement.props.children[0].props.children.props.fill}"/>
+//             </g>
+//             <defs>
+//               <filter id="filter${index}-${backgroundId}"
+//                       x="${svgElement.props.children[1].props.children.props.x}"
+//                       y="${svgElement.props.children[1].props.children.props.y}"
+//                       width="${svgElement.props.children[1].props.children.props.width}"
+//                       height="${svgElement.props.children[1].props.children.props.height}"
+//                       filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+//                 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+//                 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+//                 <feGaussianBlur stdDeviation="${30 + Math.random() * 70}" result="effect1_foregroundBlur_${index}"/>
+//               </filter>
+//             </defs>
+//           </svg>
+//         `;
+//
+//                 // Create SVG DOM element
+//                 const parser = new DOMParser();
+//                 const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+//                 const svgNode = svgDoc.documentElement;
+//
+//                 // Unique ID for this SVG
+//                 const svgId = `svg-ellipse-${index}-${backgroundId}`;
+//                 svgNode.id = svgId;
+//
+//                 // Style SVG for absolute positioning and animation
+//                 svgNode.style.position = 'absolute';
+//                 // Center SVG within container, adjusting for its size
+//                 const offsetX = (parseFloat(svgElement.props.width) - targetElement.clientWidth) / 2;
+//                 const offsetY = (parseFloat(svgElement.props.height) - targetElement.clientHeight) / 2;
+//                 svgNode.style.left = `-${offsetX}px`;
+//                 svgNode.style.top = `-${offsetY}px`;
+//                 svgNode.style.width = svgElement.props.width + 'px';
+//                 svgNode.style.height = svgElement.props.height + 'px';
+//
+//                 // Append SVG to background element
+//                 backgroundElement.appendChild(svgNode);
+//
+//                 // Random animation
+//                 const animationName = `svgShift${index}-${backgroundId}`;
+//                 const maxMove = 10; // Max % movement relative to container
+//                 const scaleRange = 0.1; // Max scale variation
+//                 const cssRules = `
+//           #${svgId} {
+//             animation: ${animationName} ${animationDuration + index * 5}s ease infinite;
+//           }
+//           @keyframes ${animationName} {
+//             0% {
+//               transform: translate(0%, 0%) scale(1);
+//               opacity: 1.0;
+//             }
+//             25% {
+//               transform: translate(${Math.random() * maxMove - maxMove / 2}%, ${Math.random() * maxMove - maxMove / 2}%) scale(${1 + Math.random() * scaleRange});
+//               opacity: 0.85;
+//             }
+//             50% {
+//               transform: translate(${Math.random() * maxMove - maxMove / 2}%, ${Math.random() * maxMove - maxMove / 2}%) scale(${1 + Math.random() * scaleRange});
+//               opacity: 0.95;
+//             }
+//             75% {
+//               transform: translate(${Math.random() * maxMove - maxMove / 2}%, ${Math.random() * maxMove - maxMove / 2}%) scale(${1 + Math.random() * scaleRange});
+//               opacity: 0.9;
+//             }
+//             100% {
+//               transform: translate(0%, 0%) scale(1);
+//               opacity: 1.0;
+//             }
+//           }
+//         `;
+//
+//                 try {
+//                     styleSheet.insertRule(cssRules.split('}')[0] + '}', styleSheet.cssRules.length);
+//                     styleSheet.insertRule(cssRules.split('}')[1] + '}', styleSheet.cssRules.length);
+//                 } catch (e) {
+//                     const styleTag = document.createElement('style');
+//                     styleTag.textContent = cssRules;
+//                     document.head.appendChild(styleTag);
+//                 }
+//             });
+//         };
+//
+//         applySvgElements();
+//
+//         return () => {
+//             const targetElement = document.getElementById(targetElementId);
+//             if (targetElement) {
+//                 const backgroundIdMatch = Array.from(targetElement.children).find(child =>
+//                     child.id.startsWith(`svg-background-layer-${targetElementId}-`)) as HTMLElement | undefined;
+//                 if (backgroundIdMatch) {
+//                     targetElement.removeChild(backgroundIdMatch);
+//                 }
+//                 const styleSheet = document.styleSheets[0];
+//                 for (let i = styleSheet.cssRules.length - 1; i >= 0; i--) {
+//                     const rule = styleSheet.cssRules[i] as CSSStyleRule | CSSKeyframesRule;
+//                     if ((rule as CSSStyleRule).selectorText?.includes(`svg-background-layer-${targetElementId}`) ||
+//                         (rule as CSSKeyframesRule).name?.includes(`svgShift`)) {
+//                         styleSheet.deleteRule(i);
+//                     }
+//                 }
+//                 targetElement.style.position = '';
+//                 targetElement.style.overflow = '';
+//             }
+//         };
+//     }, [svgElements, targetElementId, animationDuration]);
+// };

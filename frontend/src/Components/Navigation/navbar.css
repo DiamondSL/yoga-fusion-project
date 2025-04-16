@@ -1,17 +1,70 @@
-
-
 .language-select {
- display: flex;
- flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .language-select .active {
- font-weight: 700;
+    font-weight: 700;
 }
 
 
 @media (max-width: 960px) {
- .MuiBox-root[data-dropdown] {
-  transition: all 0.3s ease-in-out;
- }
+    .MuiBox-root[data-dropdown] {
+        transition: all 1s ease-in-out;
+    }
 }
+
+.mobile-menu_button {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    width: 18px;
+    height: 10px;
+    gap: 6px;
+    transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu_button * {
+    transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu_button:hover, .mui-1nw0amb-MuiButtonBase-root-MuiButton-root.mobile-menu_button:hover {
+    background: transparent;
+}
+
+.mobile-menu_button.active {
+    height: auto;
+    width: 22px;
+    gap: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu_button:before, .mobile-menu_button:after {
+    position: relative;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    border: 1px solid;
+    border-radius: 2px;
+    background-color: #282828;
+    transition: all 1s ease-in-out;
+}
+
+.mobile-menu_button.active:before {
+    transform: rotate(45deg);
+    top: 2px;
+}
+
+.mobile-menu_button.active:after {
+    transform: rotate(-45deg);
+}
+
+
+@media (max-width: 767px) {
+    .actions {
+        align-self: center;
+    }
+}
+
