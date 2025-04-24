@@ -1,0 +1,24 @@
+fragment Class on Class {
+    documentId
+    Name
+    Photo {
+        height
+        width
+        url
+        alternativeText
+    }
+    Description
+    teachers {
+        ...Teacher
+    }
+    Discipline {
+        Name
+        Experience
+    }
+    Intensity
+    Information
+    Time {
+        Beginning
+        Minutes
+    }
+}

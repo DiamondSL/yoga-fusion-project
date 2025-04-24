@@ -113,7 +113,7 @@ const OriginalTheme = createTheme(
                 main: colors.brand.beige,
                 dark: colors.brand.black,
                 light: '#EEEEEE',
-                contrastText: '#FFFFFF'
+                contrastText: '#FFFFFF',
             },
             secondary: {
                 main: colors.brand.yellow,

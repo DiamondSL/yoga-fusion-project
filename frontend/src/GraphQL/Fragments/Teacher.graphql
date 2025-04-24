@@ -1,0 +1,20 @@
+
+
+fragment Teacher on Teacher {
+    documentId
+    Active
+    Name
+    Disciplines {
+        Name
+        Active
+        Experience
+    }
+    Photo {
+        url
+        width
+        height
+        alternativeText
+    }
+    Description
+    Rating
+}

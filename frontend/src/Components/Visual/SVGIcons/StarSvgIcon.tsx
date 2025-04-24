@@ -22,10 +22,10 @@ const StarSvgIcon: FC<StarSvgIconProps> = ({
     const starRef = useRef<HTMLImageElement | SVGSVGElement>(null);
     const animationFrameRef = useRef<number | null>(null);
     const transformRef = useRef({
-        x: style?.transform && style?.transform.includes('transformX') ? Number(style.transform?.replace( /[^\d.]/g, '' )) :Math.random() * 6 - 3, // Reduced initial translate to -3 to 3px
-        y: style?.transform && style?.transform.includes('transformY') ? Number(style.transform?.replace( /[^\d.]/g, '' )) : Math.random() * 6 - 3,
+        x: !animated && style?.transform && style?.transform.includes('transformX') ? Number(style.transform?.replace( /[^\d.]/g, '' )) : Math.random() * 6 - 3, // Reduced initial translate to -3 to 3px
+        y: !animated && style?.transform && style?.transform.includes('transformY') ? Number(style.transform?.replace( /[^\d.]/g, '' )) : Math.random() * 6 - 3,
         scale: 1, // Initial scale
-        rotate: Math.random() * 10 - 5, // Reduced initial rotation to -5 to 5deg
+        rotate: !animated ? Math.random() * 10 - 5 : 0, // Reduced initial rotation to -5 to 5deg
     });
 
     useEffect(() => {
@@ -62,16 +62,16 @@ const StarSvgIcon: FC<StarSvgIconProps> = ({
                 transformRef.current.rotate = newRotate;
 
                 // Apply combined transform
-                starRef.current.style.transform = `translate(${newX}px, ${newY}px) scale(${newScale}) rotate(${newRotate}deg)`;
+                starRef.current.style.transform = animated ? `translate(${newX}px, ${newY}px) scale(${newScale}) rotate(${newRotate}deg)` : 'none';
             }
 
             animationFrameRef.current = requestAnimationFrame(animateStar);
         };
 
         // Set initial transform
-        starRef.current.style.transform = `translate(${transformRef.current.x}px, ${transformRef.current.y}px) 
+        starRef.current.style.transform = animated ? `translate(${transformRef.current.x}px, ${transformRef.current.y}px) 
       scale(${transformRef.current.scale}) 
-      rotate(${transformRef.current.rotate}deg)`;
+      rotate(${transformRef.current.rotate}deg)` : 'none';
         animationFrameRef.current = requestAnimationFrame(animateStar);
 
         return () => {

@@ -1,0 +1,104 @@
+#classes-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    .classes {
+        margin-top: 60px;
+        margin-bottom: 120px;
+        max-width: 960px;
+        width: 100%;
+        .heading {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .classes-list {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            flex-wrap: wrap;
+            transition: all 200ms ease-in-out;
+            .class-card {
+                display: flex;
+                position: relative;
+                border: 1px solid;
+                cursor: pointer;
+                transition: all 200ms ease-in-out;
+                align-items: end;
+
+                .class-content {
+                    position: relative;
+                    z-index: 5;
+                    width: 100%;
+                    transition: all 200ms ease-in-out;
+                    padding: 10px 34px 0;
+                    .title {
+                        display: flex;
+                        flex-direction: row;
+                        transition: all 200ms ease-in-out;
+                        gap: 28px;
+                        position: relative;
+                        padding-bottom: 10px;
+
+                        h1, h2, h3, h4, h5, h6, p {
+                            text-transform: lowercase;
+                            transition: all 200ms ease-in-out;
+                            align-self: center;
+                        }
+
+                        .intensity-wrapper {
+                            display: flex;
+                            transition: all 200ms ease-in-out;
+                            flex-direction: row;
+                            gap: 10px;
+                            img {
+                                transition: all 200ms ease-in-out;
+                            }
+                        }
+                    }
+                    .class-description {
+                        margin-top: 0;
+                        transition: all 200ms ease-in-out;
+                        height: 1px;
+                    }
+                }
+            }
+            .class-card:hover {
+                align-items: flex-start;
+                transform: scale(1.1);
+                .class-content {
+                    height: 100%;
+                    .class-description {
+                        height: 104px;
+                        margin-top: 58px;
+                    }
+                }
+            }
+        }
+    }
+    .actions {
+        padding-top: 140px;
+        padding-bottom: 60px;
+        display: flex;
+        background-size: 100vw;
+        justify-content: center;
+        max-width: 100vw;
+        width: 100%;
+        .actions-content {
+            max-width: 960px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            h1, h2, h3, h4, h5, h6, p {
+                max-width: 440px;
+                width: 100%;
+            }
+            button {
+                max-width: 273px;
+                width: 100%;
+            }
+        }
+    }
+}

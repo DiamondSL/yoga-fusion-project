@@ -1,0 +1,57 @@
+#teachers-content {
+    background-repeat: no-repeat;
+    background-position: -25% -75%;
+    .cards, .actions {
+        max-width: 960px;
+        width: 100%;
+        justify-self: center;
+        align-self: center;
+    }
+    .cards {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        padding-top: 100px;
+        padding-bottom: 100px;
+        .teacher-card {
+            transition: all 200ms ease-in-out;
+        }
+        .teacher-card:hover {
+            transform: scale(1.05);
+        }
+    }
+    .actions {
+        padding-top: 64px;
+        padding-bottom: 64px;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        button {
+            align-self: center;
+            max-width: 274px;
+            width: 100%;
+        }
+    }
+
+    .rating {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        padding-right: 17px;
+        padding-top: 17px;
+        .rating-content {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr;
+            margin-left: auto;
+            :first-child, .rating-text {
+                grid-column: 1/-1;
+                grid-row: 1/-1;
+            }
+            .rating-text {
+                text-align: center;
+                align-self: center;
+            }
+        }
+    }
+}

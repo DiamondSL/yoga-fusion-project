@@ -1,0 +1,123 @@
+#teacher-content {
+    background-repeat: no-repeat;
+    background-position: 100% 25%;
+    background-clip: content-box;
+
+    @media (max-width: 767px) {
+        background-position: initial;
+    }
+
+    .teacher {
+        margin-top: 60px;
+        margin-bottom: 80px;
+        max-width: 960px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        flex-direction: column;
+        @media (max-width: 767px) {
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-top: 0;
+        }
+
+
+        .teacher-info {
+            display: grid;
+            grid-auto-columns: minmax(200px, 460px) minmax(200px, 460px);
+            column-gap: 40px;
+            grid-auto-rows: auto auto;
+            grid-template-areas:
+                "title photo"
+    "description photo";
+            @media (max-width: 767px) {
+                display: flex;
+                flex-direction: column;
+                grid-auto-columns: max-content;
+                grid-template-areas: none;
+                max-width: 100vw;
+                width: 100%;
+            }
+
+            .title {
+                grid-area: title;
+                max-width: 460px;
+                width: 100%;
+                height: fit-content;
+                text-wrap: nowrap;
+                margin-bottom: 24px;
+                @media (max-width: 1024px) {
+                    max-width: max-content;
+                    text-wrap: balance;
+                    margin-top: 32px;
+                }
+                h1, h2, h3, h4, h5, h6, p {
+                    @media (max-width: 1024px) {
+                        font-size: 40px;
+                    }
+                }
+            }
+
+            .description {
+                display: flex;
+                flex-direction: column;
+                gap: 36px;
+                max-width: 460px;
+                width: 100%;
+                grid-area: description;
+                height: fit-content;
+
+                p.description-item {
+                    font-weight: 400;
+                }
+            }
+
+            .photo {
+                padding-top: 32px;
+                display: flex;
+
+                @media (max-width: 767px) {
+                    padding-top: 16px;
+                }
+
+                img {
+                    border: 1px solid black;
+                    object-fit: cover;
+                    width: 100%;
+                    height: 290px;
+                }
+
+                width: 100%;
+                grid-area: photo;
+            }
+        }
+        .teacher-skills {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 80px;
+            border-radius: 50px;
+            border: 1px solid;
+            padding: 8px 120px;
+            justify-content: space-between;
+            @media (max-width: 1024px) {
+                justify-content: space-evenly;
+                padding: 8px 24px;
+            }
+            .skill-item {
+                display: flex;
+                flex-direction: row;
+                gap: 14px;
+                .skill-title {
+                    font-weight: 500;
+                    font-style: normal;
+                    font-size: 20px;
+                    color: #ffffff;
+                    text-transform: lowercase;
+                    align-self: center;
+                }
+            }
+        }
+    }
+}

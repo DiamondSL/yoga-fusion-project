@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_event_times",
+  "info": {
+    "displayName": "Event Time",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Beginning": {
+      "type": "datetime",
+      "required": true
+    },
+    "Minutes": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 30
+    }
+  }
+}
