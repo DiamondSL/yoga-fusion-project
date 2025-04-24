@@ -246,9 +246,67 @@ type ComponentSharedQuote {
     motto: String
 }
 
+enum ENUM_COMPONENTSHAREDMETHOD_NAME {
+    Hatha_yoga
+    Power_yoga
+    Vinyasa_flow
+    Kundalini
+    Stretching
+}
+
+enum ENUM_COMPONENTSHAREDMETHOD_EXPERIENCE {
+    beginner
+    standard
+    professional
+    master
+}
+
+input ComponentSharedMethodFiltersInput {
+    Name: StringFilterInput
+    Experience: StringFilterInput
+    Active: BooleanFilterInput
+    and: [ComponentSharedMethodFiltersInput]
+    or: [ComponentSharedMethodFiltersInput]
+    not: ComponentSharedMethodFiltersInput
+}
+
+input ComponentSharedMethodInput {
+    id: ID
+    Name: ENUM_COMPONENTSHAREDMETHOD_NAME
+    Experience: ENUM_COMPONENTSHAREDMETHOD_EXPERIENCE
+    Active: Boolean
+}
+
+type ComponentSharedMethod {
+    id: ID!
+    Name: ENUM_COMPONENTSHAREDMETHOD_NAME!
+    Experience: ENUM_COMPONENTSHAREDMETHOD_EXPERIENCE!
+    Active: Boolean
+}
+
 type ComponentSharedMedia {
     id: ID!
     file: UploadFile
+}
+
+input ComponentSharedEventTimeFiltersInput {
+    Beginning: DateTimeFilterInput
+    Minutes: IntFilterInput
+    and: [ComponentSharedEventTimeFiltersInput]
+    or: [ComponentSharedEventTimeFiltersInput]
+    not: ComponentSharedEventTimeFiltersInput
+}
+
+input ComponentSharedEventTimeInput {
+    id: ID
+    Beginning: DateTime
+    Minutes: Int
+}
+
+type ComponentSharedEventTime {
+    id: ID!
+    Beginning: DateTime!
+    Minutes: Int!
 }
 
 enum ENUM_COMPONENTSECTIONTITLE_PLACEMENT {
@@ -727,6 +785,7 @@ input UsersPermissionsUserFiltersInput {
     confirmed: BooleanFilterInput
     blocked: BooleanFilterInput
     role: UsersPermissionsRoleFiltersInput
+    bookings: BookingFiltersInput
     createdAt: DateTimeFilterInput
     updatedAt: DateTimeFilterInput
     publishedAt: DateTimeFilterInput
@@ -742,6 +801,7 @@ input UsersPermissionsUserInput {
     confirmed: Boolean
     blocked: Boolean
     role: ID
+    bookings: [ID]
     publishedAt: DateTime
     password: String
 }
@@ -754,6 +814,8 @@ type UsersPermissionsUser {
     confirmed: Boolean
     blocked: Boolean
     role: UsersPermissionsRole
+    bookings_connection(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BookingRelationResponseCollection
+    bookings(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Booking]!
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
@@ -882,6 +944,47 @@ type AuthorEntityResponseCollection {
     pageInfo: Pagination!
 }
 
+input BookingFiltersInput {
+    documentId: IDFilterInput
+    users_permissions_user: UsersPermissionsUserFiltersInput
+    class: ClassFiltersInput
+    createdAt: DateTimeFilterInput
+    updatedAt: DateTimeFilterInput
+    publishedAt: DateTimeFilterInput
+    locale: StringFilterInput
+    localizations: BookingFiltersInput
+    and: [BookingFiltersInput]
+    or: [BookingFiltersInput]
+    not: BookingFiltersInput
+}
+
+input BookingInput {
+    users_permissions_user: ID
+    class: ID
+    publishedAt: DateTime
+}
+
+type Booking {
+    documentId: ID!
+    users_permissions_user: UsersPermissionsUser
+    class: Class
+    createdAt: DateTime
+    updatedAt: DateTime
+    publishedAt: DateTime
+    locale: String
+    localizations_connection(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BookingRelationResponseCollection
+    localizations(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Booking]!
+}
+
+type BookingEntityResponseCollection {
+    nodes: [Booking!]!
+    pageInfo: Pagination!
+}
+
+type BookingRelationResponseCollection {
+    nodes: [Booking!]!
+}
+
 input CategoryFiltersInput {
     documentId: IDFilterInput
     name: StringFilterInput
@@ -919,6 +1022,71 @@ type Category {
 type CategoryEntityResponseCollection {
     nodes: [Category!]!
     pageInfo: Pagination!
+}
+
+enum ENUM_CLASS_INTENSITY {
+    low_1
+    medium_2
+    high_3
+}
+
+input ClassFiltersInput {
+    documentId: IDFilterInput
+    Name: StringFilterInput
+    Discipline: ComponentSharedMethodFiltersInput
+    Intensity: StringFilterInput
+    Information: StringFilterInput
+    Description: JSONFilterInput
+    bookings: BookingFiltersInput
+    teachers: TeacherFiltersInput
+    Time: ComponentSharedEventTimeFiltersInput
+    createdAt: DateTimeFilterInput
+    updatedAt: DateTimeFilterInput
+    publishedAt: DateTimeFilterInput
+    and: [ClassFiltersInput]
+    or: [ClassFiltersInput]
+    not: ClassFiltersInput
+}
+
+input ClassInput {
+    Name: String
+    Discipline: ComponentSharedMethodInput
+    Intensity: ENUM_CLASS_INTENSITY
+    Information: String
+    Photo: [ID]
+    Description: JSON
+    bookings: [ID]
+    teachers: [ID]
+    Time: ComponentSharedEventTimeInput
+    publishedAt: DateTime
+}
+
+type Class {
+    documentId: ID!
+    Name: String!
+    Discipline: ComponentSharedMethod
+    Intensity: ENUM_CLASS_INTENSITY
+    Information: String
+    Photo_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+    Photo(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+    Description: JSON
+    bookings_connection(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BookingRelationResponseCollection
+    bookings(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Booking]!
+    teachers_connection(filters: TeacherFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeacherRelationResponseCollection
+    teachers(filters: TeacherFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Teacher]!
+    Time: ComponentSharedEventTime
+    createdAt: DateTime
+    updatedAt: DateTime
+    publishedAt: DateTime
+}
+
+type ClassEntityResponseCollection {
+    nodes: [Class!]!
+    pageInfo: Pagination!
+}
+
+type ClassRelationResponseCollection {
+    nodes: [Class!]!
 }
 
 input GlobalInput {
@@ -974,7 +1142,63 @@ type LandingPageRelationResponseCollection {
     nodes: [LandingPage!]!
 }
 
-union GenericMorph = ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedMedia | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | About | Article | Author | Category | Global | LandingPage
+input TeacherFiltersInput {
+    documentId: IDFilterInput
+    Name: StringFilterInput
+    Active: BooleanFilterInput
+    Description: JSONFilterInput
+    Rating: FloatFilterInput
+    Disciplines: ComponentSharedMethodFiltersInput
+    classes: ClassFiltersInput
+    createdAt: DateTimeFilterInput
+    updatedAt: DateTimeFilterInput
+    publishedAt: DateTimeFilterInput
+    locale: StringFilterInput
+    localizations: TeacherFiltersInput
+    and: [TeacherFiltersInput]
+    or: [TeacherFiltersInput]
+    not: TeacherFiltersInput
+}
+
+input TeacherInput {
+    Photo: ID
+    Name: String
+    Active: Boolean
+    Description: JSON
+    Rating: Float
+    Disciplines: [ComponentSharedMethodInput]
+    classes: [ID]
+    publishedAt: DateTime
+}
+
+type Teacher {
+    documentId: ID!
+    Photo: UploadFile
+    Name: String!
+    Active: Boolean
+    Description: JSON
+    Rating: Float
+    Disciplines(filters: ComponentSharedMethodFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedMethod]
+    classes_connection(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ClassRelationResponseCollection
+    classes(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Class]!
+    createdAt: DateTime
+    updatedAt: DateTime
+    publishedAt: DateTime
+    locale: String
+    localizations_connection(filters: TeacherFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeacherRelationResponseCollection
+    localizations(filters: TeacherFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Teacher]!
+}
+
+type TeacherEntityResponseCollection {
+    nodes: [Teacher!]!
+    pageInfo: Pagination!
+}
+
+type TeacherRelationResponseCollection {
+    nodes: [Teacher!]!
+}
+
+union GenericMorph = ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedMethod | ComponentSharedMedia | ComponentSharedEventTime | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | About | Article | Author | Booking | Category | Class | Global | LandingPage | Teacher
 
 input FileInfoInput {
     name: String
@@ -1068,9 +1292,37 @@ type Query {
     author(documentId: ID!, status: PublicationStatus = PUBLISHED): Author
     authors_connection(filters: AuthorFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): AuthorEntityResponseCollection
     authors(filters: AuthorFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Author]!
+    booking(
+        documentId: ID!
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Booking
+    bookings_connection(
+        filters: BookingFiltersInput
+        pagination: PaginationArg = {}
+        sort: [String] = []
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): BookingEntityResponseCollection
+    bookings(
+        filters: BookingFiltersInput
+        pagination: PaginationArg = {}
+        sort: [String] = []
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): [Booking]!
     category(documentId: ID!, status: PublicationStatus = PUBLISHED): Category
     categories_connection(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): CategoryEntityResponseCollection
     categories(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Category]!
+    class(documentId: ID!, status: PublicationStatus = PUBLISHED): Class
+    classes_connection(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ClassEntityResponseCollection
+    classes(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Class]!
     global(status: PublicationStatus = PUBLISHED): Global
     landingPage(
         status: PublicationStatus = PUBLISHED
@@ -1078,6 +1330,31 @@ type Query {
         """The locale to use for the query"""
         locale: I18NLocaleCode
     ): LandingPage
+    teacher(
+        documentId: ID!
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Teacher
+    teachers_connection(
+        filters: TeacherFiltersInput
+        pagination: PaginationArg = {}
+        sort: [String] = []
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): TeacherEntityResponseCollection
+    teachers(
+        filters: TeacherFiltersInput
+        pagination: PaginationArg = {}
+        sort: [String] = []
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): [Teacher]!
     me: UsersPermissionsMe
 }
 
@@ -1096,9 +1373,33 @@ type Mutation {
     createAuthor(status: PublicationStatus = PUBLISHED, data: AuthorInput!): Author
     updateAuthor(documentId: ID!, status: PublicationStatus = PUBLISHED, data: AuthorInput!): Author
     deleteAuthor(documentId: ID!): DeleteMutationResponse
+    createBooking(
+        status: PublicationStatus = PUBLISHED
+        data: BookingInput!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Booking
+    updateBooking(
+        documentId: ID!
+        status: PublicationStatus = PUBLISHED
+        data: BookingInput!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Booking
+    deleteBooking(
+        documentId: ID!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): DeleteMutationResponse
     createCategory(status: PublicationStatus = PUBLISHED, data: CategoryInput!): Category
     updateCategory(documentId: ID!, status: PublicationStatus = PUBLISHED, data: CategoryInput!): Category
     deleteCategory(documentId: ID!): DeleteMutationResponse
+    createClass(status: PublicationStatus = PUBLISHED, data: ClassInput!): Class
+    updateClass(documentId: ID!, status: PublicationStatus = PUBLISHED, data: ClassInput!): Class
+    deleteClass(documentId: ID!): DeleteMutationResponse
     updateGlobal(status: PublicationStatus = PUBLISHED, data: GlobalInput!): Global
     deleteGlobal: DeleteMutationResponse
     updateLandingPage(
@@ -1109,6 +1410,27 @@ type Mutation {
         locale: I18NLocaleCode
     ): LandingPage
     deleteLandingPage(
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): DeleteMutationResponse
+    createTeacher(
+        status: PublicationStatus = PUBLISHED
+        data: TeacherInput!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Teacher
+    updateTeacher(
+        documentId: ID!
+        status: PublicationStatus = PUBLISHED
+        data: TeacherInput!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Teacher
+    deleteTeacher(
+        documentId: ID!
+
         """The locale to use for the query"""
         locale: I18NLocaleCode
     ): DeleteMutationResponse

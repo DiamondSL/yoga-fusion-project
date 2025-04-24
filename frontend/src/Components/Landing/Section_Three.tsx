@@ -4,6 +4,7 @@ import {Box, Container, Typography, Button as ButtonEl} from "@mui/material";
 import ImageSlider from "@/Components/Slider/Slider";
 import renderBlocks from "@/Helpers/BlockRender";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import './section_three.css'
 
 const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectionThreeContent) => {
     const isPhone = useMediaQuery('(max-width:767px)')
@@ -31,25 +32,25 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 paddingRight: '0 !important'
             }}>
                 <Box component={'article'} className={'section-three-article'}
-                     sx={{maxWidth: isPhone ? '100%' : '575px', padding: (isPhone || isTablet) ? '0 30px' : '', display: 'flex', position: 'relative', flexDirection: 'column'}}>
-                    <Box
-                        component="img"
-                        src={'icons/shapes/Section_Three_Shape.svg'}
-                        alt={'Section Three'}
-                        sx={{
-                            maxWidth: isPhone ? '238px' : '575px',
-                            width: isPhone ? '100%' : 'max-content',
-                            height: isPhone ? '238px' : 'auto',
-                            objectFit: 'contain',
-                            right: isPhone ? '-5%' : '',
-                            position: 'absolute',
-                            left: isPhone ? '' : '-21%',
-                            top: isPhone ? '' : '17%',
-                            transform: isPhone ? 'rotate(90deg) scale(1, -1)' : '',
-                            transition: 'opacity 0.3s ease-in-out',
-                        }}
-                    />
-                    <Box className={'title'} display={'flex'} sx={{marginBottom: isPhone? '16px' : '8px', justifyContent: isPhone ? 'flex-start' : 'center'}}>
+                     sx={{maxWidth: (isPhone || isTablet) ? '100%' : '575px', padding: (isPhone || isTablet) ? '0 30px' : '', display: 'flex', position: 'relative', flexDirection: 'column'}}>
+                    {/*<Box*/}
+                    {/*    component="img"*/}
+                    {/*    src={'icons/shapes/Section_Three_Shape.svg'}*/}
+                    {/*    alt={'Section Three'}*/}
+                    {/*    sx={{*/}
+                    {/*        maxWidth: isPhone ? '238px' : '575px',*/}
+                    {/*        width: isPhone ? '100%' : 'max-content',*/}
+                    {/*        height: isPhone ? '238px' : 'auto',*/}
+                    {/*        objectFit: 'contain',*/}
+                    {/*        right: isPhone ? '-5%' : '',*/}
+                    {/*        position: 'absolute',*/}
+                    {/*        left: isPhone ? '' : '-21%',*/}
+                    {/*        top: isPhone ? '' : '17%',*/}
+                    {/*        transform: isPhone ? 'rotate(90deg) scale(1, -1)' : '',*/}
+                    {/*        transition: 'opacity 0.3s ease-in-out',*/}
+                    {/*    }}*/}
+                    {/*/>*/}
+                    <Box className={'title'} display={'flex'} sx={{marginBottom: isPhone? '16px' : '8px', justifyContent: 'flex-start'}}>
                         {Title?.title && <Typography variant={isPhone ? 'h3' : 'h1'}>{Title?.title}</Typography>}
                     </Box>
                     <Box className={'description'} sx={{display: 'flex', flexDirection: 'column', gap: isPhone ? '40px' : '38px'}}>
@@ -61,8 +62,8 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                             gap: isPhone? '30px' : '38px',
                             padding: '0 !important',
                             justifyContent: 'flex-end',
-                            marginRight: isPhone ? '0' : '0',
-                            marginLeft: isPhone ? '0' : '',
+                            marginRight: (isPhone || isTablet) ? '0' : '0',
+                            marginLeft: (isPhone || isTablet) ? '0' : '',
                         }}>
                             {Title?.motto && <Typography fontSize={isPhone ? '14px' : '16px'} sx={isPhone ? {letterSpacing: '0', textWrap: 'nowrap'} : {}} variant={'body1'}>{Title?.motto}</Typography>}
                             {Description ? renderBlocks({content: Description, className: isPhone ? 'small' : '', style: isPhone? {fontSize: '14px', letterSpacing: '0'} : {}}) : <Box>

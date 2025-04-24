@@ -1,24 +1,5 @@
 import {gql} from "@apollo/client";
 
-
-export const LandingPageQuery1 = gql`
-    query LandingPage {
-      landingPage(status: PUBLISHED, locale: "uk-UA") {
-          documentId
-          Section_One {
-              Title {
-                  Title
-                  Placement
-              }
-              Buttons {
-                  Action
-                  Variant
-                  Text
-              }
-          }
-      }  
-    }`
-
 export const LandingPageQuery = gql`
     query LandingPage($status: PublicationStatus, $locale: I18NLocaleCode) {
         landingPage(status: $status, locale: $locale) {

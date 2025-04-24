@@ -1,0 +1,5 @@
+query Teachers {
+    teachers {
+        ...Teacher
+    }
+}

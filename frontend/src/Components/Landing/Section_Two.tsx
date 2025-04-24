@@ -38,6 +38,7 @@ const LandingSectionTwo = ({
 
     const isPhone = useMediaQuery('(max-width:767px)')
     const isSmallScreen = useMediaQuery('(max-width:425px)')
+    const isTablet = useMediaQuery('(min-width:768px) and (max-width:1024px)')
     useGradientCloudsBackground({
         colors: ["#F7BE00", "#FE5347"],
         targetElementId: 'sections-gradient-container',
@@ -55,7 +56,7 @@ const LandingSectionTwo = ({
                 flexDirection: 'column'
             }}>
                 <Box className={'title'} sx={{
-                    padding: isPhone ? '0 30px 0 30px' : '',
+                    padding: isPhone ? '0 30px 0 30px' : isTablet ? '0 30px 0 30px' : '',
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: Title?.Placement === 'Center' ? 'center' : Title?.Placement === 'Left' ? 'flex=start' : Title?.Placement === 'Right' ? 'flex-end' : 'center'
@@ -64,11 +65,11 @@ const LandingSectionTwo = ({
                 </Box>
                 <Box className={'Icon-description-list'} component={'ul'} sx={{
                     display: 'grid',
-                    gridTemplateColumns: isSmallScreen ? '100%' : isPhone ? '50% 50%' : 'calc(50% - 50px) calc(50% - 50px)',
+                    gridTemplateColumns: isSmallScreen ? '100%' : isPhone ? '1fr 1fr' : 'calc(50% - 50px) calc(50% - 50px)',
                     rowGap: isSmallScreen ? '22px' : '40px',
                     columnGap: isPhone ? '1em' : '50px',
                     justifyContent: 'space-between',
-                    padding: isPhone ? '0 30px' : '0',
+                    padding: (isPhone || isTablet) ? '0 30px' : '0',
                     margin: isPhone ? '16px 0 0 0 0' : '34px 0 0 0'
                 }}>
                     {List_Description?.map((item) => {

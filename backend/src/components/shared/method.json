@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_shared_methods",
+  "info": {
+    "displayName": "Method",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "enumeration",
+      "enum": [
+        "Hatha yoga",
+        "Power yoga",
+        "Vinyasa flow",
+        "Kundalini",
+        "Stretching"
+      ],
+      "required": true
+    },
+    "Experience": {
+      "type": "enumeration",
+      "enum": [
+        "beginner",
+        "standard",
+        "professional",
+        "master"
+      ],
+      "required": true,
+      "default": "beginner"
+    },
+    "Active": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    }
+  }
+}

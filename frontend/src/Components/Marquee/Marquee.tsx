@@ -1,11 +1,11 @@
 'use client'; // Ensure client-side rendering for Next.js
 
-import React, { FC, useEffect, useRef, useState } from 'react';
-import { Box, styled, SxProps } from '@mui/material';
-import { Theme } from '@mui/system';
+import React, {FC, useEffect, useRef, useState} from 'react';
+import {Box, CSSProperties, styled, SxProps} from '@mui/material';
+import {Theme} from '@mui/system';
 
 // Styled component for the marquee container
-const MarqueeContainer = styled(Box)(({ theme }) => ({
+const MarqueeContainer = styled(Box)(({theme}) => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     width: '100%',
@@ -21,34 +21,35 @@ interface MarqueeProps {
     style?: SxProps<Theme>;
     onClick?: () => void;
     gap?: number | string;
+    reverse?: boolean
 }
 
 // Styled component for the animated wrapper
 const Wrapper = styled(Box, {
     shouldForwardProp: (prop) => prop !== 'speed',
-})<{ speed: number }>(({ speed }) => ({
+})<{ speed: number }>(({speed}) => ({
     display: 'inline-block',
     animation: `marquee ${speed}s linear infinite`,
     '&:hover': {
         animationPlayState: 'paused',
     },
     '@keyframes marquee': {
-        '0%': { transform: 'translateX(0)' },
-        '100%': { transform: 'translateX(-50%)' },
+        '0%': {transform: 'translateX(-50%)'},
+        '100%': {transform: 'translateX(0%)'},
     },
 }));
 
 // Styled component for content with flex layout
 const MarqueeContent = styled(Box, {
     shouldForwardProp: (prop) => prop !== 'gap',
-})<{ gap: number | string }>(({ gap }) => ({
+})<{ gap: number | string }>(({gap}) => ({
     display: 'flex',
     gap: typeof gap === 'number' ? `${gap}px` : gap,
     flexShrink: 0,
 }));
 
 // Responsive adjustments for animation speed
-const ResponsiveWrapper = styled(Wrapper)(({ theme }) => ({
+const ResponsiveWrapper = styled(Wrapper)(({theme}) => ({
     [theme.breakpoints.down('sm')]: {
         animationDuration: '15s',
     },
@@ -67,6 +68,7 @@ const Marquee: FC<MarqueeProps> = ({
                                        content,
                                        speed = 40,
                                        gap = 18,
+                                       reverse = false,
                                    }) => {
     const [containerWidth, setContainerWidth] = useState(0);
     const [contentWidth, setContentWidth] = useState(0);
@@ -101,17 +103,25 @@ const Marquee: FC<MarqueeProps> = ({
         : 10;
 
     // Debugging output
-    console.log({ containerWidth, contentWidth, repeatCount });
+    console.log({containerWidth, contentWidth, repeatCount});
+
+    const reverseAnimation = {
+        '@keyframes marquee': {
+            '0%': {transform: 'translateX(0%)'},
+            '100%': {transform: 'translateX(-50%)'},
+        }
+    } as CSSProperties
 
     return (
         <MarqueeContainer ref={containerRef} onClick={onClick} sx={style}>
-            <ResponsiveWrapper speed={speed}>
+            <ResponsiveWrapper speed={speed} style={reverse ?
+                reverseAnimation : {}}>
                 <MarqueeContent gap={gap}>
-                    {Array.from({ length: repeatCount }).map((_, index) => (
+                    {Array.from({length: repeatCount}).map((_, index) => (
                         <Box
                             key={`first-${index}`}
                             ref={index === 0 ? contentRef : null}
-                            sx={{ display: 'inline-block' }}
+                            sx={{display: 'inline-block'}}
                         >
                             {marqueeContent}
                         </Box>

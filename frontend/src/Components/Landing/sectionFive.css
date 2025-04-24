@@ -111,6 +111,7 @@
         font-size: 18px;
         text-wrap: balance;
         padding-top: 36px;
+        flex-grow: 2;
     }
 
     .mobile-route .arrows {

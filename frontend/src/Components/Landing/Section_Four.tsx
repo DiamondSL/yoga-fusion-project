@@ -108,7 +108,7 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button}: LandingC
                 <Typography variant={'body2'}>book now</Typography>
                 <ArrowRightAltIcon/>
                 </Box>
-            } style={{backgroundColor: 'secondary.light', display: 'flex', animationComposition: 'add', animationDirection: 'reverse'}} onClick={onMarqueeClick} speed={60} />
+            } style={{backgroundColor: 'secondary.light', display: 'flex', animationComposition: 'add'}} onClick={onMarqueeClick} speed={60} />
         </SectionWrapper>
     )
 }

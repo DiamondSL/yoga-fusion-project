@@ -17,15 +17,15 @@ const useLandingPageSections = (): {
     loading: boolean;
     error: ApolloError | undefined;
 } => {
+    const {language} = useContext(LanguageContext);
 
-    const lang = useContext(LanguageContext);
     const {data, loading, error} = useQuery(LandingPageQuery, {
         variables: {
-            locale: lang ? lang : 'uk-UA',
+            locale: language ?? 'uk-UA',
             status: 'PUBLISHED'
-        }
+        },
+        context: { fetchOptions: { cache: 'no-store' } },
     });
-
 
     // Define default data
     // Memoize the merged data to prevent unnecessary re-renders
@@ -40,7 +40,7 @@ const useLandingPageSections = (): {
                 Buttons: [{Text: 'fusion me, now', Variant: 'primary', Action: undefined}],
             },
             SectionTwo: {
-                Title: {Title: 'Why us?', Placement: 'Center'},
+                Title: {Title: 'Why us?', Placement: 'Left'},
                 List_Description: [
                     {
                         Description: 'безпечний простір в самому центрі Києва: у нас завжди тепло, затишно та є світло',

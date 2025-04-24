@@ -189,6 +189,26 @@ export interface SectionTitle extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedEventTime extends Struct.ComponentSchema {
+  collectionName: 'components_shared_event_times';
+  info: {
+    description: '';
+    displayName: 'Event Time';
+  };
+  attributes: {
+    Beginning: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    Minutes: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<30>;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -197,6 +217,26 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
   attributes: {
     file: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+  };
+}
+
+export interface SharedMethod extends Struct.ComponentSchema {
+  collectionName: 'components_shared_methods';
+  info: {
+    description: '';
+    displayName: 'Method';
+  };
+  attributes: {
+    Active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    Experience: Schema.Attribute.Enumeration<
+      ['beginner', 'standard', 'professional', 'master']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'beginner'>;
+    Name: Schema.Attribute.Enumeration<
+      ['Hatha yoga', 'Power yoga', 'Vinyasa flow', 'Kundalini', 'Stretching']
+    > &
+      Schema.Attribute.Required;
   };
 }
 
@@ -269,7 +309,9 @@ declare module '@strapi/strapi' {
       'section.icon-description': SectionIconDescription;
       'section.shape-title': SectionShapeTitle;
       'section.title': SectionTitle;
+      'shared.event-time': SharedEventTime;
       'shared.media': SharedMedia;
+      'shared.method': SharedMethod;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;

@@ -6,6 +6,7 @@ import { Manrope } from "next/font/google";
 import NavBar from "@/Components/Navigation/NavBar";
 import Footer from "@/Components/Navigation/Footer";
 import ContextWrapper from "@/app/ContextWrapper";
+import './global.css';
 
 export const metadata: Metadata = {
     title: 'Yoga Fusion',
@@ -15,13 +16,13 @@ export const metadata: Metadata = {
 const manrope = Manrope({subsets: ["cyrillic", "cyrillic-ext", "greek", "latin", "latin-ext", "vietnamese"]})
 
 const linkPlaceholders = [{link: 'наш простір', url: ''},
-    {link: 'розклад', url: ''}, {link: 'вчителі', url: ''}, {link: 'тренування', url: ''}, {
+    {link: 'розклад', url: ''}, {link: 'вчителі', url: 'teachers'}, {link: 'тренування', url: 'classes'}, {
         link: 'ціни',
         url: ''
     }, {link: 'контакти', url: ''}];
 
 const footerPlaceholders = {
-    links: [{to: '/', text: 'тренування'}, {to: '/', text: 'ціни'}, {to: '/', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: '/', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: '/', text: 'вчителі'}],
+    links: [{to: 'classes', text: 'тренування'}, {to: '/', text: 'ціни'}, {to: '/', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: '/', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: 'teachers', text: 'вчителі'}],
     socialMedia: [{to: '/', text: 'instagram'}, {to: '/', text: 'facebook'}]
 }
 
@@ -34,7 +35,7 @@ export default function RootLayout({
     return (
             <html lang="en">
             <body className={manrope.className}>
-            <ContextWrapper>
+            <ContextWrapper initialLanguage={'uk-UA'}>
             <ApolloWrapper>
                 <MUIProvider>
                     <NavBar linkItems={linkPlaceholders} />

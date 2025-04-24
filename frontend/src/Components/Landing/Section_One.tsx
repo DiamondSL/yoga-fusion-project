@@ -7,51 +7,6 @@ import './sectionOne.css'
 import {useGradientCloudsBackground} from "@/Helpers/DynamicGradient";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-// const redGradient = <svg width="890" height="895" viewBox="0 0 890 895" fill="none" xmlns="http://www.w3.org/2000/svg">
-//     <g filter="url(#filter0_f_7801_10339)">
-//         <ellipse cx="444.893" cy="447.578" rx="324.511" ry="326.813" fill="#FE4538"/>
-//     </g>
-//     <defs>
-//         <filter id="filter0_f_7801_10339" x="0.382812" y="0.764923" width="889.021" height="893.626"
-//                 filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-//             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-//             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-//             <feGaussianBlur stdDeviation="60" result="effect1_foregroundBlur_7801_10339"/>
-//         </filter>
-//     </defs>
-// </svg>
-//
-// const yellowGradient = <svg width="719" height="725" viewBox="0 0 719 725" fill="none"
-//                             xmlns="http://www.w3.org/2000/svg">
-//     <g filter="url(#filter0_f_7801_10338)">
-//         <ellipse cx="359.202" cy="362.743" rx="299.202" ry="301.891" fill="#F7BE01"/>
-//     </g>
-//     <defs>
-//         <filter id="filter0_f_7801_10338" x="0" y="0.851868" width="718.404" height="723.782"
-//                 filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-//             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-//             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-//             <feGaussianBlur stdDeviation="30" result="effect1_foregroundBlur_7801_10338"/>
-//         </filter>
-//     </defs>
-// </svg>
-//
-// const pinkGradient = <svg width="1333" height="1340" viewBox="0 0 1333 1340" fill="none"
-//                           xmlns="http://www.w3.org/2000/svg">
-//     <g filter="url(#filter0_f_7801_10337)">
-//         <ellipse cx="666.761" cy="669.546" rx="466.238" ry="469.546" fill="#FF81BE"/>
-//     </g>
-//     <defs>
-//         <filter id="filter0_f_7801_10337" x="0.523438" y="0" width="1332.48" height="1339.09"
-//                 filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-//             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-//             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-//             <feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur_7801_10337"/>
-//         </filter>
-//     </defs>
-// </svg>
-//
-
 const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
     const gradientColors = ['#FF81BE', '#F7BE01', '#FE4538']
     const isDesktop = useMediaQuery('(min-width:1200px)')
@@ -68,7 +23,7 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
 
     return (
         <SectionWrapper id={'Landing-section-one'} sx={{
-            minHeight: isDesktop ? '666px' :  'initial',
+            minHeight: isDesktop ? '588px' :  'initial',
             marginTop: '78px'
         }}>
             <Container maxWidth={false} sx={{
@@ -82,12 +37,12 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                      sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: isPhone ? '19px' : ''}}>
                     <Box className={'left'} sx={{display: 'flex', flexDirection: 'row-reverse', gap: isPhone ? '30px' : '18px'}}>
                         <StarSvgIcon className={'upper'} style={{width: '22px', height: '29px'}}
-                                     animated={true}/>
+                                     animated={!isPhone}/>
                         <StarSvgIcon className={'down'} style={{transform: 'translateY(22px)', width: '15.125px', height: '19.9375px'}}
-                                     animated={true}/>
+                                     animated={!isPhone}/>
                     </Box>
                     <Box className={'right'} sx={{alignSelf: isPhone ? 'flex-start' : 'flex-end'}}>
-                        <StarSvgIcon style={{width: '15.125px', height: '19.9375px '}} animated={true}/>
+                        <StarSvgIcon style={{width: '15.125px', height: '19.9375px '}} animated={!isPhone}/>
                     </Box>
                 </Box>
                 <Box className={'Title'} sx={{
@@ -125,20 +80,20 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                     </Box>
                     }
                     <Box className={'actions'}
-                         sx={{display: 'flex', order: isPhone ? '3' : 'initial', justifySelf: 'stretch', flexDirection: 'column', alignSelf: 'stretch'}}>
+                         sx={{display: 'flex', order: isPhone ? '3' : 'initial', width: isPhone ? '100%' : 'initial', justifySelf: 'stretch', flexDirection: 'column', alignSelf: isPhone ? 'center' : 'stretch'}}>
                         {Buttons && Buttons.length > 0 && Buttons.map((item) => {
                             return (
                                 <Button key={item.Text}
-                                        variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"} sx={isPhone ? {maxWidth: '330px'} : {}}>{item.Text}</Button>
+                                        variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"} sx={isPhone ? {maxWidth: '330px', width: '100%', alignSelf: 'center'} : {maxWidth: '234px'}}>{item.Text}</Button>
                             )
                         })}
                     </Box>
                     <Box className={isPhone ? 'upper-stars' : 'right'}
-                         sx={{display: 'flex', alignSelf: 'flex-end', flexDirection: 'column-reverse', gap: '14px', marginBottom: '34px'}}>
+                         sx={{display: 'flex', alignSelf: 'flex-end', flexDirection: 'column-reverse', gap: '14px'}}>
                         <StarSvgIcon className={'upper'} style={{width: '15.125px', height: '19.9375px'}}
-                                     animated={true}/>
+                                     animated={!isPhone}/>
                         <StarSvgIcon className={'down'} style={{width: '22px', height: '29px', marginLeft: '26px'}}
-                                     animated={true}/>
+                                     animated={!isPhone}/>
                     </Box>
                 </Box>
             </Container>

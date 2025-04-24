@@ -1,31 +1,92 @@
-'use client'
-import React, {createContext, useEffect, useState} from "react";
+'use client';
+import React, {createContext, Dispatch, SetStateAction, useEffect, useMemo, useState} from 'react';
 
+type LanguageType = 'uk-UA' | 'ru-RU' | 'en-US';
 
-type languageType = 'uk-UA' | 'ru-RU' | 'en-US' | null
-
-export const LanguageContext = createContext<languageType>(null)
+interface LanguageContext {
+    language: LanguageType;
+    setLanguage: Dispatch<SetStateAction<LanguageType>>;
+}
 
 interface ContextWrapperProps {
-    children: React.ReactNode;
-    language?: languageType
+    children?: React.ReactNode;
+    initialLanguage?: LanguageType;
 }
 
+export const LanguageContext = createContext<LanguageContext>({
+    language: 'uk-UA', // Default fallback
+    setLanguage: () => {}, // No-op fallback
+});
 
-const ContextWrapper = ({children, language}:ContextWrapperProps) => {
-    const [lang, setLanguage] = useState<languageType>(language ?? null)
+const ContextWrapper = ({ children, initialLanguage }: ContextWrapperProps) => {
+    // Use initialLanguage or 'uk-UA' during SSR
+    const [lang, setLang] = useState<LanguageType>(initialLanguage ?? 'uk-UA');
+    const [isClient, setIsClient] = useState(false);
 
+    // Mark as client-side after mount
     useEffect(() => {
-        if ((lang || language) !== undefined && (lang || language) !== null && language !== undefined) {
-            setLanguage(language)
+        setIsClient(true);
+    }, []);
+
+    // Load stored language or geolocation on client-side only
+    useEffect(() => {
+        if (!isClient) return;
+
+        // Check localStorage first
+        const storedLang = localStorage.getItem('language') as LanguageType | null;
+        if (storedLang) {
+            setLang(storedLang);
+            return;
         }
-    }, [lang, language])
+
+        // Fallback to geolocation if no stored language
+        if (!initialLanguage && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    try {
+                        const isUkraine = await checkIfUkraine(position.coords.latitude, position.coords.longitude);
+                        setLang(isUkraine ? 'uk-UA' : 'en-US');
+                    } catch (error) {
+                        console.info('Error detecting location:', error);
+                        setLang('en-US');
+                    }
+                },
+                (error) => {
+                    console.info('Geolocation error:', error);
+                    setLang('en-US');
+                }
+            );
+        } else {
+            console.warn('Geolocation not supported or initialLanguage provided');
+            setLang(initialLanguage ?? 'en-US');
+        }
+    }, [isClient, initialLanguage]);
+
+    // Sync language to localStorage when it changes
+    useEffect(() => {
+        if (isClient) {
+            localStorage.setItem('language', lang);
+        }
+    }, [lang, isClient]);
+
+    const checkIfUkraine = async (lat: number, lon: number): Promise<boolean> => {
+         // Placeholder
+        return lat > 44 && lat < 52 && lon > 22 && lon < 40;
+    };
+
+    const languageValue = useMemo(
+        () => ({
+            language: lang,
+            setLanguage: setLang,
+        }),
+        [lang]
+    );
 
     return (
-        <LanguageContext.Provider value={lang}>
+        <LanguageContext.Provider value={languageValue}>
             {children}
         </LanguageContext.Provider>
-    )
-}
+    );
+};
 
-export default ContextWrapper
+export default ContextWrapper;
