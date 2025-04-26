@@ -20,15 +20,12 @@
         "images"
       ]
     },
-    "Description": {
-      "type": "text"
-    },
     "Button": {
       "type": "component",
       "repeatable": false,
       "component": "section.button"
     },
-    "Description2": {
+    "Description": {
       "type": "blocks"
     }
   }

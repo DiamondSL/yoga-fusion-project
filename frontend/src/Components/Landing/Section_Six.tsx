@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import renderBlocks from "@/Helpers/BlockRender";
 import './SectionSix.css'
 
-const LandingSectionSix = ({Title, FAQ_detailed}:LandingSectionEightContent) => {
+const LandingSectionSix = ({Title, FAQ_elements}:LandingSectionEightContent) => {
     const isPhone = useMediaQuery('(max-width:767px)')
 
     return (
@@ -16,7 +16,7 @@ const LandingSectionSix = ({Title, FAQ_detailed}:LandingSectionEightContent) => 
                     {Title && <Typography variant={isPhone ? 'h2' : 'h1'} sx={{alignSelf: Title.Placement === 'Left' ? 'flex-start' : Title.Placement === 'Right' ? 'flex-end' : Title?.Placement === 'Center' ? 'center' : undefined}}>{Title?.Title}</Typography>}
                 </Box>
                 <Box className={'FAQ'} sx={{paddingBottom: '80px', maxWidth: '962px', width: '100%'}}>
-                    {FAQ_detailed && FAQ_detailed?.length > 0 && FAQ_detailed?.map((item, index) =>
+                    {FAQ_elements && FAQ_elements?.length > 0 && FAQ_elements?.map((item, index) =>
                         <Accordion key={item.Title} slotProps={{ heading: { component: 'div' } }} id={`faq_item-${index+1}`} sx={{borderColor: 'primary.dark'}}  className={'FAQ-accordion'}>
                             <AccordionSummary
                                 expandIcon={<AddOutlined height={14} width={14} sx={{color: 'primary.dark', width: '14px', height: '14px'}} />}

@@ -76,8 +76,7 @@ export interface LandingSectionFourContent {
 }
 
 export interface LandingSectionFiveContent {
-    Title: string;
-    Title2?: BlocksContent
+    Title?: BlocksContent
     Button: ButtonItem;
 }
 
@@ -90,8 +89,7 @@ interface GalleryItem {
 export interface LandingSectionSixContent {
     Button?: ButtonItem;
     Title?: TitleItem;
-    Description?: string;
-    Description2?: BlocksContent;
+    Description?: BlocksContent;
     Gallery?: GalleryItem[];
 }
 
@@ -114,7 +112,6 @@ interface FAQDetail {
 export interface LandingSectionEightContent {
     Title?: TitleItem;
     FAQ_elements?: FAQDetail[];
-    FAQ_detailed?: FAQDetail[]
 }
 
 export interface content {

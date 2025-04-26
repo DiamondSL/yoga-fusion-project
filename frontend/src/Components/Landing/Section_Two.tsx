@@ -6,6 +6,7 @@ import {useGradientCloudsBackground} from "@/Helpers/DynamicGradient";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 import blockRender from "@/Helpers/BlockRender";
+import './section_two.css'
 
 const IconListComponent = ({Icon, Description, className}: ListDescriptionItem) => {
     const isPhone = useMediaQuery('(max-width:767px)')
@@ -85,7 +86,7 @@ const LandingSectionTwo = ({
                 }}>
                     {List_Description && List_Description.map((item) => {
                        return (
-                            <IconListComponent key={typeof item?.Description === 'string' && true ? item?.Description : item?.Icon?.url} Icon={item?.Icon} Description={item?.Description}/>
+                            <IconListComponent key={typeof item?.Description === 'string' && true ? item?.Description : item?.Icon?.url} Icon={item?.Icon} className={'section-two-blocks'} Description={item?.Description}/>
                         )
                     })}
                 </Box>

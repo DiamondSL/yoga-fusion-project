@@ -20,7 +20,7 @@ const LandingSectionFive = ({
                                 TitleSecondPlacement,
                                 Route,
                                 Button,
-                                Description2,
+                                Description,
                                 Gallery
                             }: SectionFiveContent) => {
     const router = useRouter()
@@ -48,7 +48,18 @@ const LandingSectionFive = ({
                     gap: '46px',
                     paddingTop: isPhone ? '16px' : '46px'
                 }}>
-                    {Description2 &&  renderBlocks({content: Description2, className: 'description-blocks', style: {fontSize: isPhone ? '14px' : '16px', textWrap: 'balance', maxWidth: '560px', width: '100%', textAlign: 'center'}})}
+                    {Description && <Box>{renderBlocks({
+                        content: Description,
+                        className: 'description-blocks',
+                        style: {
+                            fontSize: isPhone ? '14px' : '16px',
+                            textWrap: 'balance',
+                            maxWidth: '560px',
+                            width: '100%',
+                            textAlign: 'center'
+                        }
+                    })}</Box>}
+
                     {Button && <ButtonEl sx={{maxWidth: isPhone ? '330px' : '210px', width: '100%'}}
                                          variant={Button.Variant === 'primary' ? 'contained' : 'transparent'}>{Button?.Text}</ButtonEl>}
                 </Box>
@@ -74,15 +85,22 @@ const LandingSectionFive = ({
                         <Box component={'img'} src={'icons/arrows/sectionSix_arrow2.svg'}></Box>
                         <Box component={'img'} src={'icons/arrows/sectionSix_arrow1.svg'}></Box>
                     </Box>
-                    <Box className={'location-details'} sx={{ marginTop: isPhone ? '10px' : ''}}>
-                        {Route && Route.map(item => <Typography variant={'h6'} onClick={() => router.push(item.Link)}
+                    <Box className={'location-details'} sx={{marginTop: isPhone ? '10px' : ''}}>
+                        {Route && Route.map(item => <Typography variant={'h6'}
+                                                                onClick={() => router.push(item.Link)}
                                                                 className={'location-link'}
                                                                 key={item.Title}>{item.Title}</Typography>)}
                         {TitleSecondPlacement && typeof TitleSecondPlacement === 'object' ?
-                            <Box>{renderBlocks({content: TitleSecondPlacement, style: {fontSize: isPhone ? '12px' : ''}})}</Box> : <><Typography
-                                component={'span'} variant={'body2'} sx={{display: 'block'}}>Наш простір розташований
-                                біля парку Т.Г. Шевченко</Typography><Typography component={'span'} variant={'body2'}
-                                                                                 sx={{display: 'block'}}> Місто Київ,
+                            <Box>{renderBlocks({
+                                content: TitleSecondPlacement,
+                                style: {fontSize: isPhone ? '12px' : ''}
+                            })}</Box> : <><Typography
+                                component={'span'} variant={'body2'} sx={{display: 'block'}}>Наш простір
+                                розташований
+                                біля парку Т.Г. Шевченко</Typography><Typography component={'span'}
+                                                                                 variant={'body2'}
+                                                                                 sx={{display: 'block'}}> Місто
+                                Київ,
                                 вулиця Терещенківська, 21(сині двері, дзвінок зліва, -1 поверх)</Typography></>}
                     </Box>
                 </Container>

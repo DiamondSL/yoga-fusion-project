@@ -1,0 +1,5 @@
+#Landing-section-two {
+    .section-two-blocks, .section-two-blocks [class^="MUI"] {
+        font-size: 14px;
+    }
+}
