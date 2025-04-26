@@ -9,7 +9,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
     const gradientColors = ['#FF81BE', '#F7BE01', '#FE4538']
-
     const isPhone = useMediaQuery('(max-width:767px)')
 
 
@@ -25,7 +24,7 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
 
     return (
         <SectionWrapper id={'Landing-section-one'} sx={{
-            minHeight: 'initial',
+            minHeight: 'calc(666px - 78px)',
             marginTop: '78px'
         }}>
             <Container maxWidth={false} sx={{
@@ -35,7 +34,7 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                 width: isPhone ? '85vw' : '100%',
                 paddingLeft: '0 !important',
                 paddingRight: '0 !important',
-                padding: isPhone ? '38px 0 60px 0' : '82px 0 126px 0'
+                padding: isPhone ? '38px 0 60px 0' : '82px 0 0 0'
             }}>
                 <Box className={'Upper-stars'}
                      sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: isPhone ? '19px' : ''}}>

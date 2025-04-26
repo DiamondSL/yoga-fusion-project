@@ -234,7 +234,7 @@ export const useDynamicSvgGradientBackground = ({
         svgElement.style.top = positioning?.top ?? '0';
         svgElement.style.left = positioning?.left ?? '0';
         svgElement.style.width = '100%';
-        svgElement.style.height = '100%';
+        svgElement.style.height = '110%';
         svgElement.style.zIndex = '-1';
         svgElement.style.pointerEvents = 'none';
         svgElement.setAttribute('viewBox', '0 0 100 100'); // Use percentage-based viewBox
