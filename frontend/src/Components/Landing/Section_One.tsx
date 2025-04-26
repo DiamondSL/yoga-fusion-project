@@ -24,7 +24,7 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
 
     return (
         <SectionWrapper id={'Landing-section-one'} sx={{
-            minHeight: 'calc(666px - 78px)',
+            minHeight: isPhone ? '458px' : 'calc(666px - 78px)',
             marginTop: '78px'
         }}>
             <Container maxWidth={false} sx={{
@@ -73,7 +73,8 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                     alignSelf: 'center',
                     justifyContent: 'space-between',
                     flexDirection: isPhone ? 'column' : 'row',
-                    marginTop: isPhone ? '24px' : '58px'
+                    marginTop: isPhone ? '24px' : '58px',
+                    marginBottom: isPhone ? '0' : '126px'
                 }}>
                     {!isPhone &&
                     <Box className={'Down-stars'}>
