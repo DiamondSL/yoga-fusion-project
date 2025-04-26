@@ -6,6 +6,110 @@ import React from "react";
 // Regular expression to match the color syntax: (#<hex> <text>)
 const COLOR_REGEX = /\(#([0-9A-Fa-f]{6})\s+([^)]+)\)/g;
 
+// Helper function to process children and handle color syntax
+const processChildren = (children: React.ReactNode, parentKey: string = ""): React.ReactNode => {
+    return React.Children.map(children, (child, index) => {
+        // Handle string children
+        if (typeof child === "string") {
+            const matches = [...child.matchAll(COLOR_REGEX)];
+            if (matches.length === 0) return child;
+
+            let lastIndex = 0;
+            const elements: React.ReactNode[] = [];
+
+            for (const match of matches) {
+                const [fullMatch, hexColor, coloredText] = match;
+                const startIndex = match.index!;
+
+                // Add text before the match
+                if (startIndex > lastIndex) {
+                    elements.push(child.slice(lastIndex, startIndex));
+                }
+
+                // Validate hex color
+                const isValidHex = /^[0-9A-Fa-f]{6}$/.test(hexColor);
+                if (isValidHex) {
+                    elements.push(
+                        <span
+                            key={`${parentKey}-span-${startIndex}-${index}`}
+                            style={{ color: `#${hexColor}` }}
+                        >
+              {coloredText}
+            </span>
+                    );
+                } else {
+                    // Treat invalid color as plain text
+                    elements.push(fullMatch);
+                }
+
+                lastIndex = startIndex + fullMatch.length;
+            }
+
+            // Add remaining text
+            if (lastIndex < child.length) {
+                elements.push(child.slice(lastIndex));
+            }
+
+            return elements;
+        }
+        // Handle React elements, including text nodes from BlocksRenderer
+        else if (React.isValidElement<{ children?: React.ReactNode; text?: string }>(child)) {
+            // Check if the element is a text node with a text prop (from BlocksRenderer)
+            if (child.props.text) {
+                const text = child.props.text;
+                const matches = [...text.matchAll(COLOR_REGEX)];
+                if (matches.length === 0) return child;
+
+                let lastIndex = 0;
+                const elements: React.ReactNode[] = [];
+
+                for (const match of matches) {
+                    const [fullMatch, hexColor, coloredText] = match;
+                    const startIndex = match.index!;
+
+                    // Add text before the match
+                    if (startIndex > lastIndex) {
+                        elements.push(text.slice(lastIndex, startIndex));
+                    }
+
+                    // Validate hex color
+                    const isValidHex = /^[0-9A-Fa-f]{6}$/.test(hexColor);
+                    if (isValidHex) {
+                        elements.push(
+                            <span
+                                key={`${parentKey}-span-${startIndex}-${index}`}
+                                style={{ color: `#${hexColor}` }}
+                            >
+                {coloredText}
+              </span>
+                        );
+                    } else {
+                        // Treat invalid color as plain text
+                        elements.push(fullMatch);
+                    }
+
+                    lastIndex = startIndex + fullMatch.length;
+                }
+
+                // Add remaining text
+                if (lastIndex < text.length) {
+                    elements.push(text.slice(lastIndex));
+                }
+
+                return elements;
+            }
+            // Recursively process children of other elements (e.g., bold, italic)
+            if ("children" in child.props && child.props.children !== undefined) {
+                return React.cloneElement(child, {
+                    children: processChildren(child.props.children, `${parentKey}-${index}`),
+                });
+            }
+        }
+        // Return non-string, non-element children unchanged (e.g., null, numbers)
+        return child;
+    });
+};
+
 const renderBlocks = ({
                           content,
                           className,
@@ -23,50 +127,9 @@ const renderBlocks = ({
             content={content}
             blocks={{
                 paragraph: ({ children }) => {
-                    // Process children to handle color syntax
-                    const processedChildren = React.Children.map(children, (child) => {
-                        if (typeof child === "string") {
-                            const matches = [...child.matchAll(COLOR_REGEX)];
-                            if (matches.length === 0) return child;
-
-                            let lastIndex = 0;
-                            const elements: React.ReactNode[] = [];
-
-                            for (const match of matches) {
-                                const [fullMatch, hexColor, coloredText] = match;
-                                const startIndex = match.index!;
-
-                                // Add text before the match
-                                if (startIndex > lastIndex) {
-                                    elements.push(child.slice(lastIndex, startIndex));
-                                }
-
-                                // Validate hex color
-                                const isValidHex = /^[0-9A-Fa-f]{6}$/.test(hexColor);
-                                if (isValidHex) {
-                                    elements.push(
-                                        <span key={startIndex} style={{ color: `#${hexColor}` }}>
-                      {coloredText}
-                    </span>
-                                    );
-                                } else {
-                                    // Treat invalid color as plain text
-                                    elements.push(fullMatch);
-                                }
-
-                                lastIndex = startIndex + fullMatch.length;
-                            }
-
-                            // Add remaining text
-                            if (lastIndex < child.length) {
-                                elements.push(child.slice(lastIndex));
-                            }
-
-                            return elements;
-                        }
-                        // Return non-string children (e.g., bold, italic) unchanged
-                        return child;
-                    });
+                    const processedChildren = processChildren(children, "paragraph");
+                    // Debug: Log processed children
+                    console.log("Processed Paragraph Children:", processedChildren);
 
                     return (
                         <Typography
@@ -79,49 +142,9 @@ const renderBlocks = ({
                     );
                 },
                 heading: ({ children, level }) => {
-                    // Process children to handle color syntax
-                    const processedChildren = React.Children.map(children, (child) => {
-                        if (typeof child === "string") {
-                            const matches = [...child.matchAll(COLOR_REGEX)];
-                            if (matches.length === 0) return child;
-
-                            let lastIndex = 0;
-                            const elements: React.ReactNode[] = [];
-
-                            for (const match of matches) {
-                                const [fullMatch, hexColor, coloredText] = match;
-                                const startIndex = match.index!;
-
-                                // Add text before the match
-                                if (startIndex > lastIndex) {
-                                    elements.push(child.slice(lastIndex, startIndex));
-                                }
-
-                                // Validate hex color
-                                const isValidHex = /^[0-9A-Fa-f]{6}$/.test(hexColor);
-                                if (isValidHex) {
-                                    elements.push(
-                                        <span key={startIndex} style={{ color: `#${hexColor}` }}>
-                      {coloredText}
-                    </span>
-                                    );
-                                } else {
-                                    // Treat invalid color as plain text
-                                    elements.push(fullMatch);
-                                }
-
-                                lastIndex = startIndex + fullMatch.length;
-                            }
-
-                            // Add remaining text
-                            if (lastIndex < child.length) {
-                                elements.push(child.slice(lastIndex));
-                            }
-
-                            return elements;
-                        }
-                        return child;
-                    });
+                    const processedChildren = processChildren(children, `heading-${level}`);
+                    // Debug: Log processed children
+                    console.log("Processed Heading Children:", processedChildren);
 
                     switch (level) {
                         case 1:
