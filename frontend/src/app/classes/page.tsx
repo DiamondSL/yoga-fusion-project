@@ -2,10 +2,10 @@ import {Box, Button, Container, Typography} from "@mui/material";
 import {ClassesList} from "@/app/classes/components/classesList";
 import SectionWrapper from "@/Components/Landing/SectionWrapper";
 import {teacherEntity} from "@/app/teachers/page";
-import './page.css'
 import React from "react";
 import background from "../../../public/icons/gradients/classes/background-main.png";
 import {BlocksContent} from "@strapi/blocks-react-renderer";
+import './page.css'
 
 export type ClassEntity = {
     documentId: string

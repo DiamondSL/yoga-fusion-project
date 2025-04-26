@@ -1,6 +1,7 @@
 import {Box, Card, CardContent, SxProps, Typography, Theme, CardMedia, alpha, useTheme} from "@mui/material";
 import React from "react";
 import './card.css'
+import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 
 
 interface CardElement {
@@ -20,7 +21,7 @@ interface CardElement {
 }
 
 export const CardElement = ({sx, children, image, id, title, className, onClick, backdrop}: CardElement) => {
-    const imageSrc = process?.env?.NODE_ENV === 'production' ? `${process.env.NEXT_PUBLIC_URL}/cms${image?.src}` : `http://localhost:1337${image?.src}`
+    const imageSrc = image?.src && generateStrapiUrl(image.src)
     const theme = useTheme()
     return (
         <Card elevation={backdrop === false ? 0 : 1} onClick={onClick} id={id && id.length > 0 ? id : undefined}

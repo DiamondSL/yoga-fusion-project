@@ -4,11 +4,12 @@ import SectionWrapper from './SectionWrapper'
 import {LandingSectionTwoContent, ListDescriptionItem} from "@/types/LandingPageTypes";
 import {useGradientCloudsBackground} from "@/Helpers/DynamicGradient";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
+import blockRender from "@/Helpers/BlockRender";
 
-const IconListComponent = ({Icon, Description}: ListDescriptionItem) => {
+const IconListComponent = ({Icon, Description, className}: ListDescriptionItem) => {
     const isPhone = useMediaQuery('(max-width:767px)')
     const isSmallScreen = useMediaQuery('(max-width:425px)')
-    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
     return (
         <Container component={'li'} maxWidth={false} sx={{
             display: 'flex',
@@ -21,11 +22,21 @@ const IconListComponent = ({Icon, Description}: ListDescriptionItem) => {
         }}>
             <Box>
                 <CardMedia component={'img'} alt={Icon?.alt}
-                           src={process.env.NODE_ENV === 'development' && Icon?.url?.includes('uploads') ? 'http://localhost:1337' + Icon?.url : process.env.NODE_ENV === 'production' && Icon?.url?.includes('uploads') ? `${appUrl}/cms` + Icon?.url : Icon?.url}
-                           sx={{objectFit: 'contain', maxWidth: isPhone? '30px' : '100%', width: isPhone ? 'auto' : Icon?.width, height: isPhone ? 'auto' : Icon?.height}}/>
+                           src={Icon?.url?.includes('uploads') ? generateStrapiUrl(Icon?.url) : Icon?.url}
+                           sx={{
+                               objectFit: 'contain',
+                               maxWidth: isPhone ? '30px' : '100%',
+                               width: isPhone ? 'auto' : Icon?.width,
+                               height: isPhone ? 'auto' : Icon?.height
+                           }}/>
             </Box>
             <Box sx={{maxWidth: isPhone ? '280px' : '358px', width: '100%'}}>
-                <Typography variant={'body2'}>{Description ? Description : 'Blank'}</Typography>
+                {typeof Description === 'string' ?
+                    <Typography className={className}
+                                variant={'body2'}>{Description ? Description : 'Blank'}</Typography> :
+                    typeof Description === 'object' &&
+                    blockRender({content: Description, className: className})
+                }
             </Box>
         </Container>
     )
@@ -72,9 +83,9 @@ const LandingSectionTwo = ({
                     padding: (isPhone || isTablet) ? '0 30px' : '0',
                     margin: isPhone ? '16px 0 0 0 0' : '34px 0 0 0'
                 }}>
-                    {List_Description?.map((item) => {
-                        return (
-                            <IconListComponent key={item.Description} Icon={item.Icon} Description={item.Description}/>
+                    {List_Description && List_Description.map((item) => {
+                       return (
+                            <IconListComponent key={typeof item?.Description === 'string' && true ? item?.Description : item?.Icon?.url} Icon={item?.Icon} Description={item?.Description}/>
                         )
                     })}
                 </Box>

@@ -32,6 +32,13 @@
       "type": "boolean",
       "default": false,
       "required": false
+    },
+    "Icon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

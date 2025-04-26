@@ -27,13 +27,14 @@ export interface LandingSectionOneContent {
 }
 
 export type ListDescriptionItem = {
-    Description?: string;
+    Description?: string | BlocksContent;
     Icon?: {
         url?: string;
         alt?: string;
         height?: string;
         width?: string;
     }
+    className?: string
 }
 
 export interface LandingSectionTwoContent {
@@ -76,6 +77,7 @@ export interface LandingSectionFourContent {
 
 export interface LandingSectionFiveContent {
     Title: string;
+    Title2?: BlocksContent
     Button: ButtonItem;
 }
 
@@ -89,6 +91,7 @@ export interface LandingSectionSixContent {
     Button?: ButtonItem;
     Title?: TitleItem;
     Description?: string;
+    Description2?: BlocksContent;
     Gallery?: GalleryItem[];
 }
 
@@ -103,14 +106,15 @@ export interface LandingSectionSevenContent {
     Route: RouteItem[];
 }
 
-interface FAQElement {
-    Title: string;
-    Description: string;
+interface FAQDetail {
+    Title?: string;
+    Description?: BlocksContent;
 }
 
 export interface LandingSectionEightContent {
     Title?: TitleItem;
-    FAQ_elements?: FAQElement[];
+    FAQ_elements?: FAQDetail[];
+    FAQ_detailed?: FAQDetail[]
 }
 
 export interface content {

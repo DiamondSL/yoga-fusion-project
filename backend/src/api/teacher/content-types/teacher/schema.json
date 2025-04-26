@@ -68,23 +68,16 @@
       "max": 5,
       "min": 1
     },
-    "Disciplines": {
-      "type": "component",
-      "repeatable": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "shared.method",
-      "max": 5,
-      "required": false
-    },
     "classes": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::class.class",
       "mappedBy": "teachers"
+    },
+    "disciplines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::discipline.discipline"
     }
   }
 }

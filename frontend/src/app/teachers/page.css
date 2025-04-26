@@ -1,6 +1,7 @@
 #teachers-content {
     background-repeat: no-repeat;
     background-position: -25% -75%;
+    min-height: 100vh;
     .cards, .actions {
         max-width: 960px;
         width: 100%;

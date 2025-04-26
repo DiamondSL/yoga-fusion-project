@@ -10,10 +10,28 @@
     border-radius: 0 !important;
 }
 
+.FAQ [id^="faq_item"] [id^="FAQ_header"] {
+    min-height: 48px;
+    padding-bottom: 24px;
+        [class^="MuiAccordionSummary-expand"].Mui-expanded {
+            transform: rotate(45deg);
+    }
+}
+
+
+
 .FAQ [id^="faq_item"] * {
     padding-left: 0;
     padding-right: 0;
     align-items: flex-start;
+    p.FAQ-content {
+        font-weight: 200;
+        font-size: 16px !important;
+    }
+    p.FAQ-content strong {
+        position: relative;
+        margin-bottom: 10px;
+    }
 }
 
 .FAQ [id^="faq_item"]::before {
@@ -24,6 +42,16 @@
 .FAQ [id^="faq_item"] .MuiAccordionSummary-content {
     margin: 0 0 !important;
 }
+
+.FAQ [id^="faq_item"] .MuiAccordionDetails-root {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    br, > :last-child {
+        margin-bottom: 24px;
+    }
+}
+
 
 @media (max-width: 767px) {
     .FAQ  {
@@ -36,6 +64,7 @@
 
         &  [id^="faq_item"] * {
             min-height: 54px;
+
         }
     }
 

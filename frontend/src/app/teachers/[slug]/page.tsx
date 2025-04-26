@@ -9,16 +9,9 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import './page.css'
 import renderBlocks from "@/Helpers/BlockRender";
 import background from "../../../../public/icons/gradients/teachers/background_slug.png";
-import RedStar from "@/Components/Visual/SVGIcons/RedStar";
-import BlueSlime from "@/Components/Visual/SVGIcons/BlueSlime";
-import GreenSlime from "@/Components/Visual/SVGIcons/GreenSlime";
-import LimeSlime from "@/Components/Visual/SVGIcons/LimeSlime";
+import {Discipline} from "@/app/teachers/page";
+import {generateStrapiUrl, StrapiIcon} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 
-type DiscipLine = {
-    Experience?: string
-    Active?: boolean
-    Name?: string
-}
 
 export default function Page({
                                  params,
@@ -29,7 +22,6 @@ export default function Page({
     const teacherData = useQuery(teacherQuery, {variables: {teacherId: slug}});
     const {loading, data} = teacherData
     const theme = useTheme()
-
 
     return (
         <Container id={'teacher-content'} sx={{
@@ -50,7 +42,7 @@ export default function Page({
                         <Box className={'teacher-info'}>
                             <Box className={'photo'}>
                                 <CardMedia component={'img'}
-                                           src={process?.env?.NODE_ENV === 'production' ? `${process.env.NEXT_PUBLIC_URL}/cms${data?.teacher?.Photo?.url}` : `http://localhost:1337${data?.teacher?.Photo?.url}`}/>
+                                           src={generateStrapiUrl(data?.teacher?.Photo?.url)}/>
                             </Box>
                             <Box className={'title'}>
                                 <Typography variant={'h1'}>{data?.teacher?.Name}</Typography>
@@ -65,21 +57,15 @@ export default function Page({
                     )}
                 {!loading && <Box className={'teacher-skills'} borderColor={theme.palette.primary.dark}
                                   bgcolor={alpha(`${theme.palette.secondary.dark}`, 0.6)}>
-                    {data?.teacher?.Disciplines.filter((item: DiscipLine) => {
-                        return item?.Active === true
-                    }).map((item: DiscipLine) =>
+                    {data?.teacher?.disciplines?.map((item: Discipline) =>
                         <Box key={item?.Name} className={'skill-item'}>
                             <Box width={'34px'} height={'34px'}>
-                                {item?.Name?.includes('Hatha') ?
-                                    <GreenSlime width={'34px'} height={'34px'}/> : item?.Name?.includes('Power') ?
-                                        <RedStar width={'34px'} height={'34px'}/> : item?.Name?.includes('Vinyasa') ?
-                                            <BlueSlime width={'34px'}
-                                                       height={'34px'}/> : item?.Name?.includes('Stretching') ?
-                                                <LimeSlime sx={{transform: 'scale(1)'}}/> :
-                                                <LimeSlime sx={{transform: 'scale(1)'}}/>}
+                                {item?.Icon?.url && (
+                                    <StrapiIcon url={item?.Icon?.url} sx={{maxWidth: '100%', position: 'relative'}} />
+                                )}
                             </Box>
                             <Typography className={'skill-title'}
-                                        variant={'h6'}>{item?.Name?.replace('_', ' ')}</Typography>
+                                        variant={'h6'}>{item?.Name}</Typography>
                         </Box>
                     )}
                 </Box>

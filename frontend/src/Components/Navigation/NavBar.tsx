@@ -127,7 +127,7 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
                             <Box
                                 component={'img'}
                                 sx={{ cursor: 'pointer' }}
-                                src={'icons/navigation/header-user.svg'}
+                                src={'/icons/navigation/header-user.svg'}
                             />
                         </Box>
                     </Box>

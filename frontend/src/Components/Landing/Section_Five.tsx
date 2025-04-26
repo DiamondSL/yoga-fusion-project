@@ -6,6 +6,7 @@ import {useRouter} from 'next/navigation';
 import {BlocksContent} from "@strapi/blocks-react-renderer";
 import renderBlocks from "@/Helpers/BlockRender";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 
 type SectionFiveContent = LandingSectionSixContent & {
     TitleSecond?: string;
@@ -19,20 +20,18 @@ const LandingSectionFive = ({
                                 TitleSecondPlacement,
                                 Route,
                                 Button,
-                                Description,
+                                Description2,
                                 Gallery
                             }: SectionFiveContent) => {
     const router = useRouter()
-    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
     const isPhone = useMediaQuery('(max-width:767px)')
     const isSmallScreen = useMediaQuery('(max-width:425px)')
-
 
     return <SectionWrapper id={'Landing-section-five'}>
         <Container maxWidth={false} sx={{padding: '0 !important'}}>
             <Box className={'gallery'} sx={{display: 'flex', flexDirection: 'row'}}>
                 {Gallery && Gallery.map((item, index) => <Box component={'img'}
-                                                              src={process.env.NODE_ENV === 'development' ? 'http://localhost:1337' + item.url : `${appUrl}/cms` + item.url}
+                                                              src={generateStrapiUrl(item.url)}
                                                               sx={isPhone ? {
                                                                   width: '50%',
                                                                   minHeight: '200px'
@@ -49,8 +48,7 @@ const LandingSectionFive = ({
                     gap: '46px',
                     paddingTop: isPhone ? '16px' : '46px'
                 }}>
-                    {Description && <Typography sx={{maxWidth: '560px', width: '100%', textAlign: 'center'}}
-                                                variant={isPhone ? 'body2' : 'body1'}>{Description}</Typography>}
+                    {Description2 &&  renderBlocks({content: Description2, className: 'description-blocks', style: {fontSize: isPhone ? '14px' : '16px', textWrap: 'balance', maxWidth: '560px', width: '100%', textAlign: 'center'}})}
                     {Button && <ButtonEl sx={{maxWidth: isPhone ? '330px' : '210px', width: '100%'}}
                                          variant={Button.Variant === 'primary' ? 'contained' : 'transparent'}>{Button?.Text}</ButtonEl>}
                 </Box>

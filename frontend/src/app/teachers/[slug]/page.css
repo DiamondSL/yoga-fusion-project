@@ -2,6 +2,7 @@
     background-repeat: no-repeat;
     background-position: 100% 25%;
     background-clip: content-box;
+    min-height: 100vh;
 
     @media (max-width: 767px) {
         background-position: initial;

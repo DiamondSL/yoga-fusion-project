@@ -6,9 +6,12 @@ import './sectionFour.css'
 import Marquee from "@/Components/Marquee/Marquee";
 import {useRouter} from 'next/navigation';
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
+import {BlocksContent} from "@strapi/blocks-react-renderer";
+import renderBlocks from "@/Helpers/BlockRender";
 
 
-type LandingConnector = LandingSectionFourContent & { titleSecond?: string, Button?: ButtonItem };
+type LandingConnector = LandingSectionFourContent & { titleSecond?: BlocksContent, Button?: ButtonItem };
 
 
 const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button}: LandingConnector) => {
@@ -16,7 +19,6 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button}: LandingC
     const onMarqueeClick = () => {
         return router.refresh()
     }
-    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
     const isPhone = useMediaQuery('(max-width:767px)')
 
     return (
@@ -59,7 +61,7 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button}: LandingC
                                     height: 'auto',
                                     display: 'block',
                                 }}
-                                     src={process.env.NODE_ENV === 'development' && item.Shape.url.includes('uploads') ? 'http://localhost:1337' + item.Shape.url : process.env.NODE_ENV === 'production' && item.Shape.url.includes('uploads') ? `${appUrl}/cms` + item.Shape.url : item.Shape.url}/>
+                                     src={item.Shape.url.includes('uploads') ? generateStrapiUrl(item.Shape.url) : item.Shape.url}/>
                                 <Typography
                                     variant={'bodyXL'}
                                     fontSize={isPhone ? '18px' : '28px'}
@@ -71,7 +73,7 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button}: LandingC
                                         color: 'primary.dark', // Ensure text is visible (adjust as needed)
                                         padding: '0', // Optional: padding for readability
                                         textAlign: 'center',
-                                        textWrap: 'nowrap'
+                                        textWrap: 'nowrap',
                                     }}
                                 >{item.Title}</Typography>
                             </Box>
@@ -97,18 +99,20 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button}: LandingC
                     justifyContent: isPhone ? 'center' : 'space-between',
                     alignItems: isPhone ? 'center' : '',
                 }}>
+                    {titleSecond && titleSecond?.length > 0 && renderBlocks({content: titleSecond, className: 'section-five-blocks', style: isPhone ? {textAlign: 'center'} : {maxWidth: '576px'}})}
                     <Typography variant={isPhone ? 'h5' : 'h3'}
-                                sx={isPhone ? {textAlign: 'center'} : {}}>{titleSecond}</Typography>
+                                sx={isPhone ? {textAlign: 'center'} : {maxWidth: '50%'}}></Typography>
                     <ButtonEl sx={{maxWidth: '273px', width: '100%', height: '51px', alignSelf: 'center'}}
                               variant={Button?.Variant === "primary" ? 'contained' : 'outlined'}>{Button?.Text}</ButtonEl>
                 </Box>
             </Container>
             <Marquee content={
                 <Box className={'marquee-item'}>
-                <Typography variant={'body2'}>book now</Typography>
-                <ArrowRightAltIcon/>
+                    <Typography variant={'body2'}>book now</Typography>
+                    <ArrowRightAltIcon/>
                 </Box>
-            } style={{backgroundColor: 'secondary.light', display: 'flex', animationComposition: 'add'}} onClick={onMarqueeClick} speed={60} />
+            } style={{backgroundColor: 'secondary.light', display: 'flex', animationComposition: 'add'}}
+                     onClick={onMarqueeClick} speed={60}/>
         </SectionWrapper>
     )
 }

@@ -1,6 +1,7 @@
 #class-content {
     background-position: -100% 50vh;
     background-repeat: no-repeat;
+    min-height: 100vh;
 
     .class {
         width: 100%;
@@ -62,6 +63,12 @@
             max-width: 460px;
             width: 100%;
             font-weight: 400;
+        }
+        .description > img {
+            max-width: 100%;
+            width: 100%;
+            object-fit: cover;
+            max-height: 440px;
         }
     }
 

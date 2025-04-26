@@ -12,6 +12,8 @@ import Marquee from "@/Components/Marquee/Marquee";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import './page.css'
 import PinkStarVector from "@/Components/Visual/SVGIcons/PinkStar";
+import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
+import ImageSlider from "@/Components/Slider/Slider";
 
 export default function Page({
                                  params,
@@ -22,8 +24,6 @@ export default function Page({
     const classData = useQuery(classQuery, {variables: {classId: slug}});
     const {loading, data} = classData
     const theme = useTheme()
-
-    console.info(data)
 
     return (
         <Container id={'class-content'} sx={{
@@ -51,7 +51,7 @@ export default function Page({
                                             <BlueSlime width={'31px'} height={'29px'} />
                                         </Box>
                                         <Typography variant={'h5'} fontSize={'20px'} color={'#FFFFFF'} fontWeight={'500'} fontStyle={'normal'}>
-                                            time / {data?.class?.Time?.Minutes} min
+                                            time / {data?.class?.Duration} min
                                         </Typography>
                                     </Box>
                                     <Box className={'intensity'}>
@@ -85,8 +85,12 @@ export default function Page({
                                 })}
                             </Box>
                             <Box className={'photo'}>
+                                {data?.class?.Photo && data?.class?.Photo?.length > 1 ? (
+                                    <ImageSlider width={'100%'} height={'440px'} style={{border: '1px solid', borderColor: theme.palette.primary.dark, objectFit: 'cover'}} images={data?.class?.Photo.map((item: { url: string; }) => generateStrapiUrl(item.url))} />
+                                ) :
                                 <Box component={'img'} border={'1px solid'} borderColor={theme.palette.primary.dark} width={'100%'} height={'440px'} sx={{objectFit: 'cover'}}
-                                     src={process?.env?.NODE_ENV === 'production' ? `${process.env.NEXT_PUBLIC_URL}/cms${data?.class?.Photo?.[0]?.url}` : `http://localhost:1337${data?.class?.Photo?.[0]?.url}`}/>
+                                     src={generateStrapiUrl(data?.class?.Photo?.[0]?.url)}/>
+                                }
                             </Box>
                         </Box>
                     )}

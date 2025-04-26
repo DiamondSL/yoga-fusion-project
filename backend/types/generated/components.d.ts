@@ -3,9 +3,20 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface LandingSectionsSectionEight extends Struct.ComponentSchema {
   collectionName: 'components_landing_sections_section_eights';
   info: {
+    description: '';
     displayName: 'Section Eight';
   };
   attributes: {
+    FAQ_detailed: Schema.Attribute.Component<
+      'section.detailed-description',
+      true
+    > &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     FAQ_elements: Schema.Attribute.Component<'section.accordion', true>;
     Title: Schema.Attribute.Component<'section.title', false> &
       Schema.Attribute.Required;
@@ -15,11 +26,13 @@ export interface LandingSectionsSectionEight extends Struct.ComponentSchema {
 export interface LandingSectionsSectionFive extends Struct.ComponentSchema {
   collectionName: 'components_landing_sections_section_fives';
   info: {
+    description: '';
     displayName: 'Section Five';
   };
   attributes: {
     Button: Schema.Attribute.Component<'section.button', false>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
+    Title2: Schema.Attribute.Blocks;
   };
 }
 
@@ -70,11 +83,13 @@ export interface LandingSectionsSectionSeven extends Struct.ComponentSchema {
 export interface LandingSectionsSectionSix extends Struct.ComponentSchema {
   collectionName: 'components_landing_sections_section_sixes';
   info: {
+    description: '';
     displayName: 'Section Six';
   };
   attributes: {
     Button: Schema.Attribute.Component<'section.button', false>;
     Description: Schema.Attribute.Text;
+    Description2: Schema.Attribute.Blocks;
     Gallery: Schema.Attribute.Media<'images', true>;
     Title: Schema.Attribute.Component<'section.title', false> &
       Schema.Attribute.Required;
@@ -140,6 +155,21 @@ export interface SectionButton extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionDetailedDescription extends Struct.ComponentSchema {
+  collectionName: 'components_section_detailed_descriptions';
+  info: {
+    displayName: 'Detailed Description';
+  };
+  attributes: {
+    Description: Schema.Attribute.Blocks;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
+  };
+}
+
 export interface SectionHiddenLink extends Struct.ComponentSchema {
   collectionName: 'components_section_hidden_links';
   info: {
@@ -154,10 +184,11 @@ export interface SectionHiddenLink extends Struct.ComponentSchema {
 export interface SectionIconDescription extends Struct.ComponentSchema {
   collectionName: 'components_section_icon_descriptions';
   info: {
+    description: '';
     displayName: 'Icon Description';
   };
   attributes: {
-    Description: Schema.Attribute.Text & Schema.Attribute.Required;
+    Description: Schema.Attribute.Blocks;
     Icon: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
   };
 }
@@ -233,6 +264,7 @@ export interface SharedMethod extends Struct.ComponentSchema {
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'beginner'>;
+    Icon: Schema.Attribute.Media<'images'>;
     Name: Schema.Attribute.Enumeration<
       ['Hatha yoga', 'Power yoga', 'Vinyasa flow', 'Kundalini', 'Stretching']
     > &
@@ -305,6 +337,7 @@ declare module '@strapi/strapi' {
       'landing-sections.section-two': LandingSectionsSectionTwo;
       'section.accordion': SectionAccordion;
       'section.button': SectionButton;
+      'section.detailed-description': SectionDetailedDescription;
       'section.hidden-link': SectionHiddenLink;
       'section.icon-description': SectionIconDescription;
       'section.shape-title': SectionShapeTitle;

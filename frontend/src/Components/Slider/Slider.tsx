@@ -96,22 +96,4 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height, style 
     );
 };
 
-// Example usage
-const Slider: React.FC = () => {
-    const sampleImages = [
-        'https://example.com/image1.jpg',
-        'https://example.com/image2.jpg',
-        'https://example.com/image3.jpg',
-    ];
-
-    return (
-        <ImageSlider
-            images={sampleImages}
-            width="600px"
-            height="400px"
-        />
-    );
-};
-
-export { Slider }
 export default ImageSlider;
