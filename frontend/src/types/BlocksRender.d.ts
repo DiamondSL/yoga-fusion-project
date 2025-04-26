@@ -24,14 +24,14 @@ interface ColoredNode {
     children: DefaultInlineNode[];
 }
 
-type DefaultInlineNode = TextInlineNode | LinkInlineNode | ColoredNode;
-
 interface ListItemInlineNode {
     type: 'list-item';
     children: DefaultInlineNode[];
 }
 
-type NonTextInlineNode = Exclude<DefaultInlineNode, TextInlineNode> | ListItemInlineNode;
+type DefaultInlineNode = TextInlineNode | LinkInlineNode | ColoredNode;
+
+type NonTextInlineNode = LinkInlineNode | ListItemInlineNode | ColoredNode;
 
 interface ParagraphBlockNode {
     type: 'paragraph';
@@ -91,7 +91,7 @@ export type RootNode =
     | ListBlockNode
     | ImageBlockNode;
 
-type Node = RootNode | NonTextInlineNode;
+export type Node = RootNode | NonTextInlineNode;
 
 type GetPropsFromNode<T> = Omit<T, 'type' | 'children' | 'color'> & {
     children?: React.ReactNode;
@@ -99,37 +99,37 @@ type GetPropsFromNode<T> = Omit<T, 'type' | 'children' | 'color'> & {
     plainText?: T extends { type: 'code' } ? string : never;
 };
 
-type BlocksComponents = {
+export type BlocksComponents = {
     [K in Node['type']]: React.ComponentType<GetPropsFromNode<Extract<Node, { type: K }>>>
 };
 
-type ModifiersComponents = {
+export type ModifiersComponents = {
     [K in Modifier]: React.ComponentType<{ children: React.ReactNode }>;
 };
 
-interface ComponentsContextValue {
+export interface ComponentsContextValue {
     blocks: BlocksComponents;
     modifiers: ModifiersComponents;
     missingBlockTypes: string[];
     missingModifierTypes: string[];
 }
 
-interface ComponentsProviderProps {
+export interface ComponentsProviderProps {
     children: React.ReactNode;
     value?: ComponentsContextValue;
 }
 
-declare const ComponentsProvider: ({ children, value }: ComponentsProviderProps) => React.JSX.Element;
+export declare const ComponentsProvider: ({ children, value }: ComponentsProviderProps) => React.JSX.Element;
 
-declare function useComponentsContext(): ComponentsContextValue;
+export declare function useComponentsContext(): ComponentsContextValue;
 
-interface BlocksRendererProps {
+export interface BlocksRendererProps {
     content: RootNode[];
     blocks?: Partial<BlocksComponents>;
     modifiers?: Partial<ModifiersComponents>;
 }
 
-declare const BlocksRenderer: (props: BlocksRendererProps) => React.JSX.Element;
+export declare const BlocksRenderer: (props: BlocksRendererProps) => React.JSX.Element;
 
-export type { RootNode, Node, GetPropsFromNode, DefaultInlineNode, BlocksContent };
+export type { DefaultInlineNode, BlocksContent };
 export { ComponentsProvider, useComponentsContext, BlocksRenderer };
