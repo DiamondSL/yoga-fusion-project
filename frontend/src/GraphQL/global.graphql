@@ -280,120 +280,6 @@ type ComponentSharedEventTime {
     Minutes: Int!
 }
 
-input ComponentLandingSectionsSectionTwoInput {
-    id: ID
-    List_Description: [ComponentSectionIconDescriptionInput]
-    Title: ComponentSectionTitleInput
-}
-
-type ComponentLandingSectionsSectionTwo {
-    id: ID!
-    List_Description(filters: ComponentSectionIconDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionIconDescription]
-    Title: ComponentSectionTitle
-}
-
-input ComponentLandingSectionsSectionThreeInput {
-    id: ID
-    Button: [ComponentSectionButtonInput]
-    Photos: [ID]
-    Description: JSON
-    Title: ComponentSharedQuoteInput
-}
-
-type ComponentLandingSectionsSectionThree {
-    id: ID!
-    Button(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]
-    Photos_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-    Photos(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-    Description: JSON
-    Title: ComponentSharedQuote
-}
-
-input ComponentLandingSectionsSectionSixInput {
-    id: ID
-    Title: ComponentSectionTitleInput
-    Gallery: [ID]
-    Description: String
-    Button: ComponentSectionButtonInput
-    Description2: JSON
-}
-
-type ComponentLandingSectionsSectionSix {
-    id: ID!
-    Title: ComponentSectionTitle!
-    Gallery_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-    Gallery(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-    Description: String
-    Button: ComponentSectionButton
-    Description2: JSON
-}
-
-input ComponentLandingSectionsSectionSevenInput {
-    id: ID
-    Route: [ComponentSectionHiddenLinkInput]
-    Placement: JSON
-    Title: String
-}
-
-type ComponentLandingSectionsSectionSeven {
-    id: ID!
-    Route(filters: ComponentSectionHiddenLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionHiddenLink]
-    Placement: JSON
-    Title: String
-}
-
-input ComponentLandingSectionsSectionOneInput {
-    id: ID
-    Title: [ComponentSectionTitleInput]
-    Buttons: [ComponentSectionButtonInput]
-}
-
-type ComponentLandingSectionsSectionOne {
-    id: ID!
-    Title(filters: ComponentSectionTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionTitle]!
-    Buttons(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]!
-}
-
-input ComponentLandingSectionsSectionFourInput {
-    id: ID
-    Title: ComponentSectionTitleInput
-    Shape_Titles: [ComponentSectionShapeTitleInput]
-}
-
-type ComponentLandingSectionsSectionFour {
-    id: ID!
-    Title: ComponentSectionTitle!
-    Shape_Titles(filters: ComponentSectionShapeTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionShapeTitle]!
-}
-
-input ComponentLandingSectionsSectionFiveInput {
-    id: ID
-    Title: String
-    Button: ComponentSectionButtonInput
-    Title2: JSON
-}
-
-type ComponentLandingSectionsSectionFive {
-    id: ID!
-    Title: String!
-    Button: ComponentSectionButton
-    Title2: JSON
-}
-
-input ComponentLandingSectionsSectionEightInput {
-    id: ID
-    Title: ComponentSectionTitleInput
-    FAQ_elements: [ComponentSectionAccordionInput]
-    FAQ_detailed: [ComponentSectionDetailedDescriptionInput]
-}
-
-type ComponentLandingSectionsSectionEight {
-    id: ID!
-    Title: ComponentSectionTitle!
-    FAQ_elements(filters: ComponentSectionAccordionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionAccordion]
-    FAQ_detailed(filters: ComponentSectionDetailedDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionDetailedDescription]
-}
-
 enum ENUM_COMPONENTSECTIONTITLE_PLACEMENT {
     Center
     Right
@@ -527,24 +413,118 @@ type ComponentSectionButton {
     Action: String!
 }
 
-input ComponentSectionAccordionFiltersInput {
-    Title: StringFilterInput
-    Description: StringFilterInput
-    and: [ComponentSectionAccordionFiltersInput]
-    or: [ComponentSectionAccordionFiltersInput]
-    not: ComponentSectionAccordionFiltersInput
-}
-
-input ComponentSectionAccordionInput {
-    id: ID
-    Title: String
-    Description: String
-}
-
 type ComponentSectionAccordion {
     id: ID!
     Title: String!
     Description: String
+}
+
+input ComponentLandingSectionsSectionTwoInput {
+    id: ID
+    List_Description: [ComponentSectionIconDescriptionInput]
+    Title: ComponentSectionTitleInput
+}
+
+type ComponentLandingSectionsSectionTwo {
+    id: ID!
+    List_Description(filters: ComponentSectionIconDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionIconDescription]
+    Title: ComponentSectionTitle
+}
+
+input ComponentLandingSectionsSectionThreeInput {
+    id: ID
+    Button: [ComponentSectionButtonInput]
+    Photos: [ID]
+    Description: JSON
+    Title: ComponentSharedQuoteInput
+}
+
+type ComponentLandingSectionsSectionThree {
+    id: ID!
+    Button(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]
+    Photos_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+    Photos(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+    Description: JSON
+    Title: ComponentSharedQuote
+}
+
+input ComponentLandingSectionsSectionSixInput {
+    id: ID
+    Title: ComponentSectionTitleInput
+    Gallery: [ID]
+    Button: ComponentSectionButtonInput
+    Description: JSON
+}
+
+type ComponentLandingSectionsSectionSix {
+    id: ID!
+    Title: ComponentSectionTitle!
+    Gallery_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+    Gallery(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+    Button: ComponentSectionButton
+    Description: JSON
+}
+
+input ComponentLandingSectionsSectionSevenInput {
+    id: ID
+    Route: [ComponentSectionHiddenLinkInput]
+    Placement: JSON
+    Title: String
+}
+
+type ComponentLandingSectionsSectionSeven {
+    id: ID!
+    Route(filters: ComponentSectionHiddenLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionHiddenLink]
+    Placement: JSON
+    Title: String
+}
+
+input ComponentLandingSectionsSectionOneInput {
+    id: ID
+    Title: [ComponentSectionTitleInput]
+    Buttons: [ComponentSectionButtonInput]
+}
+
+type ComponentLandingSectionsSectionOne {
+    id: ID!
+    Title(filters: ComponentSectionTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionTitle]!
+    Buttons(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]!
+}
+
+input ComponentLandingSectionsSectionFourInput {
+    id: ID
+    Title: ComponentSectionTitleInput
+    Shape_Titles: [ComponentSectionShapeTitleInput]
+}
+
+type ComponentLandingSectionsSectionFour {
+    id: ID!
+    Title: ComponentSectionTitle!
+    Shape_Titles(filters: ComponentSectionShapeTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionShapeTitle]!
+}
+
+input ComponentLandingSectionsSectionFiveInput {
+    id: ID
+    Button: ComponentSectionButtonInput
+    Title: JSON
+}
+
+type ComponentLandingSectionsSectionFive {
+    id: ID!
+    Button: ComponentSectionButton
+    Title: JSON
+}
+
+input ComponentLandingSectionsSectionEightInput {
+    id: ID
+    Title: ComponentSectionTitleInput
+    FAQ_elements: [ComponentSectionDetailedDescriptionInput]
+}
+
+type ComponentLandingSectionsSectionEight {
+    id: ID!
+    Title: ComponentSectionTitle!
+    FAQ_elements(filters: ComponentSectionDetailedDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionDetailedDescription]
 }
 
 input UploadFileFiltersInput {
@@ -1225,7 +1205,7 @@ type TeacherRelationResponseCollection {
     nodes: [Teacher!]!
 }
 
-union GenericMorph = ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedMethod | ComponentSharedMedia | ComponentSharedEventTime | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | About | Article | Author | Booking | Category | Class | Discipline | Global | LandingPage | Teacher
+union GenericMorph = ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedMethod | ComponentSharedMedia | ComponentSharedEventTime | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | About | Article | Author | Booking | Category | Class | Discipline | Global | LandingPage | Teacher
 
 input FileInfoInput {
     name: String

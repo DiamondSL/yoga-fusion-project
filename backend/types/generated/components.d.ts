@@ -7,7 +7,7 @@ export interface LandingSectionsSectionEight extends Struct.ComponentSchema {
     displayName: 'Section Eight';
   };
   attributes: {
-    FAQ_detailed: Schema.Attribute.Component<
+    FAQ_elements: Schema.Attribute.Component<
       'section.detailed-description',
       true
     > &
@@ -17,7 +17,6 @@ export interface LandingSectionsSectionEight extends Struct.ComponentSchema {
         },
         number
       >;
-    FAQ_elements: Schema.Attribute.Component<'section.accordion', true>;
     Title: Schema.Attribute.Component<'section.title', false> &
       Schema.Attribute.Required;
   };
@@ -31,8 +30,7 @@ export interface LandingSectionsSectionFive extends Struct.ComponentSchema {
   };
   attributes: {
     Button: Schema.Attribute.Component<'section.button', false>;
-    Title: Schema.Attribute.String & Schema.Attribute.Required;
-    Title2: Schema.Attribute.Blocks;
+    Title: Schema.Attribute.Blocks;
   };
 }
 
@@ -88,8 +86,7 @@ export interface LandingSectionsSectionSix extends Struct.ComponentSchema {
   };
   attributes: {
     Button: Schema.Attribute.Component<'section.button', false>;
-    Description: Schema.Attribute.Text;
-    Description2: Schema.Attribute.Blocks;
+    Description: Schema.Attribute.Blocks;
     Gallery: Schema.Attribute.Media<'images', true>;
     Title: Schema.Attribute.Component<'section.title', false> &
       Schema.Attribute.Required;

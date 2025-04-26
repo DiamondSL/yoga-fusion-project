@@ -115,7 +115,7 @@ const useLandingPageSections = (): {
                 ]
             },
             SectionFive: {
-                Title: 'реєструйся та отримай 1 безкоштовний класс', Button: {
+                Title: undefined, Button: {
                     Text: 'зареєструватися',
                     Variant: 'primary'
                 }
@@ -131,9 +131,7 @@ const useLandingPageSections = (): {
                     height: '',
                     width: ''
                 }, {url: 'icons/Visuals/SectionFive/photo.png', height: '', width: ''}],
-                Description: 'ваш безпечний простір для ідей, роботи та відпочинку\n' +
-                    'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.   хелсі-бар обожнює зустрічати гостей!\n',
-                Description2: undefined
+                Description: undefined
             },
             SectionSeven: {
                 Title: 'Як нас знайти',
@@ -147,13 +145,9 @@ const useLandingPageSections = (): {
                 Title: {
                     Title: 'FAQ',
                     Placement: 'Center'
-                },
-                FAQ_detailed: [{
-                    Title: 'Що взяти з собою на тренування з собою на тренування?',
-                    Description: undefined
-                }]
+                }
             }
-        };
+        }
 
         const sections: Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
             return data !== null && index !== 0;
@@ -202,13 +196,13 @@ const Home = () => {
                 <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button}
                                      Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
                 <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles}
-                                    Button={SectionFive?.Button} titleSecond={SectionFive?.Title2}/>
+                                    Button={SectionFive?.Button} titleSecond={SectionFive?.Title}/>
             </Box>
             <LandingSectionFive Title={SectionSix?.Title} Button={SectionSix?.Button} Gallery={SectionSix?.Gallery}
                                 Route={SectionSeven?.Route} TitleSecondPlacement={SectionSeven?.Placement}
-                                Description={SectionSix?.Description} Description2={SectionSix?.Description2}
+                                Description={SectionSix?.Description}
                                 TitleSecond={SectionSeven?.Title}/>
-            <LandingSectionSix Title={SectionEight?.Title} FAQ_detailed={SectionEight?.FAQ_detailed}/>
+            <LandingSectionSix Title={SectionEight?.Title} FAQ_elements={SectionEight?.FAQ_elements}/>
         </Container>
     );
 }

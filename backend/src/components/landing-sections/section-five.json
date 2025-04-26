@@ -6,16 +6,12 @@
   },
   "options": {},
   "attributes": {
-    "Title": {
-      "type": "string",
-      "required": true
-    },
     "Button": {
       "type": "component",
       "repeatable": false,
       "component": "section.button"
     },
-    "Title2": {
+    "Title": {
       "type": "blocks"
     }
   }

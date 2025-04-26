@@ -15,11 +15,6 @@
     "FAQ_elements": {
       "type": "component",
       "repeatable": true,
-      "component": "section.accordion"
-    },
-    "FAQ_detailed": {
-      "type": "component",
-      "repeatable": true,
       "component": "section.detailed-description",
       "min": 1
     }
