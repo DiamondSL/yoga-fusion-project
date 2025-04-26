@@ -2,7 +2,7 @@ import { Typography, Box, ListItem } from "@mui/material";
 import Link from "next/link";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import React from "react";
-import { RootNode, DefaultInlineNode } from "@strapi/blocks-react-renderer"; // Import types from BlocksRenderer.d.ts
+import { RootNode, DefaultInlineNode } from '@/types/BlocksRender'; // Import types from BlocksRenderer.d.ts
 
 // Regular expression to match the color syntax: (#<hex> <text>)
 const COLOR_REGEX = /\(#([0-9A-Fa-f]{6})\s+([^)]+)\)/g;
