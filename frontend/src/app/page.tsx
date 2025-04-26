@@ -27,8 +27,6 @@ const useLandingPageSections = (): {
         context: {fetchOptions: {cache: 'no-store'}},
     });
 
-    console.log('data', data)
-
     // Define default data
     // Memoize the merged data to prevent unnecessary re-renders
     const sectionsData = useMemo(() => {
@@ -187,8 +185,6 @@ const Home = () => {
         SectionSeven,
         SectionEight
     } = sections.data
-
-    console.info(sections)
 
     return (
         <Container maxWidth={false}

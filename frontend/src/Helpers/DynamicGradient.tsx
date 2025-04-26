@@ -390,6 +390,7 @@ export const useDynamicSvgGradientBackground = ({
                 }
             });
         } catch (e) {
+            console.info(e)
             const styleTag = document.createElement('style');
             styleTag.textContent = keyframesCSS;
             document.head.appendChild(styleTag);
@@ -412,5 +413,5 @@ export const useDynamicSvgGradientBackground = ({
                 targetElement.style.overflow = '';
             }
         };
-    }, [targetElementId, animationDuration, colors]); // Dependencies ensure effect runs once per reload
+    }, [targetElementId, animationDuration, colors, overflow, positioning]); // Dependencies ensure effect runs once per reload
 };

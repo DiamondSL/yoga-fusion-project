@@ -102,9 +102,6 @@ const Marquee: FC<MarqueeProps> = ({
         ? Math.ceil((containerWidth * 2) / (contentWidth + (Number(gap))))
         : 10;
 
-    // Debugging output
-    console.log({containerWidth, contentWidth, repeatCount});
-
     const reverseAnimation = {
         '@keyframes marquee': {
             '0%': {transform: 'translateX(0%)'},
