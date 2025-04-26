@@ -37,21 +37,22 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                 padding: isPhone ? '38px 0 60px 0' : '82px 0 0 0'
             }}>
                 <Box className={'Upper-stars'}
-                     sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: isPhone ? '19px' : ''}}>
+                     sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: isPhone ? '20px' : ''}}>
                     <Box className={'left'} sx={{display: 'flex', flexDirection: 'row-reverse', gap: isPhone ? '30px' : '18px'}}>
                         <StarSvgIcon className={'upper'} style={{width: '22px', height: '29px'}}
-                                     animated={!isPhone}/>
+                                     animated={false}/>
                         <StarSvgIcon className={'down'} style={{transform: 'translateY(22px)', width: '15.125px', height: '19.9375px'}}
-                                     animated={!isPhone}/>
+                                     animated={false}/>
                     </Box>
                     <Box className={'right'} sx={{alignSelf: isPhone ? 'flex-start' : 'flex-end'}}>
-                        <StarSvgIcon style={{width: '15.125px', height: '19.9375px '}} animated={!isPhone}/>
+                        <StarSvgIcon style={{width: '15.125px', height: '19.9375px '}} animated={false}/>
                     </Box>
                 </Box>
                 <Box className={'Title'} sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignSelf: 'center',
+                    gap: isPhone ? '12px' : '2px',
                     maxWidth: '867px',
                     width: '100%'
                 }}>
@@ -79,7 +80,7 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                     {!isPhone &&
                     <Box className={'Down-stars'}>
                         <Box className={'left'} sx={{alignSelf: 'flex-start', transform: isPhone ? 'none' : 'translateX(100px)'}}>
-                                <StarSvgIcon style={{width: '15.125px', height: '19.9375px'}} animated={true}/>
+                                <StarSvgIcon style={{width: '15.125px', height: '19.9375px'}} animated={false}/>
                         </Box>
                     </Box>
                     }
@@ -88,7 +89,7 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
                         {Buttons && Buttons.length > 0 && Buttons.map((item) => {
                             return (
                                 <Button key={item.Text}
-                                        variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"} sx={isPhone ? {maxWidth: '330px', width: '100%', alignSelf: 'center'} : {maxWidth: '234px'}}>{item.Text}</Button>
+                                        variant={String(item.Variant) === "secondary" ? "secondary" : item.Variant === "primary" ? undefined : String(item.Variant) === "transparent" ? "transparent" : "secondary"} sx={isPhone ? {maxWidth: '330px', width: '100%', alignSelf: 'center', marginTop: '35px'} : {maxWidth: '234px'}}>{item.Text}</Button>
                             )
                         })}
                     </Box>

@@ -9,7 +9,6 @@ import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 
 const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectionThreeContent) => {
     const isPhone = useMediaQuery('(max-width:767px)')
-    const isSmallScreen = useMediaQuery('(max-width:425px)')
     const isTablet = useMediaQuery('(min-width:768px) and (max-width:1024px)')
 
     const RenderedButtons = Button && Button.map((item) => {
@@ -26,7 +25,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 position: 'relative',
                 gap: '40px',
                 paddingTop: '60px',
-                paddingBottom: '80px',
+                paddingBottom: isPhone ? '30px' : '80px',
                 paddingLeft: '0 !important',
                 paddingRight: '0 !important'
             }}>
@@ -39,7 +38,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                         <Container maxWidth={false} sx={{
                             width: '100%',
                             display: 'flex',
-                            maxWidth: isSmallScreen ? '260px' : '460px',
+                            maxWidth: isPhone ? '70vw' : '460px',
                             flexDirection: 'column',
                             gap: isPhone? '30px' : '38px',
                             padding: '0 !important',

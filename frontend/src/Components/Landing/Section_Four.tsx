@@ -94,15 +94,12 @@ const LandingSectionFour = ({Title, Shape_Titles, titleSecond, Button}: LandingC
                     display: 'flex',
                     flexDirection: isPhone ? 'column' : 'row',
                     maxWidth: '960px',
-                    gap: isPhone ? '40px' : '',
                     width: '100%',
                     justifyContent: isPhone ? 'center' : 'space-between',
                     alignItems: isPhone ? 'center' : '',
                 }}>
                     {titleSecond && titleSecond?.length > 0 && renderBlocks({content: titleSecond, className: 'section-five-blocks', style: isPhone ? {textAlign: 'center'} : {maxWidth: '576px'}})}
-                    <Typography variant={isPhone ? 'h5' : 'h3'}
-                                sx={isPhone ? {textAlign: 'center'} : {maxWidth: '50%'}}></Typography>
-                    <ButtonEl sx={{maxWidth: '273px', width: '100%', height: '51px', alignSelf: 'center'}}
+                    <ButtonEl sx={{maxWidth: '273px', width: '100%', marginTop: isPhone ? '40px' : '', height: '51px', alignSelf: 'center'}}
                               variant={Button?.Variant === "primary" ? 'contained' : 'outlined'}>{Button?.Text}</ButtonEl>
                 </Box>
             </Container>

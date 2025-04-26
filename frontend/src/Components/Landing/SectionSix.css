@@ -16,6 +16,10 @@
         [class^="MuiAccordionSummary-expand"].Mui-expanded {
             transform: rotate(45deg);
     }
+    @media (max-width: 768px) {
+        padding-bottom: 0;
+        min-height: 54px;
+    }
 }
 
 
@@ -63,7 +67,7 @@
         }
 
         &  [id^="faq_item"] * {
-            min-height: 54px;
+            min-height: initial;
 
         }
     }
