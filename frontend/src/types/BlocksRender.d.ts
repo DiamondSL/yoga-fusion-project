@@ -1,5 +1,16 @@
 import * as React from 'react';
-import { type Modifier, type TextInlineNode } from './Text';
+
+type Modifier = 'bold' | 'italic' | 'strikethrough' | 'underline' | 'code';
+
+interface TextInlineNode {
+    type: 'text';
+    text: string;
+    bold?: boolean;
+    italic?: boolean;
+    underline?: boolean;
+    strikethrough?: boolean;
+    code?: boolean;
+}
 
 interface LinkInlineNode {
     type: 'link';
@@ -7,12 +18,19 @@ interface LinkInlineNode {
     children: TextInlineNode[];
 }
 
+interface ColoredNode {
+    type: 'span';
+    color?: string;
+    children: DefaultInlineNode[];
+}
+
+type DefaultInlineNode = TextInlineNode | LinkInlineNode | ColoredNode;
+
 interface ListItemInlineNode {
     type: 'list-item';
     children: DefaultInlineNode[];
 }
 
-type DefaultInlineNode = TextInlineNode | LinkInlineNode;
 type NonTextInlineNode = Exclude<DefaultInlineNode, TextInlineNode> | ListItemInlineNode;
 
 interface ParagraphBlockNode {
@@ -42,12 +60,6 @@ interface ListBlockNode {
     children: (ListItemInlineNode | ListBlockNode)[];
 }
 
-interface ColoredNode {
-    type: 'span';
-    color?: string;
-    children: DefaultInlineNode[];
-}
-
 interface ImageBlockNode {
     type: 'image';
     image: {
@@ -68,10 +80,7 @@ interface ImageBlockNode {
         createdAt: string;
         updatedAt: string;
     };
-    children: [{
-        type: 'text';
-        text: '';
-    }];
+    children: [{ type: 'text'; text: '' }];
 }
 
 export type RootNode =
@@ -80,18 +89,20 @@ export type RootNode =
     | CodeBlockNode
     | HeadingBlockNode
     | ListBlockNode
-    | ColoredNode
     | ImageBlockNode;
 
 type Node = RootNode | NonTextInlineNode;
+
 type GetPropsFromNode<T> = Omit<T, 'type' | 'children' | 'color'> & {
     children?: React.ReactNode;
     color?: string;
     plainText?: T extends { type: 'code' } ? string : never;
 };
+
 type BlocksComponents = {
     [K in Node['type']]: React.ComponentType<GetPropsFromNode<Extract<Node, { type: K }>>>
 };
+
 type ModifiersComponents = {
     [K in Modifier]: React.ComponentType<{ children: React.ReactNode }>;
 };
@@ -119,5 +130,6 @@ interface BlocksRendererProps {
 }
 
 declare const BlocksRenderer: (props: BlocksRendererProps) => React.JSX.Element;
-export type { Node, GetPropsFromNode, DefaultInlineNode };
+
+export type { RootNode, Node, GetPropsFromNode, DefaultInlineNode, BlocksContent };
 export { ComponentsProvider, useComponentsContext, BlocksRenderer };

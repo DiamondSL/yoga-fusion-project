@@ -2,14 +2,14 @@ import { Typography, Box, ListItem } from "@mui/material";
 import Link from "next/link";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import React from "react";
-import { RootNode, DefaultInlineNode } from '@/types/BlocksRender'; // Import types from BlocksRenderer.d.ts
+import { DefaultInlineNode } from "@/types/BlocksRender"; // Import types from BlocksRender.d.ts
 
 // Regular expression to match the color syntax: (#<hex> <text>)
 const COLOR_REGEX = /\(#([0-9A-Fa-f]{6})\s+([^)]+)\)/g;
 
 // Function to preprocess BlocksContent and transform color syntax into span nodes
 const processBlocksContent = (content: BlocksContent): BlocksContent => {
-    return content.map((block: RootNode) => {
+    return content.map((block) => {
         if (block.type === "paragraph" || block.type === "heading") {
             const processedChildren = block.children.reduce<DefaultInlineNode[]>(
                 (acc, child: DefaultInlineNode) => {
@@ -72,7 +72,7 @@ const processBlocksContent = (content: BlocksContent): BlocksContent => {
             };
         }
         return block;
-    });
+    }) as BlocksContent;
 };
 
 const renderBlocks = ({
