@@ -2,78 +2,9 @@ import { Typography, Box, ListItem } from "@mui/material";
 import Link from "next/link";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import React from "react";
-import { DefaultInlineNode } from "@/types/BlocksRender"; // Import types from BlocksRender.d.ts
 
 // Regular expression to match the color syntax: (#<hex> <text>)
 const COLOR_REGEX = /\(#([0-9A-Fa-f]{6})\s+([^)]+)\)/g;
-
-// Function to preprocess BlocksContent and transform color syntax into span nodes
-const processBlocksContent = (content: BlocksContent): BlocksContent => {
-    return content.map((block) => {
-        if (block.type === "paragraph" || block.type === "heading") {
-            const processedChildren = block.children.reduce<DefaultInlineNode[]>(
-                (acc, child: DefaultInlineNode) => {
-                    if (child.type === "text" && child.text) {
-                        const matches = [...child.text.matchAll(COLOR_REGEX)];
-                        if (matches.length === 0) return [...acc, child];
-
-                        let lastIndex = 0;
-                        const newChildren: DefaultInlineNode[] = [];
-
-                        for (const match of matches) {
-                            const [fullMatch, hexColor, coloredText] = match;
-                            const startIndex = match.index!;
-
-                            // Add text before the match
-                            if (startIndex > lastIndex) {
-                                newChildren.push({
-                                    type: "text",
-                                    text: child.text.slice(lastIndex, startIndex),
-                                });
-                            }
-
-                            // Validate hex color
-                            const isValidHex = /^[0-9A-Fa-f]{6}$/.test(hexColor);
-                            if (isValidHex) {
-                                newChildren.push({
-                                    type: "span",
-                                    color: hexColor,
-                                    children: [{ type: "text", text: coloredText }],
-                                });
-                            } else {
-                                // Treat invalid color as plain text
-                                newChildren.push({
-                                    type: "text",
-                                    text: fullMatch,
-                                });
-                            }
-
-                            lastIndex = startIndex + fullMatch.length;
-                        }
-
-                        // Add remaining text
-                        if (lastIndex < child.text.length) {
-                            newChildren.push({
-                                type: "text",
-                                text: child.text.slice(lastIndex),
-                            });
-                        }
-
-                        return [...acc, ...newChildren];
-                    }
-                    return [...acc, child];
-                },
-                []
-            );
-
-            return {
-                ...block,
-                children: processedChildren,
-            };
-        }
-        return block;
-    }) as BlocksContent;
-};
 
 const renderBlocks = ({
                           content,
@@ -84,26 +15,114 @@ const renderBlocks = ({
     className?: string;
     style?: React.CSSProperties | null | undefined;
 }) => {
-    // Preprocess the content to handle color syntax
-    const processedContent = processBlocksContent(content);
-
-    // Debug: Log the processed content to verify structure
-    console.log("Processed Content:", JSON.stringify(processedContent, null, 2));
+    // Debug: Log the input content to verify structure
+    console.log("Input Content:", JSON.stringify(content, null, 2));
 
     return (
         <BlocksRenderer
-            content={processedContent}
+            content={content}
             blocks={{
-                paragraph: ({ children }) => (
-                    <Typography
-                        style={{ ...style }}
-                        className={className ?? ""}
-                        variant={"body1"}
-                    >
-                        {children}
-                    </Typography>
-                ),
+                paragraph: ({ children }) => {
+                    // Process children to handle color syntax
+                    const processedChildren = React.Children.map(children, (child) => {
+                        if (typeof child === "string") {
+                            const matches = [...child.matchAll(COLOR_REGEX)];
+                            if (matches.length === 0) return child;
+
+                            let lastIndex = 0;
+                            const elements: React.ReactNode[] = [];
+
+                            for (const match of matches) {
+                                const [fullMatch, hexColor, coloredText] = match;
+                                const startIndex = match.index!;
+
+                                // Add text before the match
+                                if (startIndex > lastIndex) {
+                                    elements.push(child.slice(lastIndex, startIndex));
+                                }
+
+                                // Validate hex color
+                                const isValidHex = /^[0-9A-Fa-f]{6}$/.test(hexColor);
+                                if (isValidHex) {
+                                    elements.push(
+                                        <span key={startIndex} style={{ color: `#${hexColor}` }}>
+                      {coloredText}
+                    </span>
+                                    );
+                                } else {
+                                    // Treat invalid color as plain text
+                                    elements.push(fullMatch);
+                                }
+
+                                lastIndex = startIndex + fullMatch.length;
+                            }
+
+                            // Add remaining text
+                            if (lastIndex < child.length) {
+                                elements.push(child.slice(lastIndex));
+                            }
+
+                            return elements;
+                        }
+                        // Return non-string children (e.g., bold, italic) unchanged
+                        return child;
+                    });
+
+                    return (
+                        <Typography
+                            style={{ ...style }}
+                            className={className ?? ""}
+                            variant={"body1"}
+                        >
+                            {processedChildren}
+                        </Typography>
+                    );
+                },
                 heading: ({ children, level }) => {
+                    // Process children to handle color syntax
+                    const processedChildren = React.Children.map(children, (child) => {
+                        if (typeof child === "string") {
+                            const matches = [...child.matchAll(COLOR_REGEX)];
+                            if (matches.length === 0) return child;
+
+                            let lastIndex = 0;
+                            const elements: React.ReactNode[] = [];
+
+                            for (const match of matches) {
+                                const [fullMatch, hexColor, coloredText] = match;
+                                const startIndex = match.index!;
+
+                                // Add text before the match
+                                if (startIndex > lastIndex) {
+                                    elements.push(child.slice(lastIndex, startIndex));
+                                }
+
+                                // Validate hex color
+                                const isValidHex = /^[0-9A-Fa-f]{6}$/.test(hexColor);
+                                if (isValidHex) {
+                                    elements.push(
+                                        <span key={startIndex} style={{ color: `#${hexColor}` }}>
+                      {coloredText}
+                    </span>
+                                    );
+                                } else {
+                                    // Treat invalid color as plain text
+                                    elements.push(fullMatch);
+                                }
+
+                                lastIndex = startIndex + fullMatch.length;
+                            }
+
+                            // Add remaining text
+                            if (lastIndex < child.length) {
+                                elements.push(child.slice(lastIndex));
+                            }
+
+                            return elements;
+                        }
+                        return child;
+                    });
+
                     switch (level) {
                         case 1:
                             return (
@@ -112,7 +131,7 @@ const renderBlocks = ({
                                     variant="h1"
                                     className={className ?? ""}
                                 >
-                                    {children}
+                                    {processedChildren}
                                 </Typography>
                             );
                         case 2:
@@ -122,7 +141,7 @@ const renderBlocks = ({
                                     variant="h2"
                                     className={className ?? ""}
                                 >
-                                    {children}
+                                    {processedChildren}
                                 </Typography>
                             );
                         case 3:
@@ -132,7 +151,7 @@ const renderBlocks = ({
                                     variant="h3"
                                     className={className ?? ""}
                                 >
-                                    {children}
+                                    {processedChildren}
                                 </Typography>
                             );
                         case 4:
@@ -142,7 +161,7 @@ const renderBlocks = ({
                                     variant="h4"
                                     className={className ?? ""}
                                 >
-                                    {children}
+                                    {processedChildren}
                                 </Typography>
                             );
                         case 5:
@@ -152,7 +171,7 @@ const renderBlocks = ({
                                     variant="h5"
                                     className={className ?? ""}
                                 >
-                                    {children}
+                                    {processedChildren}
                                 </Typography>
                             );
                         case 6:
@@ -162,7 +181,7 @@ const renderBlocks = ({
                                     variant="h6"
                                     className={className ?? ""}
                                 >
-                                    {children}
+                                    {processedChildren}
                                 </Typography>
                             );
                         default:
@@ -172,7 +191,7 @@ const renderBlocks = ({
                                     variant="h1"
                                     className={className ?? ""}
                                 >
-                                    {children}
+                                    {processedChildren}
                                 </Typography>
                             );
                     }
@@ -197,15 +216,6 @@ const renderBlocks = ({
                         {children}
                     </ListItem>
                 ),
-                span: ({ children, color }) => {
-                    // Debug: Log the span node
-                    console.log("Span Block:", { children, color });
-                    return (
-                        <span style={{ color: color ? `#${color}` : "inherit" }}>
-              {children}
-            </span>
-                    );
-                },
             }}
             modifiers={{
                 bold: ({ children }) => (
