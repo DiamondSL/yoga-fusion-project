@@ -21,11 +21,13 @@ const useLandingPageSections = (): {
 
     const {data, loading, error} = useQuery(LandingPageQuery, {
         variables: {
-            locale: language ?? 'uk-UA',
+            locale: language,
             status: 'PUBLISHED'
         },
         context: {fetchOptions: {cache: 'no-store'}},
     });
+
+    console.log('data', data)
 
     // Define default data
     // Memoize the merged data to prevent unnecessary re-renders
@@ -40,7 +42,7 @@ const useLandingPageSections = (): {
                 Buttons: [{Text: 'fusion me, now', Variant: 'primary', Action: undefined}],
             },
             SectionTwo: {
-                Title: {Title: 'Why us?', Placement: 'Left'},
+                Title: {Title: 'Why us?', Placement: 'Center'},
                 List_Description: [
                     {
                         Description: 'безпечний простір в самому центрі Києва: у нас завжди тепло, затишно та є світло',
@@ -185,6 +187,8 @@ const Home = () => {
         SectionSeven,
         SectionEight
     } = sections.data
+
+    console.info(sections)
 
     return (
         <Container maxWidth={false}

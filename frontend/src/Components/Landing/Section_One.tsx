@@ -4,7 +4,7 @@ import StarSvgIcon from "@/Components/Visual/SVGIcons/StarSvgIcon";
 import SectionWrapper from './SectionWrapper'
 import {LandingSectionOneContent} from "@/types/LandingPageTypes";
 import './sectionOne.css'
-import {useGradientCloudsBackground} from "@/Helpers/DynamicGradient";
+import {useDynamicSvgGradientBackground} from "@/Helpers/DynamicGradient";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
@@ -13,11 +13,13 @@ const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
     const isPhone = useMediaQuery('(max-width:767px)')
 
 
-    useGradientCloudsBackground({
+    useDynamicSvgGradientBackground({
         colors: gradientColors,
         targetElementId: 'Landing-section-one',
         animationDuration: 20,
-        variant: 'default'
+        positioning: {
+            top: '-78px'
+        }
     });
 
 

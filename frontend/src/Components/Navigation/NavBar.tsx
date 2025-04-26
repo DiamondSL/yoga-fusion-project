@@ -1,8 +1,8 @@
 'use client';
 import React, { useContext, useEffect, useState } from 'react';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import Link from 'next/link';
-import { AppBar, Button, Container, Drawer, List, ListItem, Toolbar, Typography } from '@mui/material';
+import {alpha, AppBar, Button, Container, Drawer, List, ListItem, Toolbar, Typography} from '@mui/material';
 import YogaFusionLogo from '../Visual/SVGIcons/YogaFusionLogoIcon';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import './navbar.css';
@@ -33,14 +33,14 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
 
     // Safely access context
     const languageContext = useContext(LanguageContext);
-    const language = isClient ? languageContext?.language ?? 'en-US' : 'en-US';
+    const language = isClient ? languageContext?.language ?? 'en' : 'en';
     const setLanguage = languageContext?.setLanguage ?? (() => {});
 
     const LanguageComponent = ({ children }: { children?: React.ReactNode }) => {
         return (
             <Box
                 className={'language-select'}
-                onClick={() => setLanguage(language === 'uk-UA' ? 'en-US' : 'uk-UA')}
+                onClick={() => setLanguage(language === 'uk-UA' ? 'en' : 'uk-UA')}
             >
                 <Typography
                     variant="body2"
@@ -64,13 +64,14 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
         setMenuOpen(newOpen);
     };
     const router = useRouter();
+    const theme = useTheme();
 
     return (
         <AppBar
             component={'header'}
             sx={{
                 height: '78px',
-                backgroundColor: isPhone && menuOpen ? 'primary.main' : 'transparent',
+                backgroundColor: isPhone && menuOpen ? 'primary.main' : alpha(theme.palette.primary.main, 0.5),
                 zIndex: 0,
                 paddingLeft: isDesktop ? '0' : '24px',
                 paddingRight: isDesktop ? '0' : '24px',

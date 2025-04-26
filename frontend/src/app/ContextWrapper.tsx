@@ -1,7 +1,7 @@
 'use client';
 import React, {createContext, Dispatch, SetStateAction, useEffect, useMemo, useState} from 'react';
 
-type LanguageType = 'uk-UA' | 'ru-RU' | 'en-US';
+type LanguageType = 'uk-UA' | 'ru-RU' | 'en';
 
 interface LanguageContext {
     language: LanguageType;
@@ -45,20 +45,20 @@ const ContextWrapper = ({ children, initialLanguage }: ContextWrapperProps) => {
                 async (position) => {
                     try {
                         const isUkraine = await checkIfUkraine(position.coords.latitude, position.coords.longitude);
-                        setLang(isUkraine ? 'uk-UA' : 'en-US');
+                        setLang(isUkraine ? 'uk-UA' : 'en');
                     } catch (error) {
                         console.info('Error detecting location:', error);
-                        setLang('en-US');
+                        setLang('en');
                     }
                 },
                 (error) => {
                     console.info('Geolocation error:', error);
-                    setLang('en-US');
+                    setLang('en');
                 }
             );
         } else {
             console.warn('Geolocation not supported or initialLanguage provided');
-            setLang(initialLanguage ?? 'en-US');
+            setLang(initialLanguage ?? 'en');
         }
     }, [isClient, initialLanguage]);
 

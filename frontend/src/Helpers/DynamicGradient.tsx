@@ -96,7 +96,7 @@ export const useGradientCloudsBackground = ({
                     gradientElement.style.height = '110%';
                 }
 
-                return { gradient, animationName, blur, duration: animationDuration + index * 5 };
+                return {gradient, animationName, blur, duration: animationDuration + index * 5};
             });
 
             // CSS rules for the gradient element
@@ -183,196 +183,234 @@ export const useGradientCloudsBackground = ({
     }, [colors, targetElementId, animationDuration, variant]);
 };
 
-interface DynamicGradientOptions {
-    colors: string[]; // Array of HEX color strings
+
+interface DynamicSvgGradientOptions {
+    colors?: string[]; // Array of HEX color strings
     targetElementId: string; // ID of the target element
     animationDuration?: number; // Base duration in seconds (default: 20s)
-    variant?: 'default' | 'radialCenterGradient'; // Gradient style variant
+    positioning?: {
+        top?: string;
+        bottom?: string;
+        left?: string;
+        right?: string;
+    }
+    overflow?: boolean
 }
+
 
 interface Ellipse {
-    x: number; // Center x (%)
-    y: number; // Center y (%)
-    radiusX: number; // Radius x (%)
-    radiusY: number; // Radius y (%)
-    color: string; // HEX color
-    alpha: number; // Transparency (0-1)
+    id: string;
+    cx: number; // Center x (%)
+    cy: number; // Center y (%)
+    rx: number; // Radius x (px, scaled to %)
+    ry: number; // Radius y (px, scaled to %)
+    fill: string; // HEX color
     blur: number; // Blur radius (px)
-    velocityX: number; // Movement speed x (%/s)
-    velocityY: number; // Movement speed y (%/s)
-    scale: number; // Current scale (1-1.05)
-    scaleVelocity: number; // Scaling speed (oscillates)
+    animationDuration: number; // Animation duration (s)
 }
 
-export const useDynamicGradientBackground = ({
-                                                 colors,
-                                                 targetElementId,
-                                                 animationDuration = 20,
-                                                 variant = 'default',
-                                             }: DynamicGradientOptions) => {
+export const useDynamicSvgGradientBackground = ({
+                                                    colors = ['#FF81BE', '#FE4538', '#F7BE01'], // Default to design colors
+                                                    targetElementId,
+                                                    animationDuration = 20,
+                                                    positioning,
+                                                    overflow = true
+                                                }: DynamicSvgGradientOptions) => {
     useEffect(() => {
         const targetElement = document.getElementById(targetElementId);
         if (!targetElement) return;
 
-        targetElement.style.position = 'relative';
-        targetElement.style.overflow = 'hidden';
-
-        // Create canvas element
-        const canvas = document.createElement('canvas');
-        const canvasId = `gradient-canvas-${targetElementId}-${Date.now()}`;
-        canvas.id = canvasId;
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.zIndex = '-1';
-        canvas.style.pointerEvents = 'none';
-
-        // Append to target element
-        targetElement.appendChild(canvas);
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        // Set canvas size to match target element
-        const resizeCanvas = () => {
-            canvas.width = targetElement.clientWidth;
-            canvas.height = targetElement.clientHeight;
-        };
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // Validate and prepare colors
-        const validColors = colors.filter(color => /^#[0-9A-F]{6}$/i.test(color));
-        const baseColors = validColors.length >= 1 ? validColors : ['#D5F166', '#F7BE00', '#FF81BE'];
-
-        // Initialize ellipses based on variant
-        let ellipses: Ellipse[] = [];
-        if (variant === 'radialCenterGradient') {
-            // Based on SVG: green (50%, 50%), yellow (81%, 72%), pink (82%, 73%)
-            ellipses = [
-                {
-                    x: 50, // Green
-                    y: 50,
-                    radiusX: 48, // 48% of width
-                    radiusY: 43, // 43% of height
-                    color: baseColors[0],
-                    alpha: 0.8,
-                    blur: 100, // From SVG
-                    velocityX: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                    velocityY: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                    scale: 1,
-                    scaleVelocity: (Math.random() * 0.002 - 0.001) * 60 / animationDuration,
-                },
-                {
-                    x: 81, // Yellow
-                    y: 72,
-                    radiusX: 31, // 31% of width
-                    radiusY: 28, // 28% of height
-                    color: baseColors[1],
-                    alpha: 0.8,
-                    blur: 50, // From SVG
-                    velocityX: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                    velocityY: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                    scale: 1,
-                    scaleVelocity: (Math.random() * 0.002 - 0.001) * 60 / animationDuration,
-                },
-                {
-                    x: 82, // Pink
-                    y: 73,
-                    radiusX: 32, // 32% of width
-                    radiusY: 29, // 29% of height
-                    color: baseColors[2],
-                    alpha: 0.8,
-                    blur: 200, // From SVG
-                    velocityX: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                    velocityY: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                    scale: 1,
-                    scaleVelocity: (Math.random() * 0.002 - 0.001) * 60 / animationDuration,
-                },
-            ];
-        } else {
-            // Default variant: random positions
-            ellipses = baseColors.map((color) => ({
-                x: Math.random() * 100,
-                y: Math.random() * 100,
-                radiusX: 30 + Math.random() * 20,
-                radiusY: 30 + Math.random() * 20,
-                color,
-                alpha: 0.8,
-                blur: 50 + Math.random() * 50, // Random blur 50-100px
-                velocityX: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                velocityY: (Math.random() * 0.1 - 0.05) * 60 / animationDuration,
-                scale: 1,
-                scaleVelocity: (Math.random() * 0.002 - 0.001) * 60 / animationDuration,
-            }));
+        if (!overflow) {
+            targetElement.style.overflow = 'hidden';
         }
 
-        let lastTime = 0;
-        const animate = (time: number) => {
-            if (!ctx || !canvas.parentElement) return;
+        targetElement.style.position = 'relative';
 
-            const deltaTime = (time - lastTime) / 1000;
-            lastTime = time;
+        // Create SVG element
+        const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        const svgId = `svg-gradient-${targetElementId}-${Date.now()}`;
+        svgElement.id = svgId;
+        svgElement.style.position = 'absolute';
+        svgElement.style.top = positioning?.top ?? '0';
+        svgElement.style.left = positioning?.left ?? '0';
+        svgElement.style.width = '100%';
+        svgElement.style.height = '100%';
+        svgElement.style.zIndex = '-1';
+        svgElement.style.pointerEvents = 'none';
+        svgElement.setAttribute('viewBox', '0 0 100 100'); // Use percentage-based viewBox
+        svgElement.setAttribute('preserveAspectRatio', 'xMidYMid meet'); // Maintain aspect ratio for circular shapes
 
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Append to target element
+        targetElement.appendChild(svgElement);
 
-            // Draw each ellipse
-            ellipses.forEach(ellipse => {
-                // Update position
-                ellipse.x += ellipse.velocityX * deltaTime;
-                ellipse.y += ellipse.velocityY * deltaTime;
+        // Validate colors
+        const validColors = colors.filter(color => /^#[0-9A-F]{6}$/i.test(color));
+        const baseColors = validColors.length >= 3 ? validColors : ['#FF81BE', '#FE4538', '#F7BE01'];
 
-                // Bounce off boundaries (0-100%)
-                if (ellipse.x < 0) { ellipse.x = 0; ellipse.velocityX *= -1; }
-                if (ellipse.x > 100) { ellipse.x = 100; ellipse.velocityX *= -1; }
-                if (ellipse.y < 0) { ellipse.y = 0; ellipse.velocityY *= -1; }
-                if (ellipse.y > 100) { ellipse.y = 100; ellipse.velocityY *= -1; }
+        // Define blur levels for each ellipse
+        const blurLevels = [120, 80, 50]; // Pink, Red, Yellow
 
-                // Update scale
-                ellipse.scale += ellipse.scaleVelocity * deltaTime;
-                if (ellipse.scale > 1.05) { ellipse.scale = 1.05; ellipse.scaleVelocity *= -1; }
-                if (ellipse.scale < 1) { ellipse.scale = 1; ellipse.scaleVelocity *= -1; }
+        // Calculate ellipse size in pixels (1125-2062px for 1440px screen, scales to 1200-2200px on 1536px)
+        const baseScreenWidth = 1440; // Reference width
+        const minSizePx = 1125; // Min size in pixels at 1440px
+        const maxSizePx = 2062; // Max size in pixels at 1440px
 
-                // Convert percentages to pixel values
-                const centerX = (ellipse.x / 100) * canvas.width;
-                const centerY = (ellipse.y / 100) * canvas.height;
-                const rx = (ellipse.radiusX / 100) * canvas.width * ellipse.scale;
-                const ry = (ellipse.radiusY / 100) * canvas.height * ellipse.scale;
-                const maxRadius = Math.max(rx, ry);
+        // Generate ellipses with random sizes and initial positions
+        const ellipses: Ellipse[] = baseColors.map((color, index) => {
+            // Random size in pixels
+            const sizeVariationPx = minSizePx + Math.random() * (maxSizePx - minSizePx);
+            const sizePercent = (sizeVariationPx / baseScreenWidth) * 100; // Convert to % of viewport width
 
-                // Create a radial gradient to simulate blur
-                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius + ellipse.blur);
-                gradient.addColorStop(0, `${ellipse.color}${Math.round(ellipse.alpha * 255).toString(16).padStart(2, '0')}`);
-                gradient.addColorStop(0.7, `${ellipse.color}${Math.round(ellipse.alpha * 0.5 * 255).toString(16).padStart(2, '0')}`);
-                gradient.addColorStop(1, `${ellipse.color}00`); // Fully transparent
+            // Randomize ry to be 80%-120% of rx for slight variation
+            const rx = sizePercent / 2; // Radius x in % of viewBox
+            const ryVariation = 0.8 + Math.random() * 0.4; // 80%-120%
+            const ry = rx * ryVariation; // Radius y with slight randomization
 
-                // Draw the ellipse
-                ctx.beginPath();
-                ctx.ellipse(centerX, centerY, rx, ry, 0, 0, Math.PI * 2);
-                ctx.fillStyle = gradient;
-                ctx.globalCompositeOperation = 'source-over'; // Normal blending
-                ctx.fill();
-            });
+            return {
+                id: `ellipse-${index}-${Date.now()}`,
+                cx: 50 + (Math.random() - 0.5) * 70, // ±35% variation around center (15%-85%)
+                cy: 50 + (Math.random() - 0.5) * 70,
+                rx,
+                ry,
+                fill: color,
+                blur: blurLevels[index],
+                animationDuration: animationDuration + index * 5,
+            };
+        });
 
-            requestAnimationFrame(animate);
+        // Adjust positions to ensure at least 60% visibility
+        const adjustOverlap = (ellipses: Ellipse[]) => {
+            for (let i = 1; i < ellipses.length; i++) {
+                for (let j = 0; j < i; j++) {
+                    const e1 = ellipses[i];
+                    const e2 = ellipses[j];
+
+                    // Approximate each ellipse as a circle for overlap calculation
+                    const r1 = (e1.rx + e1.ry) / 2; // Average radius for e1
+                    const r2 = (e2.rx + e2.ry) / 2; // Average radius for e2
+                    const smallerRadius = Math.min(r1, r2);
+                    const smallerArea = Math.PI * smallerRadius * smallerRadius;
+
+                    // Calculate distance between centers
+                    const dx = e1.cx - e2.cx;
+                    const dy = e1.cy - e2.cy;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const maxDistanceForOverlap = r1 + r2;
+
+                    if (distance < maxDistanceForOverlap) {
+                        // Approximate overlap area (simplified as intersection of two circles)
+                        const d = distance;
+                        const r = r1;
+                        const R = r2;
+                        let overlapArea = 0;
+                        if (d < Math.abs(r - R)) {
+                            // One circle is inside the other
+                            overlapArea = Math.PI * Math.min(r, R) * Math.min(r, R);
+                        } else {
+                            overlapArea =
+                                r * r * Math.acos((d * d + r * r - R * R) / (2 * d * r)) +
+                                R * R * Math.acos((d * d + R * R - r * r) / (2 * d * R)) -
+                                0.5 * Math.sqrt((-d + r + R) * (d + r - R) * (d - r + R) * (d + r + R));
+                        }
+
+                        // Calculate overlap as a percentage of the smaller ellipse's area
+                        const overlapPercentage = (overlapArea / smallerArea) * 100;
+
+                        // If overlap is more than 40% (i.e., less than 60% visible), adjust position
+                        if (overlapPercentage > 40) {
+                            // Move e1 away from e2
+                            const angle = Math.atan2(dy, dx);
+                            const minDistance = maxDistanceForOverlap * 0.6; // Ensure at least 60% visibility
+                            const newDistance = Math.max(distance, minDistance);
+                            e1.cx = e2.cx + newDistance * Math.cos(angle);
+                            e1.cy = e2.cy + newDistance * Math.sin(angle);
+
+                            // Ensure the new position stays within 15%-85% range
+                            e1.cx = Math.max(15, Math.min(85, e1.cx));
+                            e1.cy = Math.max(15, Math.min(85, e1.cy));
+                        }
+                    }
+                }
+            }
         };
 
-        requestAnimationFrame(animate);
+        // Apply overlap adjustment
+        adjustOverlap(ellipses);
+
+        // Create SVG content
+        ellipses.forEach(ellipse => {
+            // Create filter for blur
+            const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+            filter.setAttribute('id', `blur-${ellipse.id}`);
+            filter.setAttribute('x', '-50%');
+            filter.setAttribute('y', '-50%');
+            filter.setAttribute('width', '200%');
+            filter.setAttribute('height', '200%');
+            filter.setAttribute('filterUnits', 'objectBoundingBox');
+            filter.setAttribute('color-interpolation-filters', 'sRGB');
+
+            const gaussianBlur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+            gaussianBlur.setAttribute('stdDeviation', `${ellipse.blur / 20}`); // Scale blur for percentage units
+            gaussianBlur.setAttribute('result', 'blur');
+            filter.appendChild(gaussianBlur);
+
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            defs.appendChild(filter);
+            svgElement.appendChild(defs);
+
+            // Create ellipse
+            const ellipseElement = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            ellipseElement.setAttribute('cx', `${ellipse.cx}%`);
+            ellipseElement.setAttribute('cy', `${ellipse.cy}%`);
+            ellipseElement.setAttribute('rx', `${ellipse.rx}%`);
+            ellipseElement.setAttribute('ry', `${ellipse.ry}%`);
+            ellipseElement.setAttribute('fill', ellipse.fill);
+            ellipseElement.setAttribute('fill-opacity', '0.8');
+            ellipseElement.setAttribute('filter', `url(#blur-${ellipse.id})`);
+            ellipseElement.style.animation = `move-${ellipse.id} ${ellipse.animationDuration}s ease infinite`;
+            svgElement.appendChild(ellipseElement);
+        });
+
+        // Inject styles into stylesheet for animations
+        const styleSheet = document.styleSheets[0];
+        const keyframesCSS = ellipses.map(ellipse => `
+      @keyframes move-${ellipse.id} {
+        0% { transform: translate(0%, 0%) scale(1); }
+        25% { transform: translate(${(Math.random() - 0.5) * 5}%, ${(Math.random() - 0.5) * 5}%) scale(${1 + Math.random() * 0.03}); }
+        50% { transform: translate(${(Math.random() - 0.5) * 5}%, ${(Math.random() - 0.5) * 5}%) scale(${1 + Math.random() * 0.03}); }
+        75% { transform: translate(${(Math.random() - 0.5) * 5}%, ${(Math.random() - 0.5) * 5}%) scale(${1 + Math.random() * 0.03}); }
+        100% { transform: translate(0%, 0%) scale(1); }
+      }
+    `).join('');
+
+        try {
+            keyframesCSS.split('}').forEach(rule => {
+                if (rule.trim()) {
+                    styleSheet.insertRule(rule + '}', styleSheet.cssRules.length);
+                }
+            });
+        } catch (e) {
+            const styleTag = document.createElement('style');
+            styleTag.textContent = keyframesCSS;
+            document.head.appendChild(styleTag);
+        }
 
         return () => {
-            window.removeEventListener('resize', resizeCanvas);
             if (targetElement) {
-                const canvasElement = document.getElementById(canvasId);
-                if (canvasElement) {
-                    targetElement.removeChild(canvasElement);
+                const svgElement = document.getElementById(svgId);
+                if (svgElement) {
+                    targetElement.removeChild(svgElement);
+                }
+                const styleSheet = document.styleSheets[0];
+                for (let i = styleSheet.cssRules.length - 1; i >= 0; i--) {
+                    const rule = styleSheet.cssRules[i] as CSSKeyframesRule;
+                    if (rule.name?.includes(`move-ellipse-${targetElementId}`)) {
+                        styleSheet.deleteRule(i);
+                    }
                 }
                 targetElement.style.position = '';
                 targetElement.style.overflow = '';
             }
         };
-    }, [colors, targetElementId, animationDuration, variant]);
+    }, [targetElementId, animationDuration, colors]); // Dependencies ensure effect runs once per reload
 };
-

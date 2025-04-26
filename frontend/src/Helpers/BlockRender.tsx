@@ -119,17 +119,12 @@ const renderBlocks = ({
     className?: string;
     style?: React.CSSProperties | null | undefined;
 }) => {
-    // Debug: Log the input content to verify structure
-    console.log("Input Content:", JSON.stringify(content, null, 2));
-
     return (
         <BlocksRenderer
             content={content}
             blocks={{
                 paragraph: ({ children }) => {
                     const processedChildren = processChildren(children, "paragraph");
-                    // Debug: Log processed children
-                    console.log("Processed Paragraph Children:", processedChildren);
 
                     return (
                         <Typography
@@ -143,8 +138,6 @@ const renderBlocks = ({
                 },
                 heading: ({ children, level }) => {
                     const processedChildren = processChildren(children, `heading-${level}`);
-                    // Debug: Log processed children
-                    console.log("Processed Heading Children:", processedChildren);
 
                     switch (level) {
                         case 1:
