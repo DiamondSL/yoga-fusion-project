@@ -6,10 +6,14 @@ export const teachersQuery = gql`
             documentId
             Active
             Name
-            Disciplines {
-                Experience
-                Active
+            disciplines {
                 Name
+                documentId
+                Icon {
+                    height
+                    width
+                    url
+                }
             }
             Photo {
                 url
@@ -33,10 +37,14 @@ export const teacherQuery = gql`
                 height
                 alternativeText
             }
-            Disciplines {
-                Experience
-                Active
+            disciplines {
                 Name
+                documentId
+                Icon {
+                    height
+                    width
+                    url
+                }
             }
             Description
             Rating

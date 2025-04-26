@@ -17,11 +17,6 @@
       "required": true,
       "minLength": 1
     },
-    "Discipline": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.method"
-    },
     "Intensity": {
       "type": "enumeration",
       "enum": [
@@ -47,22 +42,22 @@
     "Description": {
       "type": "blocks"
     },
-    "bookings": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::booking.booking",
-      "mappedBy": "class"
-    },
     "teachers": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::teacher.teacher",
       "inversedBy": "classes"
     },
-    "Time": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.event-time"
+    "disciplines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::discipline.discipline"
+    },
+    "Duration": {
+      "type": "integer",
+      "min": 5,
+      "default": 5,
+      "required": false
     }
   }
 }

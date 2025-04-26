@@ -67,6 +67,7 @@ export const LandingPageQuery = gql`
                     Variant
                 }
                 Title
+                Title2
             }
             Section_Six {
                 Button {
@@ -75,6 +76,7 @@ export const LandingPageQuery = gql`
                     Variant
                 }
                 Description
+                Description2
                 Gallery {
                     url
                     height
@@ -101,6 +103,10 @@ export const LandingPageQuery = gql`
                 FAQ_elements {
                     Description
                     Title
+                }
+                FAQ_detailed {
+                    Title
+                    Description
                 }
             }
         }

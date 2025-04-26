@@ -1,7 +1,8 @@
 {
   "collectionName": "components_landing_sections_section_eights",
   "info": {
-    "displayName": "Section Eight"
+    "displayName": "Section Eight",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -15,6 +16,12 @@
       "type": "component",
       "repeatable": true,
       "component": "section.accordion"
+    },
+    "FAQ_detailed": {
+      "type": "component",
+      "repeatable": true,
+      "component": "section.detailed-description",
+      "min": 1
     }
   }
 }

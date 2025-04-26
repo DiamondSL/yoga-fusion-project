@@ -5,13 +5,12 @@ import ImageSlider from "@/Components/Slider/Slider";
 import renderBlocks from "@/Helpers/BlockRender";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import './section_three.css'
+import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 
 const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectionThreeContent) => {
     const isPhone = useMediaQuery('(max-width:767px)')
     const isSmallScreen = useMediaQuery('(max-width:425px)')
     const isTablet = useMediaQuery('(min-width:768px) and (max-width:1024px)')
-    const appUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:1337'
-
 
     const RenderedButtons = Button && Button.map((item) => {
         return <ButtonEl key={item.Text} sx={{maxWidth: isPhone ? '330px' : '239px', width: '100%'}}
@@ -33,23 +32,6 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
             }}>
                 <Box component={'article'} className={'section-three-article'}
                      sx={{maxWidth: (isPhone || isTablet) ? '100%' : '575px', padding: (isPhone || isTablet) ? '0 30px' : '', display: 'flex', position: 'relative', flexDirection: 'column'}}>
-                    {/*<Box*/}
-                    {/*    component="img"*/}
-                    {/*    src={'icons/shapes/Section_Three_Shape.svg'}*/}
-                    {/*    alt={'Section Three'}*/}
-                    {/*    sx={{*/}
-                    {/*        maxWidth: isPhone ? '238px' : '575px',*/}
-                    {/*        width: isPhone ? '100%' : 'max-content',*/}
-                    {/*        height: isPhone ? '238px' : 'auto',*/}
-                    {/*        objectFit: 'contain',*/}
-                    {/*        right: isPhone ? '-5%' : '',*/}
-                    {/*        position: 'absolute',*/}
-                    {/*        left: isPhone ? '' : '-21%',*/}
-                    {/*        top: isPhone ? '' : '17%',*/}
-                    {/*        transform: isPhone ? 'rotate(90deg) scale(1, -1)' : '',*/}
-                    {/*        transition: 'opacity 0.3s ease-in-out',*/}
-                    {/*    }}*/}
-                    {/*/>*/}
                     <Box className={'title'} display={'flex'} sx={{marginBottom: isPhone? '16px' : '8px', justifyContent: 'flex-start'}}>
                         {Title?.title && <Typography variant={isPhone ? 'h3' : 'h1'}>{Title?.title}</Typography>}
                     </Box>
@@ -90,7 +72,7 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 <Box>
                     {Photos && Photos.length > 0 ?
                         <ImageSlider style={{border: '1px solid', borderColor: 'primary.dark'}}
-                                     images={Photos?.map((item) => process.env.NODE_ENV === 'development' ? 'http://localhost:1337'+item.url : process.env.NODE_ENV === 'production' && item?.url?.includes('uploads') ? `${appUrl}/cms`+item.url : item.url)}
+                                     images={Photos?.map((item) => generateStrapiUrl(item.url))}
                                      width={(isPhone || isTablet) ? 'auto' : '700px'} height={isPhone ? '226px' : isTablet ? 'auto' : '400px'} />
                         : <Box component={'img'} src={'icons/Visuals/SectionThree/about_us.png'}></Box>
                     }

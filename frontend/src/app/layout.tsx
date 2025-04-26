@@ -18,11 +18,11 @@ const manrope = Manrope({subsets: ["cyrillic", "cyrillic-ext", "greek", "latin",
 const linkPlaceholders = [{link: 'наш простір', url: ''},
     {link: 'розклад', url: ''}, {link: 'вчителі', url: 'teachers'}, {link: 'тренування', url: 'classes'}, {
         link: 'ціни',
-        url: ''
+        url: 'abonements'
     }, {link: 'контакти', url: ''}];
 
 const footerPlaceholders = {
-    links: [{to: 'classes', text: 'тренування'}, {to: '/', text: 'ціни'}, {to: '/', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: '/', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: 'teachers', text: 'вчителі'}],
+    links: [{to: 'classes', text: 'тренування'}, {to: 'abonements', text: 'ціни'}, {to: '/', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: '/', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: 'teachers', text: 'вчителі'}],
     socialMedia: [{to: '/', text: 'instagram'}, {to: '/', text: 'facebook'}]
 }
 

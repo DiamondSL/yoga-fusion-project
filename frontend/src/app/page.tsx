@@ -24,7 +24,7 @@ const useLandingPageSections = (): {
             locale: language ?? 'uk-UA',
             status: 'PUBLISHED'
         },
-        context: { fetchOptions: { cache: 'no-store' } },
+        context: {fetchOptions: {cache: 'no-store'}},
     });
 
     // Define default data
@@ -132,7 +132,8 @@ const useLandingPageSections = (): {
                     width: ''
                 }, {url: 'icons/Visuals/SectionFive/photo.png', height: '', width: ''}],
                 Description: 'ваш безпечний простір для ідей, роботи та відпочинку\n' +
-                    'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.   хелсі-бар обожнює зустрічати гостей!\n'
+                    'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.   хелсі-бар обожнює зустрічати гостей!\n',
+                Description2: undefined
             },
             SectionSeven: {
                 Title: 'Як нас знайти',
@@ -147,12 +148,13 @@ const useLandingPageSections = (): {
                     Title: 'FAQ',
                     Placement: 'Center'
                 },
-                FAQ_elements: [{
+                FAQ_detailed: [{
                     Title: 'Що взяти з собою на тренування з собою на тренування?',
-                    Description: 'відновитись після класів або завітати по спокій за чашкою кави, чаю або матчі. працюйте, перезавантажуйтесь та відпочивайте з нами.  хелсі-бар обожнює зустрічати гостей!'
+                    Description: undefined
                 }]
             }
         };
+
         const sections: Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
             return data !== null && index !== 0;
         }).map((data) => {
@@ -190,22 +192,23 @@ const Home = () => {
         SectionEight
     } = sections.data
 
-
     return (
-        <Container maxWidth={false} sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important', overflowX: 'hidden'}}
+        <Container maxWidth={false}
+                   sx={{padding: '0 0 0 0 !important', margin: '0 0 0 0 !important', overflowX: 'hidden'}}
                    className={'LandingPage'}>
             <LandingSectionOne Title={SectionOne?.Title} Buttons={SectionOne?.Buttons}/>
             <Box id={'sections-gradient-container'}>
-            <LandingSectionTwo Title={SectionTwo?.Title} List_Description={SectionTwo?.List_Description}/>
-            <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button}
-                                 Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
-            <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles}
-                                Button={SectionFive?.Button} titleSecond={SectionFive?.Title}/>
+                <LandingSectionTwo Title={SectionTwo?.Title} List_Description={SectionTwo?.List_Description}/>
+                <LandingSectionThree Title={SectionThree?.Title} Button={SectionThree?.Button}
+                                     Description={SectionThree?.Description} Photos={SectionThree?.Photos}/>
+                <LandingSectionFour Title={SectionFour?.Title} Shape_Titles={SectionFour?.Shape_Titles}
+                                    Button={SectionFive?.Button} titleSecond={SectionFive?.Title2}/>
             </Box>
             <LandingSectionFive Title={SectionSix?.Title} Button={SectionSix?.Button} Gallery={SectionSix?.Gallery}
                                 Route={SectionSeven?.Route} TitleSecondPlacement={SectionSeven?.Placement}
-                                Description={SectionSix?.Description} TitleSecond={SectionSeven?.Title}/>
-            <LandingSectionSix Title={SectionEight?.Title} FAQ_elements={SectionEight?.FAQ_elements}/>
+                                Description={SectionSix?.Description} Description2={SectionSix?.Description2}
+                                TitleSecond={SectionSeven?.Title}/>
+            <LandingSectionSix Title={SectionEight?.Title} FAQ_detailed={SectionEight?.FAQ_detailed}/>
         </Container>
     );
 }

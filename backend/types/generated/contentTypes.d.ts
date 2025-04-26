@@ -486,7 +486,6 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    class: Schema.Attribute.Relation<'manyToOne', 'api::class.class'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -550,12 +549,22 @@ export interface ApiClassClass extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    bookings: Schema.Attribute.Relation<'oneToMany', 'api::booking.booking'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Description: Schema.Attribute.Blocks;
-    Discipline: Schema.Attribute.Component<'shared.method', false>;
+    disciplines: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::discipline.discipline'
+    >;
+    Duration: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 5;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
     Information: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 1;
@@ -575,7 +584,40 @@ export interface ApiClassClass extends Struct.CollectionTypeSchema {
     Photo: Schema.Attribute.Media<'images' | 'videos', true>;
     publishedAt: Schema.Attribute.DateTime;
     teachers: Schema.Attribute.Relation<'manyToMany', 'api::teacher.teacher'>;
-    Time: Schema.Attribute.Component<'shared.event-time', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDisciplineDiscipline extends Struct.CollectionTypeSchema {
+  collectionName: 'disciplines';
+  info: {
+    displayName: 'Discipline';
+    pluralName: 'disciplines';
+    singularName: 'discipline';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Icon: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::discipline.discipline'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -752,18 +794,10 @@ export interface ApiTeacherTeacher extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    Disciplines: Schema.Attribute.Component<'shared.method', true> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }> &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 5;
-        },
-        number
-      >;
+    disciplines: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::discipline.discipline'
+    >;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1322,6 +1356,7 @@ declare module '@strapi/strapi' {
       'api::booking.booking': ApiBookingBooking;
       'api::category.category': ApiCategoryCategory;
       'api::class.class': ApiClassClass;
+      'api::discipline.discipline': ApiDisciplineDiscipline;
       'api::global.global': ApiGlobalGlobal;
       'api::landing-page.landing-page': ApiLandingPageLandingPage;
       'api::teacher.teacher': ApiTeacherTeacher;

@@ -7,14 +7,17 @@ export const classesQuery = gql`
         classes {
             Name
             documentId
-            Time {
-                Beginning
-                Minutes
-            }
+            Duration
             Intensity
             Information
-            Discipline {
+            disciplines {
                 Name
+                documentId
+                Icon {
+                    url
+                    width
+                    height
+                }
             }
             teachers {
                 Name
@@ -34,14 +37,17 @@ export const classQuery = gql`
         class (documentId: $classId) {
             Name
             documentId
-            Time {
-                Beginning
-                Minutes
-            }
+            Duration
             Intensity
             Information
-            Discipline {
+            disciplines {
                 Name
+                documentId
+                Icon {
+                    url
+                    width
+                    height
+                }
             }
             Description
             teachers {
