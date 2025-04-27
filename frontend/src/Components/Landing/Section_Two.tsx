@@ -27,8 +27,8 @@ const IconListComponent = ({Icon, Description, className}: ListDescriptionItem) 
                            sx={{
                                objectFit: 'contain',
                                maxWidth: isPhone ? '30px' : '100%',
-                               width: isPhone ? 'auto' : Icon?.width,
-                               height: isPhone ? 'auto' : Icon?.height
+                               width: isPhone ? '30px' : Icon?.width,
+                               height: isPhone ? '30px' : Icon?.height
                            }}/>
             </Box>
             <Box sx={{maxWidth: isPhone ? '280px' : '358px', width: '100%'}}>
