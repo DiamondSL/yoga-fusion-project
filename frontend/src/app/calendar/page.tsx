@@ -2,7 +2,7 @@ import {Container} from "@mui/material";
 import React from "react";
 import SessionsList from "@/app/calendar/components/sessionsList";
 import './page.css'
-import background from 'public/icons/gradients/blue-gradient-centered.png'
+import background from '../../../public/public/icons/gradients/blue-gradient-centered.png'
 
 
 export default function Page() {
