@@ -2,7 +2,7 @@
 import {Box, Button, FormControl, OutlinedInput, Typography} from "@mui/material";
 import {ContactsPageFormQuery} from "@/GraphQL/TSQueries/ContactsPageQueries";
 import {useQuery} from "@apollo/client";
-import background from '../../../public/icons/gradients/background-pink-other.png'
+import background from "../../../../public/icons/gradients/background-pink-other.png";
 import renderBlocks from "@/Helpers/BlockRender";
 
 
@@ -11,7 +11,7 @@ const ContactsForm = () => {
     const {data, loading, error} = formData
 
 
-    return <Box className={'contacts-form'} sx={{backgroundImage: `url(${background.src})`}}>
+    return <Box className={'contacts-form'} sx={{backgroundImage: `url(${background?.src})`}}>
         <Box className={'wrapper'}>
             {error ? (<Box><Typography color={'error'}>error loading form</Typography></Box>) :
                 <>
