@@ -2,7 +2,6 @@ import {Box} from "@mui/system";
 import {CardMedia, Container, Typography} from "@mui/material";
 import SectionWrapper from './SectionWrapper'
 import {LandingSectionTwoContent, ListDescriptionItem} from "@/types/LandingPageTypes";
-import {useGradientCloudsBackground} from "@/Helpers/DynamicGradient";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 import blockRender from "@/Helpers/BlockRender";
@@ -51,12 +50,6 @@ const LandingSectionTwo = ({
     const isPhone = useMediaQuery('(max-width:767px)')
     const isSmallScreen = useMediaQuery('(max-width:425px)')
     const isTablet = useMediaQuery('(min-width:768px) and (max-width:1024px)')
-    useGradientCloudsBackground({
-        colors: ["#F7BE00", "#FE5347"],
-        targetElementId: 'sections-gradient-container',
-        animationDuration: 20,
-        variant: 'roundGradient'
-    });
 
     return (
         <SectionWrapper id={'Landing-section-two'}>

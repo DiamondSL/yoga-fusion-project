@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_memberships",
+  "info": {
+    "displayName": "Membership",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "Unlimited": {
+      "type": "boolean",
+      "default": false
+    },
+    "endDate": {
+      "type": "date",
+      "required": true
+    },
+    "Amount": {
+      "type": "integer",
+      "default": 1,
+      "min": 1
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "abonement": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::abonement.abonement"
+    }
+  }
+}

@@ -7,6 +7,13 @@
     align-items: center;
 }
 
+#sections-gradient-container {
+    background-image: url('../../public/icons/gradients/Desktop/gradient_yellow_orange.png');
+    background-repeat: no-repeat;
+    background-position: -70% 30%;
+    background-size: 70%;
+}
+
 
 .marquee-item > p:first-child {
     font-family: "NyghtSerif", serif !important;
@@ -21,7 +28,7 @@
     }
 }
 
-#teachers-content, #teacher-content, #classes-content, #class-content, #abonements-page {
+#teachers-content, #teacher-content, #classes-content, #class-content, #abonements-page, #calendar-page, #contacts-page {
     padding: 78px 0 0 0;
 }
 
@@ -36,4 +43,16 @@
         position: relative;
         z-index: 5;
     }
+}
+
+#abonements-page .picker_button {
+    min-width: 0;
+    border-radius: 0;
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: Capitalize;
+    font-size: 14px;
+    border: none;
+    padding: 10px 16px;
 }

@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 const manrope = Manrope({subsets: ["cyrillic", "cyrillic-ext", "greek", "latin", "latin-ext", "vietnamese"]})
 
 const linkPlaceholders = [{link: 'наш простір', url: ''},
-    {link: 'розклад', url: ''}, {link: 'вчителі', url: 'teachers'}, {link: 'тренування', url: 'classes'}, {
+    {link: 'розклад', url: 'calendar'}, {link: 'вчителі', url: 'teachers'}, {link: 'тренування', url: 'classes'}, {
         link: 'ціни',
         url: 'abonements'
-    }, {link: 'контакти', url: ''}];
+    }, {link: 'контакти', url: 'contacts'}];
 
 const footerPlaceholders = {
-    links: [{to: 'classes', text: 'тренування'}, {to: 'abonements', text: 'ціни'}, {to: '/', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: '/', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: 'teachers', text: 'вчителі'}],
+    links: [{to: 'classes', text: 'тренування'}, {to: 'abonements', text: 'ціни'}, {to: 'contacts', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: 'calendar', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: 'teachers', text: 'вчителі'}],
     socialMedia: [{to: '/', text: 'instagram'}, {to: '/', text: 'facebook'}]
 }
 
@@ -33,7 +33,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-            <html lang="en">
+            <html>
             <body className={manrope.className}>
             <ContextWrapper initialLanguage={'uk-UA'}>
             <ApolloWrapper>

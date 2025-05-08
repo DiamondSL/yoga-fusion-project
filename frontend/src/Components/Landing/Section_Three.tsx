@@ -26,11 +26,11 @@ const LandingSectionThree = ({Title, Button, Description, Photos}: LandingSectio
                 gap: '40px',
                 paddingTop: '60px',
                 paddingBottom: isPhone ? '30px' : '80px',
-                paddingLeft: '0 !important',
+                paddingLeft: '0',
                 paddingRight: '0 !important'
             }}>
                 <Box component={'article'} className={'section-three-article'}
-                     sx={{maxWidth: (isPhone || isTablet) ? '100%' : '575px', padding: (isPhone || isTablet) ? '0 30px' : '', display: 'flex', position: 'relative', flexDirection: 'column'}}>
+                     sx={{maxWidth: (isPhone || isTablet) ? '100%' : '575px', padding: (isPhone || isTablet) ? '0 30px' : ''}}>
                     <Box className={'title'} display={'flex'} sx={{marginBottom: isPhone? '16px' : '8px', justifyContent: 'flex-start'}}>
                         {Title?.title && <Typography variant={isPhone ? 'h3' : 'h1'}>{Title?.title}</Typography>}
                     </Box>

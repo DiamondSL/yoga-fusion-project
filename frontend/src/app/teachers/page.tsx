@@ -1,4 +1,4 @@
-import {Box, Button, Container, Typography} from "@mui/material";
+import {Box, Container, Typography} from "@mui/material";
 import Marquee from "@/Components/Marquee/Marquee";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import SectionWrapper from "@/Components/Landing/SectionWrapper";
@@ -7,6 +7,7 @@ import background from '../../../public/icons/gradients/teachers/background_main
 import React from "react";
 import {BlocksContent} from "@strapi/blocks-react-renderer";
 import {TeachersList} from "@/app/teachers/components/teachersList";
+import RegisterActions from "@/Components/Actions/register_actions";
 
 export type Discipline = {
     Name?: string
@@ -21,6 +22,7 @@ export type Discipline = {
 
 export type teacherEntity = {
     Active?: boolean
+    Top?: boolean
     Description?: BlocksContent
     disciplines?: Discipline[]
     Rating?: number
@@ -55,14 +57,7 @@ const Teachers = () => {
                 animationComposition: 'add',
                 animationDirection: 'reverse'
             }} speed={60}/>
-            <SectionWrapper className={'actions'}>
-                <Typography variant={'h3'} letterSpacing={'0.5px'}>
-                    реєструйся та отримай 1 безкоштовний класс
-                </Typography>
-                <Button variant={'contained'}>
-                    зареєструватися
-                </Button>
-            </SectionWrapper>
+            <RegisterActions  />
         </Container>
     )
 }

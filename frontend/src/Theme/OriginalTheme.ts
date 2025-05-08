@@ -1,5 +1,5 @@
 'use client';
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 import {calculateLetterSpacing, CustomFontsObject, FontsObjects, returnFontFamily} from "@/Helpers/FontFamilyConverter";
 import {CSSProperties} from "@mui/material";
 
@@ -89,12 +89,12 @@ const headingsSizes = {
     h8: '18px'
 }
 
-const bodySizes =  {
-        BodyFontSizeXL: '28px',
-        BodyFontSizeL: '18px',
-        BodyFontSizeLRegular: '16px',
-        BodyFontSizeM: '14px',
-        BodyFontSizeS: '14px'
+const bodySizes = {
+    BodyFontSizeXL: '28px',
+    BodyFontSizeL: '18px',
+    BodyFontSizeLRegular: '16px',
+    BodyFontSizeM: '14px',
+    BodyFontSizeS: '14px'
 }
 
 const OriginalTheme = createTheme(
@@ -163,7 +163,7 @@ const OriginalTheme = createTheme(
                 fontSize: headingsSizes.h2,
                 fontStyle: 'italic',
                 lineHeight: '150%',
-                letterSpacing: `${calculateLetterSpacing(headingsSizes.h2,0.04)}px`
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h2, 0.04)}px`
             },
             h3: {
                 fontFamily: "NyghtSerif",
@@ -171,7 +171,7 @@ const OriginalTheme = createTheme(
                 fontSize: headingsSizes.h3,
                 fontStyle: 'italic',
                 lineHeight: '125%',
-                letterSpacing: `${calculateLetterSpacing(headingsSizes.h3,0.04)}px`
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h3, 0.04)}px`
             },
             h4: {
                 fontFamily: "NyghtSerif",
@@ -179,7 +179,7 @@ const OriginalTheme = createTheme(
                 fontStyle: 'italic',
                 fontSize: headingsSizes.h4,
                 lineHeight: '125%',
-                letterSpacing: `${calculateLetterSpacing(headingsSizes.h4,0.04)}px`
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h4, 0.04)}px`
 
             },
             h5: {
@@ -188,7 +188,7 @@ const OriginalTheme = createTheme(
                 fontStyle: 'italic',
                 fontSize: headingsSizes.h5,
                 lineHeight: '125%',
-                letterSpacing: `${calculateLetterSpacing(headingsSizes.h5,0.04)}px`
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h5, 0.04)}px`
             },
             h6: {
                 fontFamily: "NyghtSerif",
@@ -196,7 +196,7 @@ const OriginalTheme = createTheme(
                 fontStyle: 'italic',
                 fontSize: headingsSizes.h6,
                 lineHeight: '125%',
-                letterSpacing: `${calculateLetterSpacing(headingsSizes.h6,0.04)}px`
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h6, 0.04)}px`
             },
             h7: {
                 fontFamily: "NyghtSerif",
@@ -204,7 +204,7 @@ const OriginalTheme = createTheme(
                 fontStyle: 'italic',
                 fontSize: headingsSizes.h7,
                 lineHeight: '125%',
-                letterSpacing: `${calculateLetterSpacing(headingsSizes.h7,0.04)}px`
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h7, 0.04)}px`
             },
             h8: {
                 fontFamily: "NyghtSerif",
@@ -212,21 +212,21 @@ const OriginalTheme = createTheme(
                 fontStyle: 'italic',
                 fontSize: headingsSizes.h8,
                 lineHeight: '125%',
-                letterSpacing: `${calculateLetterSpacing(headingsSizes.h7,0.04)}px`
+                letterSpacing: `${calculateLetterSpacing(headingsSizes.h7, 0.04)}px`
             },
             body1: {
                 fontFamily: "Manrope",
                 fontWeight: 500,
                 fontSize: bodySizes.BodyFontSizeLRegular,
                 lineHeight: '150%',
-                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeLRegular,0.03)}px`
+                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeLRegular, 0.03)}px`
             },
             body2: {
                 fontFamily: "Manrope",
                 fontWeight: 400,
                 fontSize: bodySizes.BodyFontSizeM,
                 lineHeight: '150%',
-                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeM,0.03)}px`
+                letterSpacing: `${calculateLetterSpacing(bodySizes.BodyFontSizeM, 0.03)}px`
             },
             bodyXL: {
                 fontFamily: "Manrope",
@@ -246,6 +246,34 @@ const OriginalTheme = createTheme(
         components: {
             MuiCssBaseline: {
                 styleOverrides: fontsFontFace.replaceAll(',', " ")
+            },
+            MuiInput: {
+                styleOverrides: {
+                    root: {
+                        padding: '9px 16px'
+                    }
+                }
+            },
+            MuiInputBase: {
+                styleOverrides: {
+                    root: {
+                        padding: '0 !important'
+                    }
+                }
+            },
+            MuiFormControl: {
+                styleOverrides: {
+                    root: {
+                        padding: '0 !important'
+                    }
+                }
+            },
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        padding: '9px 16px'
+                    }
+                }
             },
             MuiButton: {
                 styleOverrides: {
@@ -296,6 +324,17 @@ const OriginalTheme = createTheme(
                             ":hover": {
                                 backgroundColor: colors.brand.lime
                             },
+                        }
+                    },
+                    {
+                        props: {size: 'small'},
+                        style: {
+                            padding: '7px 29px',
+                            minWidth: 'fit-content',
+                            fontSize: '16px',
+                            letterSpacing: '0',
+                            lineHeight: '100%',
+                            height: '36px'
                         }
                     }
                 ],

@@ -78,6 +78,21 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::discipline.discipline"
+    },
+    "sessions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::session.session",
+      "mappedBy": "teachers"
+    },
+    "Top": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "boolean",
+      "default": false
     }
   }
 }

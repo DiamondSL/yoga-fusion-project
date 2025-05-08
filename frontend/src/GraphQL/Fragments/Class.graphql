@@ -11,14 +11,10 @@ fragment Class on Class {
     teachers {
         ...Teacher
     }
-    Discipline {
-        Name
-        Experience
+    disciplines {
+        ...Discipline
     }
     Intensity
     Information
-    Time {
-        Beginning
-        Minutes
-    }
+    Duration
 }

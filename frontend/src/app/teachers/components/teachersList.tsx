@@ -29,7 +29,7 @@ export const TeachersList = () => {
                 cursor: 'pointer'
             }} title={item?.Name}
                          backdrop={false}>
-                {item.Rating && item?.Rating > 4.5 && (
+                {item && item?.Top === true && (
                     <Box className={'rating'}>
                         <Box className={'rating-content'}>
                             <RatingIcon width={'96px'} height={'auto'}/>

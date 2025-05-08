@@ -1,5 +1,4 @@
-import { Typography, Box, ListItem } from "@mui/material";
-import Link from "next/link";
+import { Typography, Box, ListItem, Link } from "@mui/material";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import React from "react";
 
@@ -220,7 +219,7 @@ const renderBlocks = ({
                         src={image.url}
                     />
                 ),
-                link: ({ children, url }) => <Link href={url}>{children}</Link>,
+                link: ({ children, url }) => <Link className={className} href={url}>{children}</Link>,
                 list: ({ children, format }) =>
                     format === "ordered" ? (
                         <ol className={className}>{children}</ol>
@@ -229,7 +228,7 @@ const renderBlocks = ({
                     ),
                 "list-item": ({ children }) => (
                     <ListItem className={className} sx={style}>
-                        {children}
+                        <Box>{children}</Box>
                     </ListItem>
                 ),
             }}

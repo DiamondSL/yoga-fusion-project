@@ -13,6 +13,9 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+"""A time string with format HH:mm:ss.SSS"""
+scalar Time
+
 type Error {
     code: String!
     message: String
@@ -159,6 +162,31 @@ input FloatFilterInput {
     between: [Float]
 }
 
+input TimeFilterInput {
+    and: [Time]
+    or: [Time]
+    not: TimeFilterInput
+    eq: Time
+    eqi: Time
+    ne: Time
+    nei: Time
+    startsWith: Time
+    endsWith: Time
+    contains: Time
+    notContains: Time
+    containsi: Time
+    notContainsi: Time
+    gt: Time
+    gte: Time
+    lt: Time
+    lte: Time
+    null: Boolean
+    notNull: Boolean
+    in: [Time]
+    notIn: [Time]
+    between: [Time]
+}
+
 input DateTimeFilterInput {
     and: [DateTime]
     or: [DateTime]
@@ -209,6 +237,31 @@ input JSONFilterInput {
     between: [JSON]
 }
 
+input ComponentSharedSocialMediaLinkFiltersInput {
+    url: StringFilterInput
+    Show: BooleanFilterInput
+    Name: StringFilterInput
+    and: [ComponentSharedSocialMediaLinkFiltersInput]
+    or: [ComponentSharedSocialMediaLinkFiltersInput]
+    not: ComponentSharedSocialMediaLinkFiltersInput
+}
+
+input ComponentSharedSocialMediaLinkInput {
+    id: ID
+    Icon: ID
+    url: String
+    Show: Boolean
+    Name: String
+}
+
+type ComponentSharedSocialMediaLink {
+    id: ID!
+    Icon: UploadFile
+    url: String!
+    Show: Boolean
+    Name: String
+}
+
 type ComponentSharedSlider {
     id: ID!
     files_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
@@ -244,6 +297,25 @@ type ComponentSharedQuote {
     id: ID!
     title: String
     motto: String
+}
+
+input ComponentSharedPriceFiltersInput {
+    Amount: IntFilterInput
+    and: [ComponentSharedPriceFiltersInput]
+    or: [ComponentSharedPriceFiltersInput]
+    not: ComponentSharedPriceFiltersInput
+}
+
+input ComponentSharedPriceInput {
+    id: ID
+    Amount: Int
+    Shape: ID
+}
+
+type ComponentSharedPrice {
+    id: ID!
+    Amount: Int!
+    Shape: UploadFile
 }
 
 enum ENUM_COMPONENTSHAREDMETHOD_NAME {
@@ -321,8 +393,25 @@ input ComponentSectionShapeTitleInput {
 
 type ComponentSectionShapeTitle {
     id: ID!
-    Title: String!
-    Shape: UploadFile!
+    Title: String
+    Shape: UploadFile
+}
+
+input ComponentSectionLinksFiltersInput {
+    url: StringFilterInput
+    and: [ComponentSectionLinksFiltersInput]
+    or: [ComponentSectionLinksFiltersInput]
+    not: ComponentSectionLinksFiltersInput
+}
+
+input ComponentSectionLinksInput {
+    id: ID
+    url: String
+}
+
+type ComponentSectionLinks {
+    id: ID!
+    url: String!
 }
 
 input ComponentSectionIconDescriptionFiltersInput {
@@ -811,6 +900,61 @@ type UsersPermissionsUserRelationResponseCollection {
     nodes: [UsersPermissionsUser!]!
 }
 
+enum ENUM_ABONEMENT_TYPE {
+    Memberships
+    Events
+}
+
+input AbonementFiltersInput {
+    documentId: IDFilterInput
+    Description: JSONFilterInput
+    Name: ComponentSectionShapeTitleFiltersInput
+    Price: ComponentSharedPriceFiltersInput
+    Type: StringFilterInput
+    Trainings_amount: IntFilterInput
+    createdAt: DateTimeFilterInput
+    updatedAt: DateTimeFilterInput
+    publishedAt: DateTimeFilterInput
+    locale: StringFilterInput
+    localizations: AbonementFiltersInput
+    and: [AbonementFiltersInput]
+    or: [AbonementFiltersInput]
+    not: AbonementFiltersInput
+}
+
+input AbonementInput {
+    Description: JSON
+    Name: ComponentSectionShapeTitleInput
+    Price: ComponentSharedPriceInput
+    Type: ENUM_ABONEMENT_TYPE
+    Trainings_amount: Int
+    publishedAt: DateTime
+}
+
+type Abonement {
+    documentId: ID!
+    Description: JSON
+    Name: ComponentSectionShapeTitle
+    Price: ComponentSharedPrice
+    Type: ENUM_ABONEMENT_TYPE
+    Trainings_amount: Int
+    createdAt: DateTime
+    updatedAt: DateTime
+    publishedAt: DateTime
+    locale: String
+    localizations_connection(filters: AbonementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): AbonementRelationResponseCollection
+    localizations(filters: AbonementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Abonement]!
+}
+
+type AbonementEntityResponseCollection {
+    nodes: [Abonement!]!
+    pageInfo: Pagination!
+}
+
+type AbonementRelationResponseCollection {
+    nodes: [Abonement!]!
+}
+
 union AboutBlocksDynamicZone = ComponentSharedMedia | ComponentSharedQuote | ComponentSharedRichText | ComponentSharedSlider | Error
 
 scalar AboutBlocksDynamicZoneInput
@@ -924,6 +1068,7 @@ type AuthorEntityResponseCollection {
 input BookingFiltersInput {
     documentId: IDFilterInput
     users_permissions_user: UsersPermissionsUserFiltersInput
+    session: SessionFiltersInput
     createdAt: DateTimeFilterInput
     updatedAt: DateTimeFilterInput
     publishedAt: DateTimeFilterInput
@@ -936,12 +1081,14 @@ input BookingFiltersInput {
 
 input BookingInput {
     users_permissions_user: ID
+    session: ID
     publishedAt: DateTime
 }
 
 type Booking {
     documentId: ID!
     users_permissions_user: UsersPermissionsUser
+    session: Session
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
@@ -1060,6 +1207,32 @@ type ClassRelationResponseCollection {
     nodes: [Class!]!
 }
 
+input ContactsPageInput {
+    Title: JSON
+    Description: JSON
+    Form: ComponentSectionDetailedDescriptionInput
+    Maps: [ComponentSectionLinksInput]
+    publishedAt: DateTime
+}
+
+type ContactsPage {
+    documentId: ID!
+    Title: JSON
+    Description: JSON
+    Form: ComponentSectionDetailedDescription
+    Maps(filters: ComponentSectionLinksFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionLinks]
+    createdAt: DateTime
+    updatedAt: DateTime
+    publishedAt: DateTime
+    locale: String
+    localizations_connection: ContactsPageRelationResponseCollection
+    localizations: [ContactsPage]!
+}
+
+type ContactsPageRelationResponseCollection {
+    nodes: [ContactsPage!]!
+}
+
 input DisciplineFiltersInput {
     documentId: IDFilterInput
     Name: StringFilterInput
@@ -1100,6 +1273,7 @@ input GlobalInput {
     favicon: ID
     siteDescription: String
     defaultSeo: ComponentSharedSeoInput
+    Socials: [ComponentSharedSocialMediaLinkInput]
     publishedAt: DateTime
 }
 
@@ -1109,6 +1283,7 @@ type Global {
     favicon: UploadFile
     siteDescription: String!
     defaultSeo: ComponentSharedSeo
+    Socials(filters: ComponentSharedSocialMediaLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedSocialMediaLink]
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
@@ -1148,6 +1323,62 @@ type LandingPageRelationResponseCollection {
     nodes: [LandingPage!]!
 }
 
+input SessionFiltersInput {
+    documentId: IDFilterInput
+    Date: DateTimeFilterInput
+    teachers: TeacherFiltersInput
+    class: ClassFiltersInput
+    bookings: BookingFiltersInput
+    Duration: TimeFilterInput
+    Places: IntFilterInput
+    Name: StringFilterInput
+    Room: StringFilterInput
+    createdAt: DateTimeFilterInput
+    updatedAt: DateTimeFilterInput
+    publishedAt: DateTimeFilterInput
+    and: [SessionFiltersInput]
+    or: [SessionFiltersInput]
+    not: SessionFiltersInput
+}
+
+input SessionInput {
+    Date: DateTime
+    teachers: [ID]
+    class: ID
+    bookings: [ID]
+    Duration: Time
+    Places: Int
+    Name: String
+    Room: String
+    publishedAt: DateTime
+}
+
+type Session {
+    documentId: ID!
+    Date: DateTime!
+    teachers_connection(filters: TeacherFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeacherRelationResponseCollection
+    teachers(filters: TeacherFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Teacher]!
+    class: Class
+    bookings_connection(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BookingRelationResponseCollection
+    bookings(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Booking]!
+    Duration: Time
+    Places: Int
+    Name: String
+    Room: String
+    createdAt: DateTime
+    updatedAt: DateTime
+    publishedAt: DateTime
+}
+
+type SessionEntityResponseCollection {
+    nodes: [Session!]!
+    pageInfo: Pagination!
+}
+
+type SessionRelationResponseCollection {
+    nodes: [Session!]!
+}
+
 input TeacherFiltersInput {
     documentId: IDFilterInput
     Name: StringFilterInput
@@ -1156,6 +1387,8 @@ input TeacherFiltersInput {
     Rating: FloatFilterInput
     classes: ClassFiltersInput
     disciplines: DisciplineFiltersInput
+    sessions: SessionFiltersInput
+    Top: BooleanFilterInput
     createdAt: DateTimeFilterInput
     updatedAt: DateTimeFilterInput
     publishedAt: DateTimeFilterInput
@@ -1174,6 +1407,8 @@ input TeacherInput {
     Rating: Float
     classes: [ID]
     disciplines: [ID]
+    sessions: [ID]
+    Top: Boolean
     publishedAt: DateTime
 }
 
@@ -1188,6 +1423,9 @@ type Teacher {
     classes(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Class]!
     disciplines_connection(filters: DisciplineFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): DisciplineRelationResponseCollection
     disciplines(filters: DisciplineFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Discipline]!
+    sessions_connection(filters: SessionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): SessionRelationResponseCollection
+    sessions(filters: SessionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Session]!
+    Top: Boolean
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
@@ -1205,7 +1443,7 @@ type TeacherRelationResponseCollection {
     nodes: [Teacher!]!
 }
 
-union GenericMorph = ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedMethod | ComponentSharedMedia | ComponentSharedEventTime | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | About | Article | Author | Booking | Category | Class | Discipline | Global | LandingPage | Teacher
+union GenericMorph = ComponentSharedSocialMediaLink | ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedPrice | ComponentSharedMethod | ComponentSharedMedia | ComponentSharedEventTime | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionLinks | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Abonement | About | Article | Author | Booking | Category | Class | ContactsPage | Discipline | Global | LandingPage | Session | Teacher
 
 input FileInfoInput {
     name: String
@@ -1292,6 +1530,31 @@ type Query {
     usersPermissionsUser(documentId: ID!, status: PublicationStatus = PUBLISHED): UsersPermissionsUser
     usersPermissionsUsers_connection(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): UsersPermissionsUserEntityResponseCollection
     usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [UsersPermissionsUser]!
+    abonement(
+        documentId: ID!
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Abonement
+    abonements_connection(
+        filters: AbonementFiltersInput
+        pagination: PaginationArg = {}
+        sort: [String] = []
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): AbonementEntityResponseCollection
+    abonements(
+        filters: AbonementFiltersInput
+        pagination: PaginationArg = {}
+        sort: [String] = []
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): [Abonement]!
     about(status: PublicationStatus = PUBLISHED): About
     article(documentId: ID!, status: PublicationStatus = PUBLISHED): Article
     articles_connection(filters: ArticleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ArticleEntityResponseCollection
@@ -1330,6 +1593,12 @@ type Query {
     class(documentId: ID!, status: PublicationStatus = PUBLISHED): Class
     classes_connection(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ClassEntityResponseCollection
     classes(filters: ClassFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Class]!
+    contactsPage(
+        status: PublicationStatus = PUBLISHED
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): ContactsPage
     discipline(documentId: ID!, status: PublicationStatus = PUBLISHED): Discipline
     disciplines_connection(filters: DisciplineFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): DisciplineEntityResponseCollection
     disciplines(filters: DisciplineFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Discipline]!
@@ -1340,6 +1609,9 @@ type Query {
         """The locale to use for the query"""
         locale: I18NLocaleCode
     ): LandingPage
+    session(documentId: ID!, status: PublicationStatus = PUBLISHED): Session
+    sessions_connection(filters: SessionFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): SessionEntityResponseCollection
+    sessions(filters: SessionFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Session]!
     teacher(
         documentId: ID!
         status: PublicationStatus = PUBLISHED
@@ -1375,6 +1647,27 @@ type Mutation {
     createReviewWorkflowsWorkflowStage(status: PublicationStatus = PUBLISHED, data: ReviewWorkflowsWorkflowStageInput!): ReviewWorkflowsWorkflowStage
     updateReviewWorkflowsWorkflowStage(documentId: ID!, status: PublicationStatus = PUBLISHED, data: ReviewWorkflowsWorkflowStageInput!): ReviewWorkflowsWorkflowStage
     deleteReviewWorkflowsWorkflowStage(documentId: ID!): DeleteMutationResponse
+    createAbonement(
+        status: PublicationStatus = PUBLISHED
+        data: AbonementInput!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Abonement
+    updateAbonement(
+        documentId: ID!
+        status: PublicationStatus = PUBLISHED
+        data: AbonementInput!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): Abonement
+    deleteAbonement(
+        documentId: ID!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): DeleteMutationResponse
     updateAbout(status: PublicationStatus = PUBLISHED, data: AboutInput!): About
     deleteAbout: DeleteMutationResponse
     createArticle(status: PublicationStatus = PUBLISHED, data: ArticleInput!): Article
@@ -1410,6 +1703,17 @@ type Mutation {
     createClass(status: PublicationStatus = PUBLISHED, data: ClassInput!): Class
     updateClass(documentId: ID!, status: PublicationStatus = PUBLISHED, data: ClassInput!): Class
     deleteClass(documentId: ID!): DeleteMutationResponse
+    updateContactsPage(
+        status: PublicationStatus = PUBLISHED
+        data: ContactsPageInput!
+
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): ContactsPage
+    deleteContactsPage(
+        """The locale to use for the query"""
+        locale: I18NLocaleCode
+    ): DeleteMutationResponse
     createDiscipline(status: PublicationStatus = PUBLISHED, data: DisciplineInput!): Discipline
     updateDiscipline(documentId: ID!, status: PublicationStatus = PUBLISHED, data: DisciplineInput!): Discipline
     deleteDiscipline(documentId: ID!): DeleteMutationResponse
@@ -1426,6 +1730,9 @@ type Mutation {
         """The locale to use for the query"""
         locale: I18NLocaleCode
     ): DeleteMutationResponse
+    createSession(status: PublicationStatus = PUBLISHED, data: SessionInput!): Session
+    updateSession(documentId: ID!, status: PublicationStatus = PUBLISHED, data: SessionInput!): Session
+    deleteSession(documentId: ID!): DeleteMutationResponse
     createTeacher(
         status: PublicationStatus = PUBLISHED
         data: TeacherInput!

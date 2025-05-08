@@ -7,6 +7,8 @@ import {BlocksContent} from "@strapi/blocks-react-renderer";
 import renderBlocks from "@/Helpers/BlockRender";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
+import RedArrow, {RedArrowCurved} from "@/Components/Visual/SVGIcons/Arrow";
+import React from "react";
 
 type SectionFiveContent = LandingSectionSixContent & {
     TitleSecond?: string;
@@ -77,13 +79,13 @@ const LandingSectionFive = ({
                                                                     className={'location-link'}
                                                                     key={item.Title}>{item.Title}</Typography>)}
                             <Box className={'arrows'}>
-                                <Box component={'img'} src={'icons/arrows/sectionSix_arrow2.svg'}></Box>
-                                <Box component={'img'} src={'icons/arrows/sectionSix_arrow1.svg'}></Box>
+                                <RedArrowCurved width={48} height={48} className={'contact-arrow'}/>
+                                <RedArrow width={62} height={62} className={'contact-arrow'}/>
                             </Box>
                         </Box>}
                     <Box className={'arrows'}>
-                        <Box component={'img'} src={'icons/arrows/sectionSix_arrow2.svg'}></Box>
-                        <Box component={'img'} src={'icons/arrows/sectionSix_arrow1.svg'}></Box>
+                        <RedArrowCurved width={68} height={68} className={'contact-arrow'}/>
+                        <RedArrow className={'contact-arrow'}/>
                     </Box>
                     <Box className={'location-details'} sx={{marginTop: isPhone ? '10px' : ''}}>
                         {Route && Route.map(item => <Typography variant={'h6'}

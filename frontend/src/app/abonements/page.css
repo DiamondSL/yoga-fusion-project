@@ -1,4 +1,5 @@
 #abonements-page {
+    --ul-bullet: '<svg height="6" width="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3" r="3" fill="#282218"/></svg>';
     padding-bottom: 100px;
     display: flex;
     flex-direction: column;
@@ -8,14 +9,19 @@
     background-size: 100% 100%;
     background-position: top center;
     min-height: 100vh;
+
+    @media (max-width: 1024px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
     .abonements {
         margin-top: 60px;
         max-width: 960px;
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+
+
         .title {
             h1 {
                 font-weight: 700;
@@ -23,5 +29,139 @@
                 letter-spacing: 0.01vw;
             }
         }
+
+        .abonements-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 52px;
+            gap: 30px;
+            justify-content: flex-start;
+            align-items: flex-start;
+            min-height: 600px;
+
+            @media (max-width: 1024px) {
+                justify-content: center;
+            }
+
+            .abonement-card {
+                display: flex;
+                justify-content: flex-start;
+                align-content: center;
+                flex-direction: column;
+                border-radius: 24px;
+                padding: 0 0;
+                height: auto;
+                transition: all 300ms ease-in-out;
+
+                .content {
+                    padding: 36px 24px 0;
+                    transition: all 300ms ease-in-out;
+
+                    * {
+                        transition: all 300ms ease-in-out;
+                    }
+                }
+
+                .card-header {
+                    margin-bottom: 28px;
+                }
+
+                .price {
+                    margin-bottom: 32px;
+                }
+
+                .card-header, .price {
+                    display: grid;
+                    justify-items: center;
+
+                    img {
+                        grid-column: 1 / -1;
+                        grid-row: 1 / -1;
+                    }
+
+                    .typography-item {
+                        grid-column: 1 / -1;
+                        grid-row: 1 / -1;
+                        align-self: center;
+                    }
+                }
+
+                .actions {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-bottom: 36px;
+
+                    button {
+                        max-width: 244px;
+                        width: 100%;
+                    }
+                }
+
+                .details {
+                    width: calc(100% + 48px);
+                    transform: translateX(-24px);
+                    padding: 0 0;
+                    transition: all 300ms ease-in-out;
+
+                    .MuiAccordion-heading {
+                        padding: 0 0;
+
+                        button {
+                            padding: 15px 40px;
+
+                            span {
+                                margin-top: 0;
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+
+                    .MuiAccordionDetails-root {
+                        padding: 0;
+
+                        .Details-content {
+                            margin-top: 0;
+                            margin-bottom: 0;
+                            padding: 30px 28px 52px 40px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 16px;
+
+                            * {
+                                padding: 0 0;
+                            }
+                        }
+                        ul.Details-content {
+                            li {
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: flex-start;
+                                align-items: flex-start;
+                                gap: 14px;
+                            }
+                            li:before {
+                                content: "•";
+                                width: auto;
+                                height: auto;
+                                display: block;
+                                align-self: center;
+                            }
+                        }
+                    }
+
+                    * {
+                        transition: all 300ms ease-in-out;
+                    }
+
+                    [id^='card-description'] {
+                        --Paper-shadow: none !important;
+                    }
+                }
+            }
+        }
     }
+
 }

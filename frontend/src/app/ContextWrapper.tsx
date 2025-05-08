@@ -8,6 +8,24 @@ interface LanguageContext {
     setLanguage: Dispatch<SetStateAction<LanguageType>>;
 }
 
+export type StrapiIcon = {
+        url?: string;
+        width?: number | string
+        height?: number | string
+        alternativeText?: string;
+}
+
+export type Social = {
+    Icon?: StrapiIcon;
+    url: string;
+    Show?: boolean;
+    Name?: string;
+}
+
+export interface SocialsContext {
+    socials?: Social[]
+}
+
 interface ContextWrapperProps {
     children?: React.ReactNode;
     initialLanguage?: LanguageType;

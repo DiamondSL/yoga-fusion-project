@@ -110,7 +110,7 @@ const Marquee: FC<MarqueeProps> = ({
     } as CSSProperties
 
     return (
-        <MarqueeContainer ref={containerRef} onClick={onClick} sx={style}>
+        <MarqueeContainer className={'marquee-container'} ref={containerRef} onClick={onClick} sx={style}>
             <ResponsiveWrapper speed={speed} style={reverse ?
                 reverseAnimation : {}}>
                 <MarqueeContent gap={gap}>

@@ -20,6 +20,12 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "bookings"
+    },
+    "session": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::session.session",
+      "inversedBy": "bookings"
     }
   }
 }

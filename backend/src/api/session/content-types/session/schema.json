@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sessions",
+  "info": {
+    "singularName": "session",
+    "pluralName": "sessions",
+    "displayName": "Session",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Date": {
+      "type": "datetime",
+      "required": true
+    },
+    "teachers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::teacher.teacher",
+      "inversedBy": "sessions"
+    },
+    "class": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::class.class"
+    },
+    "bookings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::booking.booking",
+      "mappedBy": "session"
+    },
+    "Duration": {
+      "type": "time"
+    },
+    "Places": {
+      "type": "integer",
+      "min": 0
+    },
+    "Name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Room": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

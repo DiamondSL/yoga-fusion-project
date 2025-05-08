@@ -190,14 +190,34 @@ export interface SectionIconDescription extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionLinks extends Struct.ComponentSchema {
+  collectionName: 'components_section_links';
+  info: {
+    description: '';
+    displayName: 'Links';
+    icon: 'earth';
+  };
+  attributes: {
+    url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+  };
+}
+
 export interface SectionShapeTitle extends Struct.ComponentSchema {
   collectionName: 'components_section_shape_titles';
   info: {
+    description: '';
     displayName: 'Shape Title';
   };
   attributes: {
-    Shape: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    Title: Schema.Attribute.String & Schema.Attribute.Required;
+    Shape: Schema.Attribute.Media<'images'>;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
   };
 }
 
@@ -248,6 +268,31 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedMembership extends Struct.ComponentSchema {
+  collectionName: 'components_shared_memberships';
+  info: {
+    displayName: 'Membership';
+    icon: 'user';
+  };
+  attributes: {
+    abonement: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::abonement.abonement'
+    >;
+    Amount: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
+    endDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    startDate: Schema.Attribute.Date;
+    Unlimited: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
 export interface SharedMethod extends Struct.ComponentSchema {
   collectionName: 'components_shared_methods';
   info: {
@@ -266,6 +311,25 @@ export interface SharedMethod extends Struct.ComponentSchema {
       ['Hatha yoga', 'Power yoga', 'Vinyasa flow', 'Kundalini', 'Stretching']
     > &
       Schema.Attribute.Required;
+  };
+}
+
+export interface SharedPrice extends Struct.ComponentSchema {
+  collectionName: 'components_shared_prices';
+  info: {
+    displayName: 'Price';
+  };
+  attributes: {
+    Amount: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 5;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<500>;
+    Shape: Schema.Attribute.Media<'images'>;
   };
 }
 
@@ -321,6 +385,25 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSocialMediaLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_social_media_links';
+  info: {
+    description: '';
+    displayName: 'Social Media Link';
+    icon: 'link';
+  };
+  attributes: {
+    Icon: Schema.Attribute.Media<'images'>;
+    Name: Schema.Attribute.String;
+    Show: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -337,15 +420,19 @@ declare module '@strapi/strapi' {
       'section.detailed-description': SectionDetailedDescription;
       'section.hidden-link': SectionHiddenLink;
       'section.icon-description': SectionIconDescription;
+      'section.links': SectionLinks;
       'section.shape-title': SectionShapeTitle;
       'section.title': SectionTitle;
       'shared.event-time': SharedEventTime;
       'shared.media': SharedMedia;
+      'shared.membership': SharedMembership;
       'shared.method': SharedMethod;
+      'shared.price': SharedPrice;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.social-media-link': SharedSocialMediaLink;
     }
   }
 }

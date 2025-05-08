@@ -30,8 +30,10 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height, style 
         <Box
             sx={{
                 position: 'relative',
-                width,
-                height,
+                maxWidth: width,
+                width: '100%',
+                maxHeight: height,
+                height: '100%',
                 overflow: 'hidden',
                 display: 'flex',
                 alignItems: 'center',

@@ -1,0 +1,23 @@
+fragment Abonement on Abonement {
+    documentId
+    Name {
+        Title
+        Shape {
+            alternativeText
+            url
+            width
+            height
+        }
+    }
+    Price {
+        Shape {
+            height
+            width
+            url
+        }
+        Amount
+    }
+    Description
+    Trainings_amount
+    Type
+}

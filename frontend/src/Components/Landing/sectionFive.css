@@ -55,12 +55,12 @@
     max-width: 230px;
 }
 
-.location-content .arrows img:first-child {
+.location-content .arrows svg:first-child {
     margin-left: 72px;
     transform: translateY(2%);
 }
 
-.location-content .arrows img:last-child {
+.location-content .arrows svg:last-child {
     max-width: 80px;
 }
 
@@ -127,7 +127,7 @@
         justify-content: flex-end;
     }
 
-    .mobile-route .arrows img {
+    .mobile-route .arrows svg {
         position: relative;
         &:first-child {
             max-width: 48px;

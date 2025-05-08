@@ -1,7 +1,7 @@
 'use client';
 import React from "react";
 import {useQuery} from "@apollo/client";
-import {alpha, Button, CircularProgress, Container, Typography, useTheme} from "@mui/material";
+import {alpha, Button, Container, Typography, useTheme} from "@mui/material";
 import {classQuery} from "@/GraphQL/TSQueries/ClassesQueries";
 import {Box} from "@mui/system";
 import background from "../../../../public/icons/gradients/classes/background-slug.png";
@@ -14,6 +14,7 @@ import './page.css'
 import PinkStarVector from "@/Components/Visual/SVGIcons/PinkStar";
 import {generateStrapiUrl} from "@/Components/Visual/StrapiIcons/StrapiIcon";
 import ImageSlider from "@/Components/Slider/Slider";
+import LoaderElement from "@/Components/Loader";
 
 export default function Page({
                                  params,
@@ -25,6 +26,7 @@ export default function Page({
     const {loading, data} = classData
     const theme = useTheme()
 
+
     return (
         <Container id={'class-content'} sx={{
             display: 'flex',
@@ -35,47 +37,42 @@ export default function Page({
                    maxWidth={false}>
             <SectionWrapper className={loading ? 'class loading' : 'class'}>
                 {loading ?
-                    <CircularProgress size={'150px'} className={'loader'}
-                                      sx={{
-                                          justifySelf: 'center',
-                                          alignSelf: 'center',
-                                          color: theme.palette.primary.dark
-                                      }}/> :
+                        <LoaderElement /> :
                     (
                         <Box className={'class-info'}>
                             <Box className={'title'}>
                                 <Typography variant={'h1'}>{data?.class?.Name}</Typography>
-                                <Box className={'details'} borderColor={theme.palette.primary.dark} bgcolor={alpha(`${theme.palette.secondary.dark}`, 0.6)}>
-                                    <Box className={'time'}>
-                                        <Box className={'time-vector'}>
-                                            <BlueSlime width={'31px'} height={'29px'} />
-                                        </Box>
-                                        <Typography variant={'h5'} fontSize={'20px'} color={'#FFFFFF'} fontWeight={'500'} fontStyle={'normal'}>
-                                            time / {data?.class?.Duration} min
-                                        </Typography>
+                            </Box>
+                            <Box className={'details'} borderColor={theme.palette.primary.dark} bgcolor={alpha(`${theme.palette.secondary.dark}`, 0.6)}>
+                                <Box className={'time'}>
+                                    <Box className={'time-vector'}>
+                                        <BlueSlime width={'31px'} height={'29px'} />
                                     </Box>
-                                    <Box className={'intensity'}>
-                                        <Typography variant={'h5'} fontSize={'20px'} color={'#FFFFFF'} fontWeight={'500'} fontStyle={'normal'}>
+                                    <Typography variant={'h5'} className={'details-text'} fontSize={'20px'} color={'#FFFFFF'} fontWeight={'500'} fontStyle={'normal'}>
+                                        time / {data?.class?.Duration} min
+                                    </Typography>
+                                </Box>
+                                <Box className={'intensity'}>
+                                    <Typography variant={'h5'} className={'details-text'} fontSize={'20px'} color={'#FFFFFF'} fontWeight={'500'} fontStyle={'normal'}>
                                         intensity / power
-                                        </Typography>
-                                        <Box className={'intensity-vector'}>
-                                            <PinkStarVector sx={{
-                                                display: Number(data?.class?.Intensity) > 0 ? 'flex' : 'none',
-                                                alignSelf: 'center'
-                                            }} width={'33px'} height={'28px'}/>
-                                            <PinkStarVector sx={{
-                                                display: Number(data?.class?.Intensity) > 1 ? 'flex' : 'none',
-                                                alignSelf: 'center'
-                                            }} width={'33px'} height={'28px'}/>
-                                            <PinkStarVector sx={{
-                                                display: Number(data?.class?.Intensity) > 2 ? 'flex' : 'none',
-                                                alignSelf: 'center'
-                                            }} width={'33px'} height={'28px'}/>
-                                        </Box>
+                                    </Typography>
+                                    <Box className={'intensity-vector'}>
+                                        <PinkStarVector sx={{
+                                            display: Number(data?.class?.Intensity) > 0 ? 'flex' : 'none',
+                                            alignSelf: 'center'
+                                        }} width={'33px'} height={'28px'}/>
+                                        <PinkStarVector sx={{
+                                            display: Number(data?.class?.Intensity) > 1 ? 'flex' : 'none',
+                                            alignSelf: 'center'
+                                        }} width={'33px'} height={'28px'}/>
+                                        <PinkStarVector sx={{
+                                            display: Number(data?.class?.Intensity) > 2 ? 'flex' : 'none',
+                                            alignSelf: 'center'
+                                        }} width={'33px'} height={'28px'}/>
                                     </Box>
-                                    <Box className={'actions'}>
-                                        <Button variant={'contained'}>book</Button>
-                                    </Box>
+                                </Box>
+                                <Box className={'actions'}>
+                                    <Button variant={'contained'}>book</Button>
                                 </Box>
                             </Box>
                             <Box className={'description'}>

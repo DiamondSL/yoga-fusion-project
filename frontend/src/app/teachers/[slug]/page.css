@@ -4,7 +4,7 @@
     background-clip: content-box;
     min-height: 100vh;
 
-    @media (max-width: 767px) {
+    @media (max-width: 1024px) {
         background-position: initial;
     }
 
@@ -17,9 +17,11 @@
         justify-content: center;
         align-self: center;
         flex-direction: column;
-        @media (max-width: 767px) {
+        @media (max-width: 1024px) {
             padding-left: 30px;
             padding-right: 30px;
+        }
+        @media (max-width: 767px) {
             margin-top: 0;
         }
 
@@ -106,10 +108,16 @@
                 justify-content: space-evenly;
                 padding: 8px 24px;
             }
+            @media (max-width: 768px) {
+                padding: 8px 16px;
+            }
             .skill-item {
                 display: flex;
                 flex-direction: row;
                 gap: 14px;
+                @media (max-width: 768px) {
+                    gap: 6px;
+                }
                 .skill-title {
                     font-weight: 500;
                     font-style: normal;

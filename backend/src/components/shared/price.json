@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_prices",
+  "info": {
+    "displayName": "Price"
+  },
+  "options": {},
+  "attributes": {
+    "Amount": {
+      "type": "integer",
+      "required": true,
+      "default": 500,
+      "min": 5
+    },
+    "Shape": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

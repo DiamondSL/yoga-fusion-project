@@ -369,6 +369,70 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAbonementAbonement extends Struct.CollectionTypeSchema {
+  collectionName: 'abonements';
+  info: {
+    description: '';
+    displayName: 'Abonement';
+    pluralName: 'abonements';
+    singularName: 'abonement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::abonement.abonement'
+    >;
+    Name: Schema.Attribute.Component<'section.shape-title', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Price: Schema.Attribute.Component<'shared.price', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    Trainings_amount: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<4>;
+    Type: Schema.Attribute.Enumeration<['Memberships', 'Events']> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'Memberships'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   collectionName: 'abouts';
   info: {
@@ -495,6 +559,7 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
       'api::booking.booking'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    session: Schema.Attribute.Relation<'manyToOne', 'api::session.session'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -590,6 +655,62 @@ export interface ApiClassClass extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContactsPageContactsPage extends Struct.SingleTypeSchema {
+  collectionName: 'contacts_pages';
+  info: {
+    description: '';
+    displayName: 'Contacts Page';
+    pluralName: 'contacts-pages';
+    singularName: 'contacts-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Form: Schema.Attribute.Component<'section.detailed-description', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contacts-page.contacts-page'
+    >;
+    Maps: Schema.Attribute.Component<'section.links', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    Title: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDisciplineDiscipline extends Struct.CollectionTypeSchema {
   collectionName: 'disciplines';
   info: {
@@ -650,6 +771,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    Socials: Schema.Attribute.Component<'shared.social-media-link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -760,6 +882,54 @@ export interface ApiLandingPageLandingPage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiSessionSession extends Struct.CollectionTypeSchema {
+  collectionName: 'sessions';
+  info: {
+    description: '';
+    displayName: 'Session';
+    pluralName: 'sessions';
+    singularName: 'session';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bookings: Schema.Attribute.Relation<'oneToMany', 'api::booking.booking'>;
+    class: Schema.Attribute.Relation<'oneToOne', 'api::class.class'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Date: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    Duration: Schema.Attribute.Time;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::session.session'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+    Places: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    Room: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+    teachers: Schema.Attribute.Relation<'manyToMany', 'api::teacher.teacher'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTeacherTeacher extends Struct.CollectionTypeSchema {
   collectionName: 'teachers';
   info: {
@@ -834,6 +1004,14 @@ export interface ApiTeacherTeacher extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<5>;
+    sessions: Schema.Attribute.Relation<'manyToMany', 'api::session.session'>;
+    Top: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1295,7 +1473,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1316,10 +1493,16 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    membership: Schema.Attribute.Component<'shared.membership', false>;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
+      }>;
+    phoneNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
@@ -1350,15 +1533,18 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::abonement.abonement': ApiAbonementAbonement;
       'api::about.about': ApiAboutAbout;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::booking.booking': ApiBookingBooking;
       'api::category.category': ApiCategoryCategory;
       'api::class.class': ApiClassClass;
+      'api::contacts-page.contacts-page': ApiContactsPageContactsPage;
       'api::discipline.discipline': ApiDisciplineDiscipline;
       'api::global.global': ApiGlobalGlobal;
       'api::landing-page.landing-page': ApiLandingPageLandingPage;
+      'api::session.session': ApiSessionSession;
       'api::teacher.teacher': ApiTeacherTeacher;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

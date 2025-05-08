@@ -3,11 +3,10 @@
 fragment Teacher on Teacher {
     documentId
     Active
+    Top
     Name
-    Disciplines {
-        Name
-        Active
-        Experience
+    disciplines {
+        ...Discipline
     }
     Photo {
         url

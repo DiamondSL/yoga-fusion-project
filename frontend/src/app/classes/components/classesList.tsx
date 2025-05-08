@@ -1,11 +1,12 @@
 'use client';
 import {useQuery} from "@apollo/client";
 import {classesQuery} from "@/GraphQL/TSQueries/ClassesQueries";
-import {alpha, Box, CircularProgress, Typography, useTheme} from "@mui/material";
+import {alpha, Box, Typography, useTheme} from "@mui/material";
 import {CardElement} from "@/Components/Card/Card";
 import {ClassEntity} from "@/app/classes/page";
 import {useRouter} from "next/navigation";
 import PinkStarVector from "@/Components/Visual/SVGIcons/PinkStar";
+import LoaderElement from "@/Components/Loader";
 
 export const ClassesList = () => {
     const classes = useQuery(classesQuery)
@@ -16,10 +17,7 @@ export const ClassesList = () => {
 
     return (
         <Box className={'classes-list'}>
-            {loading ? <Box className={'loader'}>
-                <CircularProgress size={'150px'} className={'loader'}
-                                  sx={{justifySelf: 'center', alignSelf: 'center', color: 'primary.dark'}}/>
-            </Box> : !loading && data && data?.classes && data?.classes.map((item: ClassEntity) => {
+            {loading ? <LoaderElement /> : !loading && data && data?.classes && data?.classes.map((item: ClassEntity) => {
                 const intensity = item?.Intensity?.replace(/[^\d.]/g, '')
                 return (
                     <CardElement className={'class-card'} onClick={() => router.push(`classes/${item?.documentId}`)} key={`${item?.Name}${item?.Intensity}${item?.Information}`}

@@ -7,6 +7,7 @@ import './sectionOne.css'
 import {useDynamicSvgGradientBackground} from "@/Helpers/DynamicGradient";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
+
 const LandingSectionOne = ({Title, Buttons}: LandingSectionOneContent) => {
     const gradientColors = ['#FF81BE', '#F7BE01', '#FE4538']
     const isPhone = useMediaQuery('(max-width:767px)')

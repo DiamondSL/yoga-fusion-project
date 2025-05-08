@@ -1,14 +1,18 @@
-import {Box, Button, Container, Typography} from "@mui/material";
+import {Box, Container, Typography} from "@mui/material";
 import {ClassesList} from "@/app/classes/components/classesList";
 import SectionWrapper from "@/Components/Landing/SectionWrapper";
-import {teacherEntity} from "@/app/teachers/page";
+import {Discipline, teacherEntity} from "@/app/teachers/page";
 import React from "react";
-import background from "../../../public/icons/gradients/classes/background-main.png";
+import background from "../../../public/icons/gradients/background-pink_bottom.png";
 import {BlocksContent} from "@strapi/blocks-react-renderer";
 import './page.css'
+import RegisterActions from "@/Components/Actions/register_actions";
+
+export type Intensity = 'low_1' | 'mid_2' | 'high_3'
 
 export type ClassEntity = {
     documentId: string
+    Duration?: number
     Name?: string
     Photo?: {
         url?: string
@@ -21,13 +25,12 @@ export type ClassEntity = {
         Beginning: Date
         Minutes: number
     }
-    Intensity?: string
+    Intensity?: Intensity
     Information?: string
+    disciplines?: Discipline[]
 }
 
 export default function Page() {
-
-
     return (
         <Container id={'classes-content'} maxWidth={false}>
             <SectionWrapper className={'classes'}>
@@ -36,16 +39,7 @@ export default function Page() {
                 </Box>
                 <ClassesList/>
             </SectionWrapper>
-            <SectionWrapper className={'actions'} sx={{backgroundImage: `url(${background.src})`}}>
-                <Box className={'actions-content'}>
-                <Typography variant={'h3'} letterSpacing={'0.5px'}>
-                    реєструйся та отримай 1 безкоштовний класс
-                </Typography>
-                <Button variant={'contained'}>
-                    зареєструватися
-                </Button>
-                </Box>
-            </SectionWrapper>
+            <RegisterActions  sx={{backgroundImage: `url(${background.src})`}}/>
         </Container>
     )
 }

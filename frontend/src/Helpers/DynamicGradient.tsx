@@ -25,7 +25,7 @@ function getBlurStrength(color: string): number {
     return Math.round(30 + brightness * 70); // 30-100px
 }
 
-export const useGradientCloudsBackground = ({
+const useGradientCloudsBackground = ({
                                                 colors,
                                                 targetElementId,
                                                 animationDuration = 20,
@@ -220,10 +220,6 @@ export const useDynamicSvgGradientBackground = ({
         const targetElement = document.getElementById(targetElementId);
         if (!targetElement) return;
 
-        if (!overflow) {
-            targetElement.style.overflow = 'hidden';
-        }
-
         targetElement.style.position = 'relative';
 
         // Create SVG element
@@ -231,6 +227,7 @@ export const useDynamicSvgGradientBackground = ({
         const svgId = `svg-gradient-${targetElementId}-${Date.now()}`;
         svgElement.id = svgId;
         svgElement.style.position = 'absolute';
+        svgElement.style.overflow = overflow ? 'initial' : 'hidden';
         svgElement.style.top = positioning?.top ?? '0';
         svgElement.style.left = positioning?.left ?? '0';
         svgElement.style.width = '100%';
@@ -248,12 +245,12 @@ export const useDynamicSvgGradientBackground = ({
         const baseColors = validColors.length >= 3 ? validColors : ['#FF81BE', '#FE4538', '#F7BE01'];
 
         // Define blur levels for each ellipse
-        const blurLevels = [120, 80, 50]; // Pink, Red, Yellow
+        const blurLevels = [120, 100, 100]; // Pink, Red, Yellow
 
         // Calculate ellipse size in pixels (1125-2062px for 1440px screen, scales to 1200-2200px on 1536px)
         const baseScreenWidth = 1440; // Reference width
-        const minSizePx = 1125; // Min size in pixels at 1440px
-        const maxSizePx = 2062; // Max size in pixels at 1440px
+        const minSizePx = 936; // Min size in pixels at 1440px
+        const maxSizePx = 1440; // Max size in pixels at 1440px
 
         // Generate ellipses with random sizes and initial positions
         const ellipses: Ellipse[] = baseColors.map((color, index) => {
@@ -263,7 +260,7 @@ export const useDynamicSvgGradientBackground = ({
 
             // Randomize ry to be 80%-120% of rx for slight variation
             const rx = sizePercent / 2; // Radius x in % of viewBox
-            const ryVariation = 0.8 + Math.random() * 0.4; // 80%-120%
+            const ryVariation = 0.8 + Math.random() * 0.3; // 80%-120%
             const ry = rx * ryVariation; // Radius y with slight randomization
 
             return {
@@ -415,3 +412,5 @@ export const useDynamicSvgGradientBackground = ({
         };
     }, [targetElementId, animationDuration, colors, overflow, positioning]); // Dependencies ensure effect runs once per reload
 };
+
+export  {useGradientCloudsBackground}

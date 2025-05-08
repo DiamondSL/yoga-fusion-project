@@ -1,0 +1,240 @@
+#calendar-page {
+    display: flex;
+    justify-content: center;
+    background-size: 78vw 60vw;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    .sessions {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .calendar {
+        width: 100%;
+        justify-content: space-between;
+        gap: 24px;
+
+        .date {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+
+            > * {
+                text-align: center;
+            }
+        }
+    }
+
+    .calendar-section {
+        margin-bottom: 50px;
+
+        .input-controls {
+            margin-top: 40px;
+            margin-bottom: 40px;
+
+            .multi-select-wrapper {
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                width: 100%;
+                gap: 30px;
+                align-items: flex-start;
+            }
+
+            .search, .multi-select {
+                border-radius: 24px;
+                border: 1px solid;
+                overflow: hidden;
+
+                > * {
+                    border-radius: 0;
+                    border: none;
+                }
+
+                .MuiInputBase-root, .MuiSelect-select {
+                    padding: 0;
+                }
+
+                .MuiSelect-select {
+                    min-height: fit-content;
+                }
+
+                fieldset[class^="MuiOutlinedInput"] {
+                    border: none;
+                }
+            }
+
+            .multi-select {
+                color: initial;
+                padding: 10px 24px;
+
+                .MuiFormControl-root {
+                    display: grid;
+                }
+
+                label {
+                    color: inherit;
+                    max-width: fit-content;
+                    transform: none;
+                }
+
+                label[data-shrink="true"] {
+                    opacity: 0;
+                }
+
+                label, .MuiInputBase-root {
+                    color: initial;
+                    font-family: "NyghtSerif", serif;
+                    font-weight: 700;
+                    font-size: 20px;
+                    text-transform: lowercase;
+                    font-style: italic;
+                    line-height: 100%;
+                    letter-spacing: 0.04em;
+                    position: relative;
+                    grid-column: 1/-1;
+                    grid-row: 1/-1;
+                }
+            }
+        }
+
+
+        .date-picker-wrapper {
+            /*max-width: 333px;*/
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative;
+            gap: 30px;
+            border-radius: 24px;
+            border: 1px solid;
+            padding: 15px 24px 15px;
+
+            & > .MuiButtonBase-root {
+                padding: 0;
+            }
+        }
+
+        .sessions-datePicker {
+            cursor: pointer;
+            vertical-align: middle;
+            display: block;
+
+
+            & .MuiInputBase-root {
+                background-color: transparent;
+                border: none;
+                height: 47px;
+                width: 100%;
+                padding: 5px 10px;
+                font-size: 16px;
+                text-align: center;
+                color: #282218;
+            }
+
+            & .MuiInputAdornment-root {
+                display: none;
+            }
+
+            & .MuiInputLabel-root {
+                position: relative;
+                transform: none;
+                font-size: 14px;
+                color: inherit;
+                letter-spacing: 0.1px;
+                max-width: fit-content;
+                cursor: pointer;
+                transition: none !important;
+            }
+
+            & .MuiInputLabel-root.Mui-focused {
+                color: inherit;
+            }
+
+            & .MuiInputLabel-root + .MuiInputBase-root {
+                position: absolute;
+            }
+
+
+            &:hover {
+                background-color: transparent
+            }
+
+            & .MuiOutlinedInput-notchedOutline {
+                border: none
+            }
+
+            & .MuiInputBase-input {
+                opacity: 0;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .sessions-wrapper {
+        max-width: 134px;
+        width: 100%;
+
+        .session {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border-radius: 24px;
+            border: 1px solid;
+            padding: 16px 20px 20px;
+
+            .teachers, .title, .time, .room {
+                margin-bottom: 8px;
+            }
+
+
+            .places {
+                margin-bottom: 12px;
+            }
+
+            .title {
+                min-height: 28px;
+
+                & > * {
+                    font-style: italic;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+            }
+
+            .time {
+                & > * {
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+            }
+
+            .teachers {
+                > * {
+                    cursor: pointer;
+                }
+            }
+
+            .places {
+                display: flex;
+                flex-direction: row;
+            }
+
+            button.error {
+                color: #FE4538;
+                border-color: #FE4538;
+                font-weight: 400;
+                font-family: Manrope, sans-serif;
+                font-size: 12px;
+
+                &:hover {
+                    background: transparent;
+                }
+            }
+        }
+    }
+}

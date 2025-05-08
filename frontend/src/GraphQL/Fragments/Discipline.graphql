@@ -1,0 +1,11 @@
+fragment Discipline on Discipline {
+    documentId
+    Name
+    Icon {
+        alternativeText
+        url
+        width
+        height
+    }
+
+}

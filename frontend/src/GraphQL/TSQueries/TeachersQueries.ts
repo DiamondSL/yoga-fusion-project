@@ -5,6 +5,7 @@ export const teachersQuery = gql`
         teachers {
             documentId
             Active
+            Top
             Name
             disciplines {
                 Name
@@ -30,6 +31,7 @@ export const teacherQuery = gql`
     query teacher($teacherId: ID!) {
         teacher(documentId: $teacherId) {
             Active
+            Top
             Name
             Photo {
                 url
