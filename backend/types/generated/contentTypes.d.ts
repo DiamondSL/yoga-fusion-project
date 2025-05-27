@@ -537,6 +537,7 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
 export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
   collectionName: 'bookings';
   info: {
+    description: '';
     displayName: 'Booking';
     pluralName: 'bookings';
     singularName: 'booking';
@@ -550,6 +551,16 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    booking_status: Schema.Attribute.Enumeration<
+      ['upcoming', 'visited', 'canceled']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'upcoming'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1487,22 +1498,21 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    fullName: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
-    membership: Schema.Attribute.Component<'shared.membership', false>;
+    membership: Schema.Attribute.Component<'shared.membership', true>;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
-      }>;
-    phoneNumber: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        minLength: 3;
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;

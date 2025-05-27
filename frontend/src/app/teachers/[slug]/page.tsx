@@ -1,7 +1,7 @@
 'use client';
 import {useQuery} from "@apollo/client";
 import {teacherQuery} from "@/GraphQL/TSQueries/TeachersQueries";
-import React from "react";
+import React, {useState} from "react";
 import {alpha, Box, CardMedia, CircularProgress, Container, Typography, useTheme} from "@mui/material";
 import SectionWrapper from "@/Components/Landing/SectionWrapper";
 import Marquee from "@/Components/Marquee/Marquee";
@@ -21,7 +21,9 @@ export default function Page({
     const {slug} = React.use(params)
     const teacherData = useQuery(teacherQuery, {variables: {teacherId: slug}});
     const {loading, data} = teacherData
+    const [imgSrc] = useState(generateStrapiUrl(data?.teacher?.Photo?.url))
     const theme = useTheme()
+
 
     return (
         <Container id={'teacher-content'} sx={{
@@ -42,7 +44,7 @@ export default function Page({
                         <Box className={'teacher-info'}>
                             <Box className={'photo'}>
                                 <CardMedia component={'img'}
-                                           src={generateStrapiUrl(data?.teacher?.Photo?.url)}/>
+                                           src={imgSrc}/>
                             </Box>
                             <Box className={'title'}>
                                 <Typography variant={'h1'}>{data?.teacher?.Name}</Typography>
@@ -55,7 +57,7 @@ export default function Page({
                             </Box>
                         </Box>
                     )}
-                {!loading && <Box className={'teacher-skills'} borderColor={theme.palette.primary.dark}
+                {!loading && data?.teacher?.disciplines?.length > 0 && (<Box className={'teacher-skills'} borderColor={theme.palette.primary.dark}
                                   bgcolor={alpha(`${theme.palette.secondary.dark}`, 0.6)}>
                     {data?.teacher?.disciplines?.map((item: Discipline) =>
                         <Box key={item?.Name} className={'skill-item'}>
@@ -68,7 +70,7 @@ export default function Page({
                                         variant={'h6'}>{item?.Name}</Typography>
                         </Box>
                     )}
-                </Box>
+                </Box>)
                 }
             </SectionWrapper>
             <Marquee

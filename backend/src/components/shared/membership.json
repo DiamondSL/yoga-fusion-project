@@ -2,7 +2,8 @@
   "collectionName": "components_shared_memberships",
   "info": {
     "displayName": "Membership",
-    "icon": "user"
+    "icon": "user",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -26,6 +27,16 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::abonement.abonement"
+    },
+    "Activated": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "Expired": {
+      "type": "boolean",
+      "default": false,
+      "required": false
     }
   }
 }

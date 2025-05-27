@@ -73,12 +73,12 @@
     },
     "membership": {
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "shared.membership"
     },
-    "phoneNumber": {
+    "fullName": {
       "type": "string",
-      "required": true,
+      "required": false,
       "minLength": 3
     }
   }

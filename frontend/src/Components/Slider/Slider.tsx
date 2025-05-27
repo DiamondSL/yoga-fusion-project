@@ -57,7 +57,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height, style 
             />
 
             {/* Navigation Arrows - Only show when hovered */}
-            {isHovered && (
+            {isHovered && images.length > 1 && (
                 <>
                     <IconButton
                         onClick={handlePrev}

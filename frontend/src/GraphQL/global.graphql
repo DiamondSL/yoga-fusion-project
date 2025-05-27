@@ -16,6 +16,11 @@ scalar DateTime
 """A time string with format HH:mm:ss.SSS"""
 scalar Time
 
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
 type Error {
     code: String!
     message: String
@@ -160,6 +165,31 @@ input FloatFilterInput {
     in: [Float]
     notIn: [Float]
     between: [Float]
+}
+
+input DateFilterInput {
+    and: [Date]
+    or: [Date]
+    not: DateFilterInput
+    eq: Date
+    eqi: Date
+    ne: Date
+    nei: Date
+    startsWith: Date
+    endsWith: Date
+    contains: Date
+    notContains: Date
+    containsi: Date
+    notContainsi: Date
+    gt: Date
+    gte: Date
+    lt: Date
+    lte: Date
+    null: Boolean
+    notNull: Boolean
+    in: [Date]
+    notIn: [Date]
+    between: [Date]
 }
 
 input TimeFilterInput {
@@ -339,6 +369,41 @@ type ComponentSharedMethod {
     Experience: ENUM_COMPONENTSHAREDMETHOD_EXPERIENCE!
     Active: Boolean
     Icon: UploadFile
+}
+
+input ComponentSharedMembershipFiltersInput {
+    Unlimited: BooleanFilterInput
+    endDate: DateFilterInput
+    Amount: IntFilterInput
+    startDate: DateFilterInput
+    abonement: AbonementFiltersInput
+    Activated: BooleanFilterInput
+    Expired: BooleanFilterInput
+    and: [ComponentSharedMembershipFiltersInput]
+    or: [ComponentSharedMembershipFiltersInput]
+    not: ComponentSharedMembershipFiltersInput
+}
+
+input ComponentSharedMembershipInput {
+    id: ID
+    Unlimited: Boolean
+    endDate: Date
+    Amount: Int
+    startDate: Date
+    abonement: ID
+    Activated: Boolean
+    Expired: Boolean
+}
+
+type ComponentSharedMembership {
+    id: ID!
+    Unlimited: Boolean
+    endDate: Date!
+    Amount: Int
+    startDate: Date
+    abonement: Abonement
+    Activated: Boolean!
+    Expired: Boolean
 }
 
 type ComponentSharedMedia {
@@ -852,6 +917,8 @@ input UsersPermissionsUserFiltersInput {
     blocked: BooleanFilterInput
     role: UsersPermissionsRoleFiltersInput
     bookings: BookingFiltersInput
+    membership: ComponentSharedMembershipFiltersInput
+    fullName: StringFilterInput
     createdAt: DateTimeFilterInput
     updatedAt: DateTimeFilterInput
     publishedAt: DateTimeFilterInput
@@ -868,6 +935,8 @@ input UsersPermissionsUserInput {
     blocked: Boolean
     role: ID
     bookings: [ID]
+    membership: [ComponentSharedMembershipInput]
+    fullName: String
     publishedAt: DateTime
     password: String
 }
@@ -882,6 +951,8 @@ type UsersPermissionsUser {
     role: UsersPermissionsRole
     bookings_connection(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BookingRelationResponseCollection
     bookings(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Booking]!
+    membership(filters: ComponentSharedMembershipFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedMembership]
+    fullName: String!
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
@@ -1443,7 +1514,7 @@ type TeacherRelationResponseCollection {
     nodes: [Teacher!]!
 }
 
-union GenericMorph = ComponentSharedSocialMediaLink | ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedPrice | ComponentSharedMethod | ComponentSharedMedia | ComponentSharedEventTime | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionLinks | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Abonement | About | Article | Author | Booking | Category | Class | ContactsPage | Discipline | Global | LandingPage | Session | Teacher
+union GenericMorph = ComponentSharedSocialMediaLink | ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedPrice | ComponentSharedMethod | ComponentSharedMembership | ComponentSharedMedia | ComponentSharedEventTime | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionLinks | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Abonement | About | Article | Author | Booking | Category | Class | ContactsPage | Discipline | Global | LandingPage | Session | Teacher
 
 input FileInfoInput {
     name: String

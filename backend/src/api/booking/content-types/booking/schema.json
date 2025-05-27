@@ -4,7 +4,8 @@
   "info": {
     "singularName": "booking",
     "pluralName": "bookings",
-    "displayName": "Booking"
+    "displayName": "Booking",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -26,6 +27,21 @@
       "relation": "manyToOne",
       "target": "api::session.session",
       "inversedBy": "bookings"
+    },
+    "booking_status": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "upcoming",
+        "visited",
+        "canceled"
+      ],
+      "required": true,
+      "default": "upcoming"
     }
   }
 }
