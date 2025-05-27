@@ -57,7 +57,7 @@ interface CalendarPickerProps {
 }
 
 const CalendarPicker: React.FC<CalendarPickerProps> = ({onDateSelect, startDate, sx}) => {
-    const today = new Date();
+    const today = useMemo(() => new Date(), []);
     const [selectedDate, setSelectedDate] = useState<Date>(today);
 
     const baseDate = useMemo(() => {

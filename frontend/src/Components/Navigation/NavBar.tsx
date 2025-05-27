@@ -7,8 +7,8 @@ import YogaFusionLogo from '../Visual/SVGIcons/YogaFusionLogoIcon';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import './navbar.css';
 
-import { LanguageContext } from '@/app/ContextWrapper';
-import {useRouter} from "next/navigation";
+import { LanguageContext, UserContext } from '@/app/ContextWrapper';
+import {usePathname, useRouter} from "next/navigation";
 
 type LinkItem = {
     link: string;
@@ -33,6 +33,8 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
 
     // Safely access context
     const languageContext = useContext(LanguageContext);
+    const userContext = useContext(UserContext);
+    const user = isClient ? userContext.user : null;
     const language = isClient ? languageContext?.language ?? 'en' : 'en';
     const setLanguage = languageContext?.setLanguage ?? (() => {});
 
@@ -52,8 +54,8 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
                         letterSpacing: '3%',
                     }}
                 >
-                    <span className={language.includes('en') ? 'active' : ''}>en</span> |{' '}
-                    <span className={language.includes('uk') ? 'active' : ''}>ukr</span>
+                    <span style={{fontWeight: language.includes('en') ? 700 : 500}}>en</span> |
+                    <span style={{fontWeight: language.includes('uk') ? 700 : 500}}>ukr</span>
                 </Typography>
                 {children}
             </Box>
@@ -64,6 +66,7 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
         setMenuOpen(newOpen);
     };
     const router = useRouter();
+    const pathname = usePathname()
     const theme = useTheme();
 
     return (
@@ -126,6 +129,7 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
                         {(!isPhone || !isTablet) && <LanguageComponent />}
                         <Box>
                             <Box
+                                onClick={() => user !== null && user.documentId && !pathname.includes(user.documentId) ? router.replace(`/account/${user.documentId}`) : !pathname.includes('account') && router.push('/account')}
                                 component={'img'}
                                 sx={{ cursor: 'pointer' }}
                                 src={'/icons/navigation/header-user.svg'}
@@ -231,7 +235,7 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
                                 </Box>
                                 <Box className={'actions'}>
                                     <Button color={'primary'} sx={{ width: '330px' }}>
-                                        зареєструватися
+                                        {user === null ? 'зареєструватися' : 'аккаунт'}
                                     </Button>
                                 </Box>
                             </Box>

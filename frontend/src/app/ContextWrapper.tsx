@@ -8,11 +8,26 @@ interface LanguageContext {
     setLanguage: Dispatch<SetStateAction<LanguageType>>;
 }
 
+type UserInfo = {
+    documentId: string;
+    name?: string;
+    phoneNumber?: string;
+    email?: string;
+    active?: boolean;
+    blocked?: boolean;
+}
+
+interface UserContext {
+    user: null | UserInfo
+    setUser: Dispatch<SetStateAction<null | UserInfo>>;
+}
+
+
 export type StrapiIcon = {
-        url?: string;
-        width?: number | string
-        height?: number | string
-        alternativeText?: string;
+    url?: string;
+    width?: number | string
+    height?: number | string
+    alternativeText?: string;
 }
 
 export type Social = {
@@ -22,8 +37,11 @@ export type Social = {
     Name?: string;
 }
 
-export interface SocialsContext {
-    socials?: Social[]
+type jwtToken = null | string | undefined
+
+export interface jwtContext {
+    jwt: jwtToken
+    setJwt: Dispatch<SetStateAction<jwtToken>>;
 }
 
 interface ContextWrapperProps {
@@ -33,13 +51,33 @@ interface ContextWrapperProps {
 
 export const LanguageContext = createContext<LanguageContext>({
     language: 'uk-UA', // Default fallback
-    setLanguage: () => {}, // No-op fallback
+    setLanguage: () => {
+    }, // No-op fallback
 });
 
-const ContextWrapper = ({ children, initialLanguage }: ContextWrapperProps) => {
-    // Use initialLanguage or 'uk-UA' during SSR
+export const UserContext = createContext<UserContext>({
+    user: null, // Default fallback
+    setUser: () => {
+    }
+});
+
+export const jwtContext = createContext<jwtContext>({
+    jwt: null,
+    setJwt: () => {
+    }
+})
+
+
+const checkIfUkraine = async (lat: number, lon: number): Promise<boolean> => {
+    return lat > 44 && lat < 52 && lon > 22 && lon < 40;
+};
+
+
+const ContextWrapper = ({children, initialLanguage}: ContextWrapperProps) => {
     const [lang, setLang] = useState<LanguageType>(initialLanguage ?? 'uk-UA');
     const [isClient, setIsClient] = useState(false);
+    const [user, setUser] = useState<null | UserInfo>(null);
+    const [jwt, setJwtToken] = useState<jwtToken>(null)
 
     // Mark as client-side after mount
     useEffect(() => {
@@ -52,10 +90,22 @@ const ContextWrapper = ({ children, initialLanguage }: ContextWrapperProps) => {
 
         // Check localStorage first
         const storedLang = localStorage.getItem('language') as LanguageType | null;
+        const storedUser = localStorage.getItem('user') as UserInfo | null;
+        const storedJwt = localStorage.getItem('jwt') as jwtToken;
+
+        if (storedJwt !== null && (jwt === null || jwt?.length === 0)) {
+            if (storedJwt) setJwtToken(storedJwt);
+        }
+
         if (storedLang) {
             setLang(storedLang);
             return;
         }
+
+        if (storedUser) {
+            setUser(storedUser)
+        }
+
 
         // Fallback to geolocation if no stored language
         if (!initialLanguage && navigator.geolocation) {
@@ -78,7 +128,7 @@ const ContextWrapper = ({ children, initialLanguage }: ContextWrapperProps) => {
             console.warn('Geolocation not supported or initialLanguage provided');
             setLang(initialLanguage ?? 'en');
         }
-    }, [isClient, initialLanguage]);
+    }, [isClient, initialLanguage, jwt]);
 
     // Sync language to localStorage when it changes
     useEffect(() => {
@@ -86,11 +136,6 @@ const ContextWrapper = ({ children, initialLanguage }: ContextWrapperProps) => {
             localStorage.setItem('language', lang);
         }
     }, [lang, isClient]);
-
-    const checkIfUkraine = async (lat: number, lon: number): Promise<boolean> => {
-         // Placeholder
-        return lat > 44 && lat < 52 && lon > 22 && lon < 40;
-    };
 
     const languageValue = useMemo(
         () => ({
@@ -100,9 +145,30 @@ const ContextWrapper = ({ children, initialLanguage }: ContextWrapperProps) => {
         [lang]
     );
 
+    const jwtValue = useMemo(
+        () => ({
+            jwt: jwt,
+            setJwt: setJwtToken,
+        }),
+        [jwt]
+    );
+
+    const userValue = useMemo(
+        () => ({
+            user: user,
+            setUser: setUser,
+        }),
+        [user]
+    );
+
+
     return (
         <LanguageContext.Provider value={languageValue}>
-            {children}
+            <UserContext.Provider value={userValue}>
+                <jwtContext.Provider value={jwtValue}>
+                    {children}
+                </jwtContext.Provider>
+            </UserContext.Provider>
         </LanguageContext.Provider>
     );
 };

@@ -271,6 +271,7 @@ export interface SharedMedia extends Struct.ComponentSchema {
 export interface SharedMembership extends Struct.ComponentSchema {
   collectionName: 'components_shared_memberships';
   info: {
+    description: '';
     displayName: 'Membership';
     icon: 'user';
   };
@@ -279,6 +280,9 @@ export interface SharedMembership extends Struct.ComponentSchema {
       'oneToOne',
       'api::abonement.abonement'
     >;
+    Activated: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     Amount: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -288,6 +292,7 @@ export interface SharedMembership extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<1>;
     endDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    Expired: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     startDate: Schema.Attribute.Date;
     Unlimited: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
