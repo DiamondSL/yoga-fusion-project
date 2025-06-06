@@ -8,7 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import './navbar.css';
 
 import { LanguageContext, UserContext } from '@/app/ContextWrapper';
-import {usePathname, useRouter} from "next/navigation";
+import { useRouter} from "next/navigation";
 
 type LinkItem = {
     link: string;
