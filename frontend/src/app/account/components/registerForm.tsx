@@ -3,8 +3,10 @@ import {LanguageContext, UserContext} from "@/app/ContextWrapper";
 import {Box, Button, FormControl, Input, Typography} from "@mui/material";
 import React, {useContext, useEffect, useState} from "react";
 import {loginUserMutation, registerUserMutation, updateUserMutation} from "@/GraphQL/Mutations/Authentication";
-import {useMutation} from "@apollo/client";
-import {usePathname, useRouter} from "next/navigation";
+import {useMutation, useQuery} from "@apollo/client";
+import {useRouter} from "next/navigation";
+import {meQuery} from "@/GraphQL/TSQueries/MeQuery";
+import AccountComponent from "@/app/account/components/Account";
 
 
 type formProps = {
@@ -406,7 +408,43 @@ const AuthenticationWrapper = () => {
     const [login, setLogin] = React.useState(false)
     const [isClient, setIsClient] = React.useState(false)
     const router = useRouter()
-    const pathname = usePathname()
+
+    const jwt = isClient ? localStorage.getItem('jwt') : null;
+
+    const { data} = useQuery(meQuery, {
+        skip: !isClient || !jwt, // Skip query if not client-side or no JWT
+
+        onError: (err) => {
+            console.error('Me query error:', err);
+            if (err.message.includes('Unauthorized')) {
+                // Clear user and redirect to login
+                if (isClient) {
+                    localStorage.removeItem('jwt');
+                    localStorage.removeItem('user');
+                }
+                setUser(null);
+                router.push('/login');
+            }
+            else {
+                router.push('/')
+            }
+        },
+    });
+
+
+    // Update UserContext with fetched data
+    useEffect(() => {
+        if (data?.me && isClient) {
+            setUser({
+                documentId: data.me.id,
+                name: data.me.username,
+                email: data.me.email,
+                phoneNumber: data.me.phoneNumber || '',
+                active: data.me.confirmed ?? false,
+                blocked: data.me.blocked ?? false,
+            });
+        }
+    }, [data, setUser, isClient]);
 
     useEffect(() => {
         setIsClient(true)
@@ -426,14 +464,8 @@ const AuthenticationWrapper = () => {
         }
     }, [isClient, user, setUser]);
 
-    useEffect(() => {
-        if (user?.documentId && !pathname.includes(user.documentId)) {
-            router.push(`/account/${user.documentId}`)
-            setIsClient(false)
-        }
-    }, [isClient, user, pathname, router]);
 
-    return <Box className={'authentication-wrapper'}>
+    return user?.documentId ? <AccountComponent user={user} /> : (<Box className={'authentication-wrapper'}>
         <Box className={'header'}>
             <Typography
                 variant={'h1'}>{user !== null ? language === 'en' ? 'Login' : 'Логін' : language === 'en' ? 'Register' : 'Реєстрація'}</Typography>
@@ -443,7 +475,7 @@ const AuthenticationWrapper = () => {
         {!login && (<Box sx={{marginTop: '16px'}}><Typography onClick={() => setLogin(true)}
                                                               sx={{cursor: 'pointer', fontWeight: '700'}}
                                                               variant={'body1'}>{language === 'en' ? 'Want to login? Click here!' : 'Маєте аккаунт? Натисніть тут!'}</Typography></Box>)}
-    </Box>
+    </Box>)
 }
 
 export default AuthenticationWrapper
