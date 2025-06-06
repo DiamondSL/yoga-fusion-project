@@ -66,7 +66,6 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
         setMenuOpen(newOpen);
     };
     const router = useRouter();
-    const pathname = usePathname()
     const theme = useTheme();
 
     return (
@@ -129,7 +128,7 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
                         {(!isPhone || !isTablet) && <LanguageComponent />}
                         <Box>
                             <Box
-                                onClick={() => user !== null && user.documentId && !pathname.includes(user.documentId) ? router.replace(`/account/${user.documentId}`) : !pathname.includes('account') && router.push('/account')}
+                                onClick={() => router.push('/account')}
                                 component={'img'}
                                 sx={{ cursor: 'pointer' }}
                                 src={'/icons/navigation/header-user.svg'}

@@ -8,7 +8,7 @@ interface LanguageContext {
     setLanguage: Dispatch<SetStateAction<LanguageType>>;
 }
 
-type UserInfo = {
+export type UserInfo = {
     documentId: string;
     name?: string;
     phoneNumber?: string;
