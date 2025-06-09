@@ -161,8 +161,8 @@ export const AppContextProvider = ({children, initialLanguage = 'uk-UA'}: Contex
             if ((!info?.documentId) && (user?.documentId === undefined || user?.documentId === "")) {
                 setUser(null)
                 setJwt(null)
-                return;
             }
+            return;
         }
 
         const newUser: UserInfo = {
