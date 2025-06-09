@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_shared_user_socials",
+  "info": {
+    "displayName": "UserSocial",
+    "icon": "discuss",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "social": {
+      "type": "enumeration",
+      "enum": [
+        "Instagram",
+        "X (Twitter)",
+        "Facebook",
+        "LinkedIn",
+        "Telegram "
+      ],
+      "required": true
+    },
+    "link": {
+      "type": "string",
+      "unique": true,
+      "minLength": 1,
+      "required": true
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { Box, useTheme } from '@mui/system';
 import Link from 'next/link';
 import {alpha, AppBar, Button, Container, Drawer, List, ListItem, Toolbar, Typography} from '@mui/material';
@@ -7,8 +7,8 @@ import YogaFusionLogo from '../Visual/SVGIcons/YogaFusionLogoIcon';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import './navbar.css';
 
-import { LanguageContext, UserContext } from '@/app/ContextWrapper';
-import {usePathname, useRouter} from "next/navigation";
+import {useAppContext} from '@/app/ContextWrapper';
+import { useRouter} from "next/navigation";
 
 type LinkItem = {
     link: string;
@@ -24,19 +24,8 @@ const SiteNavigation = ({ linkItems }: SiteNavigationParams) => {
     const isPhone = useMediaQuery('(max-width: 767px)');
     const isTablet = useMediaQuery('(min-width:768px) and (max-width:1024px)');
     const [menuOpen, setMenuOpen] = React.useState(false);
-    const [isClient, setIsClient] = useState(false);
 
-    // Mark as client-side after mount
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    // Safely access context
-    const languageContext = useContext(LanguageContext);
-    const userContext = useContext(UserContext);
-    const user = isClient ? userContext.user : null;
-    const language = isClient ? languageContext?.language ?? 'en' : 'en';
-    const setLanguage = languageContext?.setLanguage ?? (() => {});
+    const {user, language, setLanguage} = useAppContext();
 
     const LanguageComponent = ({ children }: { children?: React.ReactNode }) => {
         return (

@@ -1,36 +1,51 @@
 'use client';
-import { Box, Typography } from '@mui/material';
-import { useContext, useEffect } from 'react';
-import {LanguageContext, UserInfo} from '@/app/ContextWrapper';
-import { useRouter } from 'next/navigation';
+import {Box, Typography} from '@mui/material';
+import {useEffect} from 'react';
+import {useAppContext, UserInfo} from '@/app/ContextWrapper';
+import {useRouter} from 'next/navigation';
 import '../page.css'
+import {useQuery} from "@apollo/client";
+import {userQuery} from "@/GraphQL/TSQueries/UsersQueries";
+import LoaderElement from "@/Components/Loader";
 
-const AccountComponent = ({user}: {user: UserInfo}) => {
-    const {language} = useContext(LanguageContext);
+const AccountComponent = ({user}: { user: UserInfo }) => {
+    const {language} = useAppContext();
     const router = useRouter();
+    const {data, loading, error} = useQuery(userQuery, {
+        variables: {userId: user.documentId},
+    });
+
+    console.info(data, user)
+
 
     useEffect(() => {
         if (!user?.documentId) {
-            router.replace('/login');
+            router.refresh()
         }
     }, [user, router]);
 
-    return (
+    return loading ? <LoaderElement/> : (
         <Box className={'account'}>
             <Box className={'title'}>
                 <Typography variant="h1" gutterBottom>
                     {language === 'en' ? 'My Account' : 'Мій обліковий запис'}
                 </Typography>
             </Box>
+            {error && (<Box className={'error-message'}>
+                <Typography variant={'body1'} color={'error'}>{error?.message}</Typography>
+            </Box>)}
             <Box className={'user-details'}>
                 <Typography variant="body1">
                     <strong>{language === 'en' ? 'Phone Number' : 'Номер телефону'}:</strong> {user?.phoneNumber}
                 </Typography>
                 <Typography variant="body1">
-                    <strong>{language === 'en' ? 'Full Name' : 'Ім`я'}:</strong> {user?.name || 'N/A'}
+                    <strong>{language === 'en' ? 'Full Name' : 'Ім`я'}:</strong> {data?.usersPermissionsUser?.fullName || 'N/A'}
                 </Typography>
                 <Typography variant="body1">
-                    <strong>{language === 'en' ? 'Email' : 'Електронна пошта'}:</strong> {user?.email}
+                    <strong>{language === 'en' ? 'Email' : 'Електронна пошта'}:</strong> {data?.usersPermissionsUser?.email}
+                </Typography>
+                <Typography variant="body1">
+                    <strong>{language === 'en' ? 'Instagram' : 'Instagram'}:</strong> {data?.usersPermissionsUser?.instagram}
                 </Typography>
                 <Typography variant="body1">
                     <strong>{language === 'en' ? 'Status' : 'Статус'}:</strong>{' '}

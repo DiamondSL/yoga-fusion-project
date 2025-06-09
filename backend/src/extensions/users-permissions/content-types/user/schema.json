@@ -80,6 +80,16 @@
       "type": "string",
       "required": false,
       "minLength": 3
+    },
+    "socials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.user-social"
+    },
+    "instagram": {
+      "type": "string",
+      "unique": true,
+      "minLength": 2
     }
   }
 }

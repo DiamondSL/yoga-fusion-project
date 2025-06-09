@@ -11,11 +11,11 @@ import {
 } from "@mui/material";
 import { CardElement } from "@/Components/Card/Card";
 import { useRouter } from "next/navigation";
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import { abonementsQuery } from "@/GraphQL/TSQueries/AbonementsQueries";
 import { abonementEntity } from "@/app/abonements/page";
 import { generateStrapiUrl } from "@/Components/Visual/StrapiIcons/StrapiIcon";
-import { LanguageContext } from "@/app/ContextWrapper";
+import {useAppContext} from "@/app/ContextWrapper";
 import { AddOutlined, RemoveOutlined } from "@mui/icons-material";
 import renderBlocks from "@/Helpers/BlockRender";
 import LoaderElement from "@/Components/Loader";
@@ -79,10 +79,11 @@ const PickerElement = ({ onChange, value }: PickerElementProps) => {
 
 const AbonementsList = () => {
     const { data, loading } = useQuery(abonementsQuery);
+    const { language } = useAppContext();
     const router = useRouter();
-    const language = useContext(LanguageContext);
     const [expandIndex, setExpandIndex] = React.useState<string | false>(false);
     const [filter, setFilter] = React.useState<"Memberships" | "Events" | undefined>(undefined);
+
 
     // Memoized filtered abonements
     const filteredAbonements = useMemo(() => {
@@ -102,8 +103,8 @@ const AbonementsList = () => {
                 const Title = item?.Name?.Title && item?.Name?.Title !== " " && item?.Name?.Title !== ""
                     ? item?.Name?.Title
                     : (item?.Trainings_amount && item?.Trainings_amount > 0 && item?.Trainings_amount < 5)
-                        ? +item?.Trainings_amount + (language.language.includes('uk') ? ' заняття' : ' classes')
-                        : item?.Trainings_amount + (language.language.includes('uk') ? ' занять' : ' classes');
+                        ? +item?.Trainings_amount + (language?.includes('uk') ? ' заняття' : ' classes')
+                        : item?.Trainings_amount + (language?.includes('uk') ? ' занять' : ' classes');
 
                 return (
                     <CardElement
@@ -163,7 +164,7 @@ const AbonementsList = () => {
                                         return router.push(`abonements/${item?.documentId}`);
                                     }}
                                 >
-                                    {language.language.includes('uk') ? 'купити' : 'purchase'}
+                                    {language?.includes('uk') ? 'купити' : 'purchase'}
                                 </Button>
                             </Box>
                             <Box
@@ -230,10 +231,15 @@ const AbonementsList = () => {
             </Box>
             <Box className={'title'} component={'header'}>
                 <Typography variant={'h1'}>
-                    {language?.language === 'uk-UA' ? "Абонементи" : "Abonements"}
+                    {language === 'uk-UA' ? "Абонементи" : "Abonements"}
                 </Typography>
             </Box>
             <AbonementsMap />
+            <Box className={'title'}>
+                <Typography variant={'h1'}>
+                    {language === 'uk-UA' ? "Події" : "Events"}
+                </Typography>
+            </Box>
         </>
     ) : (
         <LoaderElement />

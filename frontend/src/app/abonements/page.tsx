@@ -31,7 +31,6 @@ export type abonementEntity = {
 }
 
 export default function Page() {
-
     return (
         <Container maxWidth={false} id={'abonements-page'} sx={{backgroundImage: svg}}>
             <SectionWrapper className={'abonements'}>

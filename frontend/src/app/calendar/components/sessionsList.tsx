@@ -14,8 +14,8 @@ import {
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import React, {useContext, useState, useMemo} from "react";
-import {LanguageContext, UserContext} from "@/app/ContextWrapper";
+import React, {useState, useMemo} from "react";
+import {useAppContext} from "@/app/ContextWrapper";
 import {sessionsQuery} from "@/GraphQL/TSQueries/SessionsQueries";
 import {useQuery} from "@apollo/client";
 import LoaderElement from "@/Components/Loader";
@@ -56,15 +56,11 @@ const formatEventTime = (dateString: string, duration: number | null): { start: 
 };
 
 const SessionsList = () => {
-    const language = useContext(LanguageContext);
     const {data, loading, error} = useQuery<SessionsQueryData>(sessionsQuery);
     const router = useRouter();
     const today = startOfDay(new Date());
-    const {user} = useContext(UserContext);
+    const { language } = useAppContext()
 
-    console.info(user)
-
-    // State with explicit types
     const [startDate, setStartDate] = useState<Date>(today);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedDisciplines, setSelectedDisciplines] = useState<string[]>([]);
@@ -137,7 +133,7 @@ const SessionsList = () => {
         }}>
             <Box className={'calendar-title'} sx={{marginTop: '60px'}}>
                 <Typography variant="h1" component="div">
-                    {language?.language.includes('uk') ? "Розклад" : "Calendar"}
+                    {language?.includes('uk') ? "Розклад" : "Calendar"}
                 </Typography>
             </Box>
             <Box className={'input-controls'}
