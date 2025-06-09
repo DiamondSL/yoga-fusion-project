@@ -1,8 +1,8 @@
 'use client';
 import SectionWrapper from "@/Components/Landing/SectionWrapper";
 import {Box, Button, SxProps, Typography} from "@mui/material";
-import React, {useContext} from "react";
-import {LanguageContext} from "@/app/ContextWrapper";
+import React from "react";
+import {useAppContext} from "@/app/ContextWrapper";
 import {Theme} from "@mui/system";
 
 
@@ -12,7 +12,7 @@ interface RegisterActionsProps {
 }
 
 const RegisterActions = ({sx, buttonOnclick}:RegisterActionsProps) => {
-    const language = useContext(LanguageContext).language;
+    const { language } = useAppContext()
 
     return (
         <SectionWrapper className={'actions'} sx={{...sx}}>

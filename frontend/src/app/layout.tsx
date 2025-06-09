@@ -35,15 +35,15 @@ export default function RootLayout({
     return (
             <html>
             <body className={manrope.className}>
-            <ContextWrapper initialLanguage={'uk-UA'}>
             <ApolloWrapper>
+            <ContextWrapper initialLanguage={'uk-UA'}>
                 <MUIProvider>
                     <NavBar linkItems={linkPlaceholders} />
                     {children}
                     <Footer links={footerPlaceholders.links} socialMedia={footerPlaceholders.socialMedia} />
                 </MUIProvider>
-            </ApolloWrapper>
             </ContextWrapper>
+            </ApolloWrapper>
             </body>
             </html>
     )

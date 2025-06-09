@@ -14,10 +14,11 @@ export const registerUserMutation = gql`
 `;
 
 export const updateUserMutation = gql`
-    mutation ($id: ID!, $info: UsersPermissionsUserInput!) {
-        updateUsersPermissionsUser(id: $id, data: $info) {
+    mutation ($updateUsersPermissionsUserId: ID!, $data: UsersPermissionsUserInput!) {
+        updateUsersPermissionsUser(id: $updateUsersPermissionsUserId, data: $data) {
             data {
                 fullName
+                instagram
             }
         }
     }`
@@ -30,6 +31,7 @@ export const loginUserMutation = gql`
             user {
                 id
                 username
+                documentId
             }
         }
     }`

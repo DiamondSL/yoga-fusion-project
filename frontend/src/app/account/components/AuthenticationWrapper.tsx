@@ -1,12 +1,13 @@
 'use client'
-import {LanguageContext, UserContext} from "@/app/ContextWrapper";
+import {useAppContext} from "@/app/ContextWrapper";
 import {Box, Button, FormControl, Input, Typography} from "@mui/material";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useState} from "react";
 import {loginUserMutation, registerUserMutation, updateUserMutation} from "@/GraphQL/Mutations/Authentication";
 import {useMutation, useQuery} from "@apollo/client";
 import {useRouter} from "next/navigation";
-import {meQuery} from "@/GraphQL/TSQueries/MeQuery";
 import AccountComponent from "@/app/account/components/Account";
+import {usersQuery} from "@/GraphQL/TSQueries/UsersQueries";
+import {meQuery} from "@/GraphQL/TSQueries/MeQuery";
 
 
 type formProps = {
@@ -14,10 +15,9 @@ type formProps = {
     language?: 'en' | 'uk-UA' | 'ru-RU';
 }
 
-
 const RegisterForm = ({language = 'en', isClient}: formProps) => {
     const [step, setStep] = useState(0);
-    const {setUser} = useContext(UserContext);
+    const {setUser, setJwt} = useAppContext()
     const router = useRouter();
     const [userInformation, setUserInformation] = useState({
         firstName: '',
@@ -29,8 +29,14 @@ const RegisterForm = ({language = 'en', isClient}: formProps) => {
     });
     const [otp, setOtp] = useState('');
     const [error, setError] = useState('');
+    const [temporaryJwt, setTemporaryJwt] = useState(undefined);
     const [registerUser] = useMutation(registerUserMutation);
+    const {data: usersData, loading} = useQuery(usersQuery);
     const [updateUser] = useMutation(updateUserMutation);
+    const {refetch} = useQuery(meQuery, {
+        skip: !temporaryJwt,
+        context: {headers: {Authorization: temporaryJwt ? `Bearer ${temporaryJwt}` : ''}},
+    });
 
     const handleInputChange = (e: { target: { name: string; value: string } }) => {
         const {name, value} = e.target;
@@ -46,8 +52,21 @@ const RegisterForm = ({language = 'en', isClient}: formProps) => {
                         ? 'Invalid phone number format. Use E.164 (e.g., +1234567890)'
                         : 'Недійсний формат номера телефону. Використовуйте E.164 (наприклад, +1234567890)'
                 );
+                console.info('number error')
                 return;
             }
+
+            if (!loading && usersData?.usersPermissionsUsers.some((user: {
+                username: string;
+            }) => user?.username === userInformation.phoneNumber)) {
+                setError(
+                    language === 'en'
+                        ? 'There is an another user that already registered with this phone number.'
+                        : 'Користувач з таким номером уже зареєстрований у нашій системі.'
+                );
+                return
+            }
+
             const response = await fetch('/api/send-otp', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -109,47 +128,68 @@ const RegisterForm = ({language = 'en', isClient}: formProps) => {
                 setError(language === 'en' ? 'Password must be at least 6 characters' : 'Пароль має містити принаймні 6 символів');
                 return;
             }
+            if (userInformation.instagramAccount.length < 2) {
+                setError(language === 'en' ? 'Invalid instagram nickname' : 'Неправильно вказаний аккаунт інстаграм');
+                return;
+            }
 
             const input = {
                 username: userInformation.phoneNumber,
                 email: userInformation.email,
                 password: userInformation.password,
             };
+
             const {data} = await registerUser({variables: {input}});
             const {user, jwt} = data.register;
 
             setUser({
                 documentId: user.documentId,
                 name: fullName,
-                phoneNumber: userInformation.phoneNumber, // Store phoneNumber locally
+                phoneNumber: user.username, // Store phoneNumber locally
                 email: user.email,
                 active: false,
                 blocked: user.blocked ?? false,
             });
 
-            await updateUser({
-                variables: {
-                    id: user.documentId,
-                    info: {
-                        fullName
-                    }
-                }
-            });
+            setTemporaryJwt(jwt);
+            setJwt(jwt)
 
             if (isClient) {
                 localStorage.setItem('jwt', jwt);
                 localStorage.setItem('user', JSON.stringify({
-                    documentId: user.id,
-                    name: user.fullName,
+                    documentId: user.documentId,
+                    id: user.id,
+                    name: fullName,
                     phoneNumber: userInformation.phoneNumber, // Store phoneNumber locally
                     email: user.email,
                     active: false,
-                    blocked: user.blocked ?? false
+                    blocked: user.blocked ?? false,
                 }));
             }
 
-            console.info('Registration successful:', data);
-            router.push(`/account/${user.id}`);
+            if (user && jwt) {
+                refetch({
+                    context: {headers: {Authorization: `Bearer ${temporaryJwt}`}},
+                }).then(async (res) => {
+                    if (res.data.me.id) {
+                        await updateUser({
+                            variables: {
+                                updateUsersPermissionsUserId: res.data.me.id.toString(), // Ensure ID is a string
+                                data: {
+                                    fullName: `${userInformation?.firstName} ${userInformation.lastName}`,
+                                    instagram: userInformation.instagramAccount,
+                                },
+                            },
+                        }).then((result) => {
+                            console.log("updated user", result);
+                        }).catch((error) => {
+                            console.error("update user error", error);
+                        });
+                    }
+                });
+                router.refresh();
+            }
+
         } catch (error) {
             console.error('Registration error:', error);
             setError(
@@ -163,10 +203,11 @@ const RegisterForm = ({language = 'en', isClient}: formProps) => {
     const handleNext = async () => {
         setError(''); // Clear previous errors
         if (step === 0) {
-            if (!userInformation.firstName || !userInformation.lastName || !userInformation.email || !userInformation.phoneNumber) {
+            if (!userInformation.firstName || !userInformation.lastName || !userInformation.instagramAccount || !userInformation.email || !userInformation.phoneNumber) {
                 setError(language === 'en' ? 'Please fill all required fields' : 'Будь ласка, заповніть усі обов’язкові поля');
                 return;
             }
+            console.info('debug onClick')
             await sendOtp();
         } else if (step === 1) {
             await verifyOtp();
@@ -291,7 +332,7 @@ const RegisterForm = ({language = 'en', isClient}: formProps) => {
 
 
 const LoginForm = ({language = 'en', isClient}: formProps) => {
-    const {setUser} = useContext(UserContext);
+    const {setUser} = useAppContext();
     const [error, setError] = useState({executed: false, message: ''});
     const [loginData, setLoginData] = useState({email: '', password: ''});
     const [loginUser] = useMutation(loginUserMutation);
@@ -313,7 +354,8 @@ const LoginForm = ({language = 'en', isClient}: formProps) => {
 
             const userData = {
                 documentId: user.documentId,
-                name: user.username,
+                id: user.id,
+                name: user.fullName,
                 email: user.email,
                 phoneNumber: user.username,
                 active: true,
@@ -328,7 +370,7 @@ const LoginForm = ({language = 'en', isClient}: formProps) => {
             }
 
             if (user.documentId) {
-                router.push(`/${user.documentId}`)
+                router.refresh()
             }
         } catch (error) {
             console.error('Login error:', error);
@@ -403,79 +445,23 @@ const LoginForm = ({language = 'en', isClient}: formProps) => {
 
 
 const AuthenticationWrapper = () => {
-    const {language} = useContext(LanguageContext)
-    const {user, setUser} = useContext(UserContext)
+    const {user, language, isLoading, isClient} = useAppContext()
     const [login, setLogin] = React.useState(false)
-    const [isClient, setIsClient] = React.useState(false)
-    const router = useRouter()
 
-    const jwt = isClient ? localStorage.getItem('jwt') : null;
-
-    const { data} = useQuery(meQuery, {
-        skip: !isClient || !jwt, // Skip query if not client-side or no JWT
-
-        onError: (err) => {
-            console.error('Me query error:', err);
-            if (err.message.includes('Unauthorized')) {
-                // Clear user and redirect to login
-                if (isClient) {
-                    localStorage.removeItem('jwt');
-                    localStorage.removeItem('user');
-                }
-                setUser(null);
-                router.push('/login');
-            }
-            else {
-                router.push('/')
-            }
-        },
-    });
-
-
-    // Update UserContext with fetched data
-    useEffect(() => {
-        if (data?.me && isClient) {
-            setUser({
-                documentId: data.me.id,
-                name: data.me.username,
-                email: data.me.email,
-                phoneNumber: data.me.phoneNumber || '',
-                active: data.me.confirmed ?? false,
-                blocked: data.me.blocked ?? false,
-            });
-        }
-    }, [data, setUser, isClient]);
-
-    useEffect(() => {
-        setIsClient(true)
-        if (isClient) {
-            if (user === null) {
-                const userEntity = JSON.parse(localStorage.getItem('user') as string);
-                if (userEntity !== null && userEntity.documentId !== undefined) {
-                    setUser({
-                        documentId: userEntity.documentId,
-                        email: userEntity.email,
-                        phoneNumber: userEntity.name, // Will be updated later if needed
-                        active: userEntity?.active || false, // Assume active on login
-                        blocked: userEntity?.blocked || false,
-                    });
-                }
-            }
-        }
-    }, [isClient, user, setUser]);
-
-
-    return user?.documentId ? <AccountComponent user={user} /> : (<Box className={'authentication-wrapper'}>
-        <Box className={'header'}>
-            <Typography
-                variant={'h1'}>{user !== null ? language === 'en' ? 'Login' : 'Логін' : language === 'en' ? 'Register' : 'Реєстрація'}</Typography>
-        </Box>
-        {(!user || false) && !login && <RegisterForm isClient={isClient} language={language}/>}
-        {(!user || false) && login && <LoginForm isClient={isClient} language={language}/>}
-        {!login && (<Box sx={{marginTop: '16px'}}><Typography onClick={() => setLogin(true)}
-                                                              sx={{cursor: 'pointer', fontWeight: '700'}}
-                                                              variant={'body1'}>{language === 'en' ? 'Want to login? Click here!' : 'Маєте аккаунт? Натисніть тут!'}</Typography></Box>)}
-    </Box>)
+    return !isLoading && user?.documentId ? <AccountComponent user={user}/> : !isLoading && !user?.documentId && (
+        <Box className={'authentication-wrapper'}>
+            <Box className={'header'}>
+                <Typography
+                    variant={'h1'}>{user !== null ? language === 'en' ? 'Login' : 'Логін' : language === 'en' ? 'Register' : 'Реєстрація'}</Typography>
+            </Box>
+            {!login && (!user || false) && (
+                <RegisterForm isClient={isClient} language={language}/>
+            )}
+            {login && (!user || false) && <LoginForm isClient={isClient} language={language}/>}
+            {!login && (<Box sx={{marginTop: '16px'}}><Typography onClick={() => setLogin(true)}
+                                                                  sx={{cursor: 'pointer', fontWeight: '700'}}
+                                                                  variant={'body1'}>{language === 'en' ? 'Want to login? Click here!' : 'Маєте аккаунт? Натисніть тут!'}</Typography></Box>)}
+        </Box>)
 }
 
 export default AuthenticationWrapper

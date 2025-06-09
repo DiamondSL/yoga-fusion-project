@@ -267,6 +267,37 @@ input JSONFilterInput {
     between: [JSON]
 }
 
+enum ENUM_COMPONENTSHAREDUSERSOCIAL_SOCIAL {
+    Instagram
+    X_Twitter
+    Facebook
+    LinkedIn
+    Telegram
+}
+
+input ComponentSharedUserSocialFiltersInput {
+    social: StringFilterInput
+    link: StringFilterInput
+    verified: BooleanFilterInput
+    and: [ComponentSharedUserSocialFiltersInput]
+    or: [ComponentSharedUserSocialFiltersInput]
+    not: ComponentSharedUserSocialFiltersInput
+}
+
+input ComponentSharedUserSocialInput {
+    id: ID
+    social: ENUM_COMPONENTSHAREDUSERSOCIAL_SOCIAL
+    link: String
+    verified: Boolean
+}
+
+type ComponentSharedUserSocial {
+    id: ID!
+    social: ENUM_COMPONENTSHAREDUSERSOCIAL_SOCIAL!
+    link: String!
+    verified: Boolean!
+}
+
 input ComponentSharedSocialMediaLinkFiltersInput {
     url: StringFilterInput
     Show: BooleanFilterInput
@@ -415,6 +446,114 @@ type ComponentSharedEventTime {
     id: ID!
     Beginning: DateTime!
     Minutes: Int!
+}
+
+input ComponentLandingSectionsSectionTwoInput {
+    id: ID
+    List_Description: [ComponentSectionIconDescriptionInput]
+    Title: ComponentSectionTitleInput
+}
+
+type ComponentLandingSectionsSectionTwo {
+    id: ID!
+    List_Description(filters: ComponentSectionIconDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionIconDescription]
+    Title: ComponentSectionTitle
+}
+
+input ComponentLandingSectionsSectionThreeInput {
+    id: ID
+    Button: [ComponentSectionButtonInput]
+    Photos: [ID]
+    Description: JSON
+    Title: ComponentSharedQuoteInput
+}
+
+type ComponentLandingSectionsSectionThree {
+    id: ID!
+    Button(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]
+    Photos_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+    Photos(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+    Description: JSON
+    Title: ComponentSharedQuote
+}
+
+input ComponentLandingSectionsSectionSixInput {
+    id: ID
+    Title: ComponentSectionTitleInput
+    Gallery: [ID]
+    Button: ComponentSectionButtonInput
+    Description: JSON
+}
+
+type ComponentLandingSectionsSectionSix {
+    id: ID!
+    Title: ComponentSectionTitle!
+    Gallery_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+    Gallery(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+    Button: ComponentSectionButton
+    Description: JSON
+}
+
+input ComponentLandingSectionsSectionSevenInput {
+    id: ID
+    Route: [ComponentSectionHiddenLinkInput]
+    Placement: JSON
+    Title: String
+}
+
+type ComponentLandingSectionsSectionSeven {
+    id: ID!
+    Route(filters: ComponentSectionHiddenLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionHiddenLink]
+    Placement: JSON
+    Title: String
+}
+
+input ComponentLandingSectionsSectionOneInput {
+    id: ID
+    Title: [ComponentSectionTitleInput]
+    Buttons: [ComponentSectionButtonInput]
+}
+
+type ComponentLandingSectionsSectionOne {
+    id: ID!
+    Title(filters: ComponentSectionTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionTitle]!
+    Buttons(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]!
+}
+
+input ComponentLandingSectionsSectionFourInput {
+    id: ID
+    Title: ComponentSectionTitleInput
+    Shape_Titles: [ComponentSectionShapeTitleInput]
+}
+
+type ComponentLandingSectionsSectionFour {
+    id: ID!
+    Title: ComponentSectionTitle!
+    Shape_Titles(filters: ComponentSectionShapeTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionShapeTitle]!
+}
+
+input ComponentLandingSectionsSectionFiveInput {
+    id: ID
+    Button: ComponentSectionButtonInput
+    Title: JSON
+}
+
+type ComponentLandingSectionsSectionFive {
+    id: ID!
+    Button: ComponentSectionButton
+    Title: JSON
+}
+
+input ComponentLandingSectionsSectionEightInput {
+    id: ID
+    Title: ComponentSectionTitleInput
+    FAQ_elements: [ComponentSectionDetailedDescriptionInput]
+}
+
+type ComponentLandingSectionsSectionEight {
+    id: ID!
+    Title: ComponentSectionTitle!
+    FAQ_elements(filters: ComponentSectionDetailedDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionDetailedDescription]
 }
 
 enum ENUM_COMPONENTSECTIONTITLE_PLACEMENT {
@@ -571,114 +710,6 @@ type ComponentSectionAccordion {
     id: ID!
     Title: String!
     Description: String
-}
-
-input ComponentLandingSectionsSectionTwoInput {
-    id: ID
-    List_Description: [ComponentSectionIconDescriptionInput]
-    Title: ComponentSectionTitleInput
-}
-
-type ComponentLandingSectionsSectionTwo {
-    id: ID!
-    List_Description(filters: ComponentSectionIconDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionIconDescription]
-    Title: ComponentSectionTitle
-}
-
-input ComponentLandingSectionsSectionThreeInput {
-    id: ID
-    Button: [ComponentSectionButtonInput]
-    Photos: [ID]
-    Description: JSON
-    Title: ComponentSharedQuoteInput
-}
-
-type ComponentLandingSectionsSectionThree {
-    id: ID!
-    Button(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]
-    Photos_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-    Photos(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-    Description: JSON
-    Title: ComponentSharedQuote
-}
-
-input ComponentLandingSectionsSectionSixInput {
-    id: ID
-    Title: ComponentSectionTitleInput
-    Gallery: [ID]
-    Button: ComponentSectionButtonInput
-    Description: JSON
-}
-
-type ComponentLandingSectionsSectionSix {
-    id: ID!
-    Title: ComponentSectionTitle!
-    Gallery_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-    Gallery(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-    Button: ComponentSectionButton
-    Description: JSON
-}
-
-input ComponentLandingSectionsSectionSevenInput {
-    id: ID
-    Route: [ComponentSectionHiddenLinkInput]
-    Placement: JSON
-    Title: String
-}
-
-type ComponentLandingSectionsSectionSeven {
-    id: ID!
-    Route(filters: ComponentSectionHiddenLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionHiddenLink]
-    Placement: JSON
-    Title: String
-}
-
-input ComponentLandingSectionsSectionOneInput {
-    id: ID
-    Title: [ComponentSectionTitleInput]
-    Buttons: [ComponentSectionButtonInput]
-}
-
-type ComponentLandingSectionsSectionOne {
-    id: ID!
-    Title(filters: ComponentSectionTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionTitle]!
-    Buttons(filters: ComponentSectionButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionButton]!
-}
-
-input ComponentLandingSectionsSectionFourInput {
-    id: ID
-    Title: ComponentSectionTitleInput
-    Shape_Titles: [ComponentSectionShapeTitleInput]
-}
-
-type ComponentLandingSectionsSectionFour {
-    id: ID!
-    Title: ComponentSectionTitle!
-    Shape_Titles(filters: ComponentSectionShapeTitleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionShapeTitle]!
-}
-
-input ComponentLandingSectionsSectionFiveInput {
-    id: ID
-    Button: ComponentSectionButtonInput
-    Title: JSON
-}
-
-type ComponentLandingSectionsSectionFive {
-    id: ID!
-    Button: ComponentSectionButton
-    Title: JSON
-}
-
-input ComponentLandingSectionsSectionEightInput {
-    id: ID
-    Title: ComponentSectionTitleInput
-    FAQ_elements: [ComponentSectionDetailedDescriptionInput]
-}
-
-type ComponentLandingSectionsSectionEight {
-    id: ID!
-    Title: ComponentSectionTitle!
-    FAQ_elements(filters: ComponentSectionDetailedDescriptionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSectionDetailedDescription]
 }
 
 input UploadFileFiltersInput {
@@ -919,6 +950,8 @@ input UsersPermissionsUserFiltersInput {
     bookings: BookingFiltersInput
     membership: ComponentSharedMembershipFiltersInput
     fullName: StringFilterInput
+    socials: ComponentSharedUserSocialFiltersInput
+    instagram: StringFilterInput
     createdAt: DateTimeFilterInput
     updatedAt: DateTimeFilterInput
     publishedAt: DateTimeFilterInput
@@ -937,6 +970,8 @@ input UsersPermissionsUserInput {
     bookings: [ID]
     membership: [ComponentSharedMembershipInput]
     fullName: String
+    socials: [ComponentSharedUserSocialInput]
+    instagram: String
     publishedAt: DateTime
     password: String
 }
@@ -952,7 +987,9 @@ type UsersPermissionsUser {
     bookings_connection(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BookingRelationResponseCollection
     bookings(filters: BookingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Booking]!
     membership(filters: ComponentSharedMembershipFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedMembership]
-    fullName: String!
+    fullName: String
+    socials(filters: ComponentSharedUserSocialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedUserSocial]
+    instagram: String
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
@@ -973,7 +1010,6 @@ type UsersPermissionsUserRelationResponseCollection {
 
 enum ENUM_ABONEMENT_TYPE {
     Memberships
-    Events
 }
 
 input AbonementFiltersInput {
@@ -1136,10 +1172,17 @@ type AuthorEntityResponseCollection {
     pageInfo: Pagination!
 }
 
+enum ENUM_BOOKING_BOOKING_STATUS {
+    upcoming
+    visited
+    canceled
+}
+
 input BookingFiltersInput {
     documentId: IDFilterInput
     users_permissions_user: UsersPermissionsUserFiltersInput
     session: SessionFiltersInput
+    booking_status: StringFilterInput
     createdAt: DateTimeFilterInput
     updatedAt: DateTimeFilterInput
     publishedAt: DateTimeFilterInput
@@ -1153,6 +1196,7 @@ input BookingFiltersInput {
 input BookingInput {
     users_permissions_user: ID
     session: ID
+    booking_status: ENUM_BOOKING_BOOKING_STATUS
     publishedAt: DateTime
 }
 
@@ -1160,6 +1204,7 @@ type Booking {
     documentId: ID!
     users_permissions_user: UsersPermissionsUser
     session: Session
+    booking_status: ENUM_BOOKING_BOOKING_STATUS!
     createdAt: DateTime
     updatedAt: DateTime
     publishedAt: DateTime
@@ -1514,7 +1559,7 @@ type TeacherRelationResponseCollection {
     nodes: [Teacher!]!
 }
 
-union GenericMorph = ComponentSharedSocialMediaLink | ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedPrice | ComponentSharedMethod | ComponentSharedMembership | ComponentSharedMedia | ComponentSharedEventTime | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionLinks | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Abonement | About | Article | Author | Booking | Category | Class | ContactsPage | Discipline | Global | LandingPage | Session | Teacher
+union GenericMorph = ComponentSharedUserSocial | ComponentSharedSocialMediaLink | ComponentSharedSlider | ComponentSharedSeo | ComponentSharedRichText | ComponentSharedQuote | ComponentSharedPrice | ComponentSharedMethod | ComponentSharedMembership | ComponentSharedMedia | ComponentSharedEventTime | ComponentLandingSectionsSectionTwo | ComponentLandingSectionsSectionThree | ComponentLandingSectionsSectionSix | ComponentLandingSectionsSectionSeven | ComponentLandingSectionsSectionOne | ComponentLandingSectionsSectionFour | ComponentLandingSectionsSectionFive | ComponentLandingSectionsSectionEight | ComponentSectionTitle | ComponentSectionShapeTitle | ComponentSectionLinks | ComponentSectionIconDescription | ComponentSectionHiddenLink | ComponentSectionDetailedDescription | ComponentSectionButton | ComponentSectionAccordion | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Abonement | About | Article | Author | Booking | Category | Class | ContactsPage | Discipline | Global | LandingPage | Session | Teacher
 
 input FileInfoInput {
     name: String

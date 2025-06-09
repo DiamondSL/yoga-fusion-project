@@ -420,7 +420,7 @@ export interface ApiAbonementAbonement extends Struct.CollectionTypeSchema {
         };
       }> &
       Schema.Attribute.DefaultTo<4>;
-    Type: Schema.Attribute.Enumeration<['Memberships', 'Events']> &
+    Type: Schema.Attribute.Enumeration<['Memberships']> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1502,6 +1502,11 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
+    instagram: Schema.Attribute.String &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1521,6 +1526,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    socials: Schema.Attribute.Component<'shared.user-social', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

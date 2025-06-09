@@ -409,6 +409,30 @@ export interface SharedSocialMediaLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedUserSocial extends Struct.ComponentSchema {
+  collectionName: 'components_shared_user_socials';
+  info: {
+    description: '';
+    displayName: 'UserSocial';
+    icon: 'discuss';
+  };
+  attributes: {
+    link: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+    social: Schema.Attribute.Enumeration<
+      ['Instagram', 'X (Twitter)', 'Facebook', 'LinkedIn', 'Telegram ']
+    > &
+      Schema.Attribute.Required;
+    verified: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -438,6 +462,7 @@ declare module '@strapi/strapi' {
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
       'shared.social-media-link': SharedSocialMediaLink;
+      'shared.user-social': SharedUserSocial;
     }
   }
 }
