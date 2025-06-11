@@ -7,6 +7,7 @@ import {teachersQuery} from "@/GraphQL/TSQueries/TeachersQueries";
 import RatingIcon from "@/Components/Visual/SVGIcons/Rating";
 import React from "react";
 import {teacherEntity} from "@/app/teachers/page";
+import placeholder from '../../../../public/icons/teacher/teacher-placeholder_main.jpg'
 
 export const TeachersList = () => {
     const teachers = useQuery(teachersQuery);
@@ -16,7 +17,7 @@ export const TeachersList = () => {
     return !loading ? data?.teachers?.filter((item: teacherEntity) => item?.Active === true)?.map(
         (item: teacherEntity) => (
             <CardElement className={'teacher-card'} onClick={() => router.push(`teachers/${item?.documentId}`)}
-                         image={{src: item?.Photo?.url as string, background: true}} key={item?.Name} sx={{
+                         image={{src: item?.Photo?.url as string ?? placeholder?.src, background: true}} key={item?.Name} sx={{
                 backgroundColor: 'rgba(74, 62, 48, 0.6)',
                 border: '1px solid',
                 borderColor: 'primary.dark',

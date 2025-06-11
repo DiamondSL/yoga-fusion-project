@@ -21,11 +21,11 @@ interface CardElement {
 }
 
 export const CardElement = ({sx, children, image, id, title, className, onClick, backdrop}: CardElement) => {
-    const imageSrc = image?.src && generateStrapiUrl(image.src)
+    const imageSrc = image?.src && !image?.src?.includes('placeholder') ? generateStrapiUrl(image?.src) : image?.src;
     const theme = useTheme()
     return (
-        <Card elevation={backdrop === false ? 0 : 1} onClick={onClick} id={id && id.length > 0 ? id : undefined}
-              className={className && className.length > 0 ? `card-element ${className}` : `card-element`}
+        <Card elevation={backdrop === false ? 0 : 1} onClick={onClick} id={id && id?.length > 0 ? id : undefined}
+              className={className && className?.length > 0 ? `card-element ${className}` : `card-element`}
               sx={sx ? {...sx} : {display: 'flex', alignItems: 'center', position: "relative"}}>
             {image?.src && image?.background ? (<CardMedia image={imageSrc} sx={{height: '100%', position: 'absolute', width: '100%'}}/>) : image?.src && (<CardMedia src={imageSrc}/>)}
             {children}

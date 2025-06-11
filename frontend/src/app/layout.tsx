@@ -22,7 +22,7 @@ const linkPlaceholders = [{link: 'наш простір', url: ''},
     }, {link: 'контакти', url: 'contacts'}];
 
 const footerPlaceholders = {
-    links: [{to: 'classes', text: 'тренування'}, {to: 'abonements', text: 'ціни'}, {to: 'contacts', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: 'calendar', text: 'розклад'}, {to: '/', text: 'вхід'}, {to: '/', text: 'наш простір'}, {to: 'teachers', text: 'вчителі'}],
+    links: [{to: 'classes', text: 'тренування'}, {to: 'abonements', text: 'ціни'}, {to: 'contacts', text: 'контакти'}, {to: '/', text: 'івенти'}, {to: 'calendar', text: 'розклад'}, {to: '/', text: 'наш простір'}, {to: 'teachers', text: 'вчителі'}],
     socialMedia: [{to: '/', text: 'instagram'}, {to: '/', text: 'facebook'}]
 }
 
