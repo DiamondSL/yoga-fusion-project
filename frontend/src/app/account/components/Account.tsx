@@ -8,15 +8,13 @@ import {useQuery} from "@apollo/client";
 import {userQuery} from "@/GraphQL/TSQueries/UsersQueries";
 import LoaderElement from "@/Components/Loader";
 
+
 const AccountComponent = ({user}: { user: UserInfo }) => {
     const {language} = useAppContext();
     const router = useRouter();
     const {data, loading, error} = useQuery(userQuery, {
         variables: {userId: user.documentId},
     });
-
-    console.info(data, user)
-
 
     useEffect(() => {
         if (!user?.documentId) {
@@ -34,27 +32,36 @@ const AccountComponent = ({user}: { user: UserInfo }) => {
             {error && (<Box className={'error-message'}>
                 <Typography variant={'body1'} color={'error'}>{error?.message}</Typography>
             </Box>)}
-            <Box className={'user-details'}>
-                <Typography variant="body1">
-                    <strong>{language === 'en' ? 'Phone Number' : 'Номер телефону'}:</strong> {user?.phoneNumber}
-                </Typography>
-                <Typography variant="body1">
-                    <strong>{language === 'en' ? 'Full Name' : 'Ім`я'}:</strong> {data?.usersPermissionsUser?.fullName || 'N/A'}
-                </Typography>
-                <Typography variant="body1">
-                    <strong>{language === 'en' ? 'Email' : 'Електронна пошта'}:</strong> {data?.usersPermissionsUser?.email}
-                </Typography>
-                <Typography variant="body1">
-                    <strong>{language === 'en' ? 'Instagram' : 'Instagram'}:</strong> {data?.usersPermissionsUser?.instagram}
-                </Typography>
-                <Typography variant="body1">
-                    <strong>{language === 'en' ? 'Status' : 'Статус'}:</strong>{' '}
-                    {user?.blocked
-                        ? (language === 'en' ? 'Blocked' : 'Заблоковано')
-                        : user?.active
-                            ? (language === 'en' ? 'Confirmed' : 'Підтверджено')
-                            : (language === 'en' ? 'Not Confirmed' : 'Не підтверджено')}
-                </Typography>
+            <Box className={'account-information'}>
+                <Box className={'details'}>
+                    <Typography variant="body1">
+                        <strong>{language === 'en' ? 'Phone Number' : 'Номер телефону'}:</strong> {user?.phoneNumber}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>{language === 'en' ? 'Full Name' : 'Ім`я'}:</strong> {data?.usersPermissionsUser?.fullName || 'N/A'}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>{language === 'en' ? 'Email' : 'Електронна пошта'}:</strong> {data?.usersPermissionsUser?.email}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>{language === 'en' ? 'Instagram' : 'Instagram'}:</strong> {data?.usersPermissionsUser?.instagram}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>{language === 'en' ? 'Status' : 'Статус'}:</strong>{' '}
+                        {user?.blocked
+                            ? (language === 'en' ? 'Blocked' : 'Заблоковано')
+                            : user?.active
+                                ? (language === 'en' ? 'Confirmed' : 'Підтверджено')
+                                : (language === 'en' ? 'Not Confirmed' : 'Не підтверджено')}
+                    </Typography>
+                </Box>
+                <Box className={'bookings'} sx={{marginTop: '24px'}}>
+                    <Box className={'title'}>
+                        <Typography variant="h4" gutterBottom>
+                            {language === 'en' ? 'My bookings' : 'Мої заняття'}
+                        </Typography>
+                    </Box>
+                </Box>
             </Box>
         </Box>
     );

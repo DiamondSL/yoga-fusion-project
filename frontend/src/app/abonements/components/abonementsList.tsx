@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { CardElement } from "@/Components/Card/Card";
 import { useRouter } from "next/navigation";
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 import { abonementsQuery } from "@/GraphQL/TSQueries/AbonementsQueries";
 import { abonementEntity } from "@/app/abonements/page";
 import { generateStrapiUrl } from "@/Components/Visual/StrapiIcons/StrapiIcon";
@@ -82,7 +82,7 @@ const AbonementsList = () => {
     const { language } = useAppContext();
     const router = useRouter();
     const [expandIndex, setExpandIndex] = React.useState<string | false>(false);
-    const [filter, setFilter] = React.useState<"Memberships" | "Events" | undefined>(undefined);
+    const [filter] = React.useState<"Memberships" | "Events" | undefined>(undefined);
 
 
     // Memoized filtered abonements
@@ -93,7 +93,7 @@ const AbonementsList = () => {
     }, [filter, data?.abonements]);
 
     const handleFilterChange = (value: "Memberships" | "Events" | undefined) => {
-        setFilter(value);
+        console.info('jump to:', value);
     };
 
     // Render Abonements List

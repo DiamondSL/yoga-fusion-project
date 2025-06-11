@@ -7,6 +7,7 @@ import {ClassEntity} from "@/app/classes/page";
 import {useRouter} from "next/navigation";
 import PinkStarVector from "@/Components/Visual/SVGIcons/PinkStar";
 import LoaderElement from "@/Components/Loader";
+import placeholder from '../../../../public/icons/classes/class-placeholder.jpg'
 
 export const ClassesList = () => {
     const classes = useQuery(classesQuery)
@@ -22,7 +23,7 @@ export const ClassesList = () => {
                 return (
                     <CardElement className={'class-card'} onClick={() => router.push(`classes/${item?.documentId}`)} key={`${item?.Name}${item?.Intensity}${item?.Information}`}
                                  sx={{maxWidth: '460px', width: '100%', height: '300px', position: 'relative', borderColor: theme?.palette?.primary?.dark}}
-                                 backdrop={false} image={{src: item?.Photo?.[0].url as string, background: true}}>
+                                 backdrop={false} image={{src: item?.Photo?.[0]?.url as string ?? placeholder?.src, background: true}}>
                         <Box className={'class-content'} bgcolor={alpha(`${theme.palette.secondary.dark}`, 0.6)}>
                             <Box className={'title'}>
                             <Typography variant={'h3'} color={theme.palette.primary.main}>{item?.Name}</Typography>

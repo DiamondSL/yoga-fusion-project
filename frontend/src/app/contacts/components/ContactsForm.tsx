@@ -4,12 +4,13 @@ import {ContactsPageFormQuery} from "@/GraphQL/TSQueries/ContactsPageQueries";
 import {useQuery} from "@apollo/client";
 import background from "../../../../public/icons/gradients/background-pink-other.png";
 import renderBlocks from "@/Helpers/BlockRender";
+import {useAppContext} from "@/app/ContextWrapper";
 
 
 const ContactsForm = () => {
     const formData = useQuery(ContactsPageFormQuery)
     const {data, loading, error} = formData
-
+    const {user} = useAppContext()
 
     return <Box className={'contacts-form'} sx={{backgroundImage: `url(${background?.src})`}}>
         <Box className={'wrapper'}>
@@ -28,11 +29,11 @@ const ContactsForm = () => {
                     <Box className={'form-wrapper'}>
                         <form noValidate autoComplete="off">
                             <FormControl sx={{maxWidth: '160px', width: '100%'}}>
-                                <OutlinedInput sx={{backgroundColor: 'primary.main', padding: '16px 9px'}}
+                                <OutlinedInput disabled={!!(user && user.documentId && user?.documentId?.length > 0)} sx={{backgroundColor: 'primary.main', padding: '16px 9px'}}
                                                placeholder="Name"/>
                             </FormControl>
                             <FormControl sx={{maxWidth: '160px', width: '100%'}}>
-                                <OutlinedInput sx={{backgroundColor: 'primary.main', padding: '16px 9px'}}
+                                <OutlinedInput disabled={!!(user?.documentId && user.documentId.length > 0)} sx={{backgroundColor: 'primary.main', padding: '16px 9px'}}
                                                placeholder="Email"/>
                             </FormControl>
                             <FormControl sx={{maxWidth: '260px', width: '100%'}}>

@@ -149,7 +149,7 @@ const useLandingPageSections = (): {
             }
         }
 
-        const sections: Array<[string, object | null]> = data?.landingPage && Object.entries(data?.landingPage)?.filter((data, index) => {
+        const sections: Array<[string, object | null]> = data?.landingPage && Object?.entries(data?.landingPage)?.filter((data, index) => {
             return data !== null && index !== 0;
         }).map((data) => {
             return [data[0].replace(/_/g, ""), data[1]];

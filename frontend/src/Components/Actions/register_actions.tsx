@@ -12,9 +12,9 @@ interface RegisterActionsProps {
 }
 
 const RegisterActions = ({sx, buttonOnclick}:RegisterActionsProps) => {
-    const { language } = useAppContext()
+    const { language, user } = useAppContext()
 
-    return (
+    return user?.documentId ? (<></>) : (
         <SectionWrapper className={'actions'} sx={{...sx}}>
             <Box className={'actions-content'}>
             <Box className={'title'}>

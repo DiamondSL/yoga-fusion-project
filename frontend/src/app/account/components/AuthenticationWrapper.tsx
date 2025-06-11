@@ -9,7 +9,6 @@ import AccountComponent from "@/app/account/components/Account";
 import {usersQuery} from "@/GraphQL/TSQueries/UsersQueries";
 import {meQuery} from "@/GraphQL/TSQueries/MeQuery";
 
-
 type formProps = {
     isClient: boolean
     language?: 'en' | 'uk-UA' | 'ru-RU';

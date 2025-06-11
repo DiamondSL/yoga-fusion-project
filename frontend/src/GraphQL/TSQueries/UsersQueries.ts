@@ -26,5 +26,24 @@ export const userQuery = gql`
             }
             fullName
             email
+            bookings {
+                documentId
+                session {
+                    documentId
+                    Date
+                    Name
+                }
+            }
+            membership {
+                startDate
+                endDate
+                Activated
+                Amount
+                abonement {
+                    Name {
+                        Title
+                    }
+                }
+            }
         }
     }`
